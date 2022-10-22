@@ -1,4 +1,8 @@
-# Parts of this code are copied from https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial5/Inception_ResNet_DenseNet.html
+"""
+    This module implements a simple 1D convolutional network for the processing of EEG-signals in the time domain
+
+    The optimization part of this code is copied from https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial5/Inception_ResNet_DenseNet.html
+"""
 
 import pytorch_lightning as pl
 import torch.nn as nn

@@ -5,6 +5,10 @@ import torch
 import numpy as np
 
 
+"""
+    This class acts as a wrapper for the EEGdataset class (also in this file)
+    DO NOT FORGET TO CALL the setup method!!  
+"""
 class EEGdataModule(pl.LightningDataModule):
     @staticmethod
     def add_argparse_args(parent_parser, **kwargs):
@@ -28,6 +32,7 @@ class EEGdataModule(pl.LightningDataModule):
         self.num_workers = num_workers
 
     def setup(self, stage=None):
+        #TODO: maybe add this code to the initialization?
         eeg_trainval = EEGdataset(data_path=self.data_dir,
                                   first_patient=self.first_patient_train,
                                   num_patients=self.num_patients_train)
@@ -53,6 +58,12 @@ class EEGdataModule(pl.LightningDataModule):
         return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers)
 
 
+"""
+    This class loads the dataset as defined in /esat/biomeddata/SHHS_dataset/no_backup
+    Only the *_eeg.mat files are used and the number of patients to use is specified in the initialization
+    Some patients are missing in the files, but this is ignored
+    Finally the data of the different patients are concatenated into one big tensor
+"""
 class EEGdataset(torch.utils.data.Dataset):
     def __init__(self, data_path, first_patient, num_patients, transform=None):
         super().__init__()
@@ -70,14 +81,14 @@ class EEGdataset(torch.utils.data.Dataset):
                 label = torch.Tensor(np.array(f.get("label"))[0])
                 labels_list.append(label)
             except FileNotFoundError as e:
-                print("Couldn't find file at path: ", datapoint)
+                print("Couldn't find file at path: ", datapoint)  # No problem if some patients are missing
         self.X1 = torch.cat(X1_list, 0)
         self.labels = torch.cat(labels_list, 0)
         self.labels = self.labels - torch.ones(self.labels.size(0))  # Change label range from 1->5 to 0->4
         if self.labels.size(0) == 0:
-            raise FileNotFoundError     # Data not found
+            raise FileNotFoundError     # No data found at all, raise an error
 
-        # TODO: Normalization!!
+        # Normalization
         DATA_MEANS = self.X1.mean(dim=2, keepdim=True)
         DATA_STD = self.X1.std(dim=2, keepdim=True)
         self.X1 = (self.X1 - DATA_MEANS) / DATA_STD
