@@ -1,0 +1,6 @@
+model_hparams: {}
+model_name: 1D_CNN
+optimizer_hparams:
+  lr: 0.001
+  weight_decay: 0.0001
+optimizer_name: Adam
