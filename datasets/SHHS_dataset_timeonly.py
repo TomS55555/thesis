@@ -42,7 +42,7 @@ class EEGdataModule(pl.LightningDataModule):
 
         assert np.array(split).sum() == eeg_trainval.__len__()
 
-        self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)  # use a 3/5;1/5;1/5 split
+        self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)
 
         self.eeg_test = EEGdataset(data_path=self.data_dir,
                                    first_patient=self.first_patient_test,
@@ -63,6 +63,9 @@ class EEGdataModule(pl.LightningDataModule):
     Only the *_eeg.mat files are used and the number of patients to use is specified in the initialization
     Some patients are missing in the files, but this is ignored
     Finally the data of the different patients are concatenated into one big tensor
+    
+    I am aware that this implementation might not be computationally optimal: it is probably better to load a patient from a file,
+    normalize the data and concatenate it immediatly into a tensor
 """
 class EEGdataset(torch.utils.data.Dataset):
     def __init__(self, data_path, first_patient, num_patients, transform=None):
@@ -71,6 +74,7 @@ class EEGdataset(torch.utils.data.Dataset):
         self.transform = transform
         X1_list = []
         labels_list = []
+        # TODO: Make the fetching of data more efficient
         for patient in range(first_patient, first_patient+num_patients):
             datapoint = data_path + "n" + f"{patient:0=4}" + "_eeg.mat"
             try:
