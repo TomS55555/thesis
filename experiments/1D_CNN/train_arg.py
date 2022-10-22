@@ -16,15 +16,17 @@ import json
 def train(args):
     save_name = args.model_name
     dict_args = vars(args)
+    pl.seed_everything(42) # To be reproducable
 
     data_module = EEGdataModule(**dict_args)
+    data_module.setup()
 
     trainer = Trainer.from_argparse_args(args,
                                          default_root_dir = os.path.join(args.CHECKPOINT_PATH, save_name),
                                          accelerator="gpu" if str(device).startswith("cuda") else "cpu",
                                          devices=1,  # How many GPUs/CPUs we want to use (1 is enough for the notebooks)
                                          callbacks=[
-                                             ModelCheckpoint(save_weights_only=True, mode="max", monitor="val_acc"),
+                                             ModelCheckpoint(save_weights_only=True, mode="max", monitor="val_acc", save_last=True),
                                              # Save the best checkpoint based on the maximum val_acc recorded. Saves only weights and not optimizer
                                              LearningRateMonitor("epoch")],  # Log learning rate every epoch
                                          enable_progress_bar=True  # Set to False if you do not want a progress bar
@@ -39,10 +41,10 @@ def train(args):
         model = CNNmodel.load_from_checkpoint(
             pretrained_filename)  # Automatically loads the model with the saved hyperparameters
     else:
-        pl.seed_everything(42)  # To be reproducable
         model = CNNmodel(**dict_args)
-        trainer.fit(model, datamodule=data_module)
+        trainer.fit(model, data_module.train_dataloader(), data_module.val_dataloader())
         model = CNNmodel.load_from_checkpoint(trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training
+
 
     # Test best model on validation and test set
     val_result = trainer.test(model, data_module.val_dataloader(), verbose=False)

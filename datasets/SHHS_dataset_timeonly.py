@@ -8,45 +8,59 @@ import numpy as np
 class EEGdataModule(pl.LightningDataModule):
     @staticmethod
     def add_argparse_args(parent_parser, **kwargs):
-        parser = parent_parser.add_argument_group("CNNmodel")
+        parser = parent_parser.add_argument_group("EEGdataModule")
+        parser.add_argument("--DATA_PATH", type=str)
         parser.add_argument("--batch_size", type=int, default=64)
-        parser.add_argument("--data_split", nargs="*", type=int, default=[3, 1, 1])
-        parser.add_argument("--num_patients", type=int)
+        parser.add_argument("--data_split", nargs="*", type=int, default=[3, 1])
+        parser.add_argument("--num_patients_train", type=int)
+        parser.add_argument("--num_patients_test", type=int)
         return parent_parser
 
-    def __init__(self, DATA_PATH, batch_size, data_split, num_patients, **kwargs):
+    def __init__(self, DATA_PATH, batch_size, data_split, num_patients_train, num_patients_test, num_workers, first_patient=1, **kwargs):
         super().__init__()
         self.data_dir = DATA_PATH
         self.batch_size = batch_size
         self.data_split = data_split
-        self.num_patients = num_patients
+        self.num_patients_train = num_patients_train
+        self.num_patients_test = num_patients_test
+        self.first_patient_train = first_patient
+        self.first_patient_test = self.first_patient_train+self.num_patients_train
+        self.num_workers = num_workers
 
     def setup(self, stage=None):
-        eeg_all = EEGdataset(self.data_dir, 1, 1+self.num_patients)
+        eeg_trainval = EEGdataset(data_path=self.data_dir,
+                                  first_patient=self.first_patient_train,
+                                  num_patients=self.num_patients_train)
         num = np.array(self.data_split).sum()
-        piece = eeg_all.__len__() // num
-        split = [self.data_split[0] * piece, self.data_split[1] * piece, eeg_all.__len__() - (self.data_split[0] + self.data_split[1]) * piece]
-        assert np.array(split).sum() == eeg_all.__len__()
-        self.eeg_train, self.eeg_val, self.eeg_test = data.random_split(eeg_all, split)  # use a 3/5;1/5;1/5 split
+        piece = eeg_trainval.__len__() // num
+        split = [self.data_split[0] * piece, eeg_trainval.__len__() - self.data_split[0] * piece]
+
+        assert np.array(split).sum() == eeg_trainval.__len__()
+
+        self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)  # use a 3/5;1/5;1/5 split
+
+        self.eeg_test = EEGdataset(data_path=self.data_dir,
+                                   first_patient=self.first_patient_test,
+                                   num_patients=self.num_patients_test)
 
     def train_dataloader(self):
-        return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True)
+        return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)
 
     def val_dataloader(self):
-        return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=True)
+        return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)
 
     def test_dataloader(self):
-        return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False)
+        return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers)
 
 
 class EEGdataset(torch.utils.data.Dataset):
-    def __init__(self, data_path, first_patient=1, last_patient=10, transform=None):
+    def __init__(self, data_path, first_patient, num_patients, transform=None):
         super().__init__()
         self.data_path = data_path
         self.transform = transform
         X1_list = []
         labels_list = []
-        for patient in range(first_patient, last_patient):
+        for patient in range(first_patient, first_patient+num_patients):
             datapoint = data_path + "n" + f"{patient:0=4}" + "_eeg.mat"
             try:
                 f = h5py.File(datapoint, 'r')
@@ -67,7 +81,6 @@ class EEGdataset(torch.utils.data.Dataset):
         DATA_MEANS = self.X1.mean(dim=2, keepdim=True)
         DATA_STD = self.X1.std(dim=2, keepdim=True)
         self.X1 = (self.X1 - DATA_MEANS) / DATA_STD
-
 
     def __len__(self):
         return self.labels.size(0)
