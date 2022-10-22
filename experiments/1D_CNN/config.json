@@ -1,0 +1,12 @@
+{
+  "DATA_PATH": "../thesis01/data/",
+  "batch_size": 64,
+  "max_epochs": 20,
+  "CHECKPOINT_PATH": "checkpoints",
+  "optimizer_name": "Adam",
+  "optimizer_hparams":  {
+                         "lr": 1e-3,
+                         "weight_decay": 1e-4
+                        },
+  "num_patients": 10
+}
