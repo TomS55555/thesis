@@ -8,6 +8,7 @@ import pytorch_lightning as pl
 import torch.nn as nn
 import torch
 import torch.optim as optim
+import constants
 
 
 class CNN_block(nn.Module):
@@ -32,7 +33,7 @@ class CNN_block(nn.Module):
 
 def create_model(model_hparams):
     model = nn.Sequential(
-        CNN_block(3000, 3, 1, 32),
+        CNN_block(constants.SLEEP_EPOCH_SIZE, 3, 1, 32),
         CNN_block(1500, 3, 32, 64),
         CNN_block(750, 3, 64, 64),
         nn.Flatten(),

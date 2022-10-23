@@ -1,5 +1,6 @@
 import torch
 from abc import ABC, abstractmethod
+import constants
 
 
 class ContrastiveTransformations(object):
@@ -20,6 +21,7 @@ class TranformProb(ABC):
         self.min = mini
         self.max = maxi
         self.prob = prob
+        self.batch_size = batch_size
         self.u = self.min + torch.rand(batch_size) * (self.max - self.min)  # Uniform number between min and max (different for every sample)
 
     @abstractmethod
@@ -73,19 +75,30 @@ class ZeroMask(TranformProb):
     """
         This class applies a zero mask of a length uniformly between min and max to a part of the signal with a probability p
     """
-    def __init__(self, mini, maxi, prob, batch_size, SLEEP_EPOCH_SIZE, **kwargs):
+    def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
-        self.sleep_epoch_size = SLEEP_EPOCH_SIZE
 
     def action(self, x):
         u = int(self.u)
-        start = int(self.sleep_epoch_size * torch.rand(1))
-        if start > self.sleep_epoch_size - u:
+        start = int(constants.SLEEP_EPOCH_SIZE * torch.rand(1))
+        if start > constants.SLEEP_EPOCH_SIZE - u:
             x[start:] = 0  # TODO: make this work for a batch!
+
 
 class GaussianNoise(TranformProb):
     """
         This class adds gaussian noise of stdev between min and max with a probability p
+    """
+    def __init__(self, mini, maxi, prob, batch_size, **kwargs):
+        super().__init__(mini, maxi, prob, batch_size)
+
+    def action(self, x):
+        x += self.u * torch.randn(self.batch_size)
+
+
+class BandStopFilter(TranformProb):
+    """
+        This class applies a band-stop filter (10 Hz width)
     """
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
