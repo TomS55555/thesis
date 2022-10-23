@@ -103,3 +103,46 @@ class EEGdataset(torch.utils.data.Dataset):
     def __getitem__(self, item):
         return self.X1[item], self.labels[item]
 
+"""
+    This class efficiently fetches data from the SHHS dataset. It does this by keeping a list of patients 
+    and an index which is a cumulative sum of all patients. The function __get_item__ can then directly
+    index the correct file and fetch the correct datapoint.
+"""
+class SHHS_dataset(torch.utils.data.Dataset):
+    def __init__(self, data_path, first_patient, num_patients, transform=None):
+        super().__init__()
+        self.first_patient = first_patient
+        self.num_patients = num_patients
+        index_file_path = data_path+'/patient_mat_list.txt'
+        try:
+            with open(index_file_path, 'r') as f:
+                index_file = f.readlines()
+        except FileNotFoundError as e:
+            print("Could not find file: ", index_file_path)
+            exit(1)
+        self.paths = list()
+        self.index = list()
+        for line in index_file:
+            path, idx = line.split('-')
+            idx = int(idx)
+            assert idx > 1
+            self.paths.append(path)
+            self.index.append(idx)
+        self.index = np.cumsum(np.asarray(self.index))
+
+    def __len__(self):
+        return self.index[self.first_patient+self.num_patients-1]-self.index[self.first_patient]
+
+    def __getitem__(self, item):
+        idx = np.argmax(self.index > item)-1 + self.index[self.first_patient]
+        datapoint = self.paths[idx]
+        try:
+            f = h5py.File(datapoint, 'r')
+            X1 = torch.as_tensor(np.array(f.get("X1")))
+            X1 = X1[None, :]
+            labels = torch.as_tensor(np.array(f.get("label"))[0])
+        except FileNotFoundError as e:
+            print("Couldn't find file at path: ", datapoint)  # Exit if some patients are missing
+            exit(1)
+
+

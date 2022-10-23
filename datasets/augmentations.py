@@ -17,12 +17,14 @@ class TranformProb(ABC):
     """
         Abstract base class for transformations that are applied within a uniform range between min and max and with a probability p
     """
+
     def __init__(self, mini, maxi, prob, batch_size):
         self.min = mini
         self.max = maxi
         self.prob = prob
         self.batch_size = batch_size
-        self.u = self.min + torch.rand(batch_size) * (self.max - self.min)  # Uniform number between min and max (different for every sample)
+        self.u = self.min + torch.rand(batch_size) * (
+                    self.max - self.min)  # Uniform number between min and max (different for every sample)
 
     @abstractmethod
     def action(self, x):
@@ -38,6 +40,7 @@ class AmplitudeScale(TranformProb):
     """
         This class applies an amplitude scale (uniformly) between min and max with a probability p
     """
+
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
@@ -46,23 +49,33 @@ class AmplitudeScale(TranformProb):
         return x
 
 
+def roll_with_different_shifts(x, shifts):
+    n_rows, n_cols = x.shape
+    arange1 = torch.arange(n_cols).view((1, n_cols)).repeat(n_rows, 1)
+    arange2 = (arange1 - shifts[..., None]) % n_cols
+    return torch.gather(x, 1, arange2)
+
+
 class TimeShift(TranformProb):
     """
         This class applies a time shift between min and max (uniformly) samples with a probability p
     """
+
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
     def action(self, x):
-        shift = int(self.u)  # Uniform number between min and max
-        # TODO: do a timeshift
-        return x
+        shifts = int(self.u)  # Uniform number between min and max
+        # TODO: do a proper timeshift and try to implement it with tensor operations
+        y = roll_with_different_shifts(x, shifts)
+        return y
 
 
 class DCShift(TranformProb):
     """
         This class applies a DC shift uniformly between min and max with a probability p
     """
+
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
@@ -75,6 +88,7 @@ class ZeroMask(TranformProb):
     """
         This class applies a zero mask of a length uniformly between min and max to a part of the signal with a probability p
     """
+
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
@@ -89,6 +103,7 @@ class GaussianNoise(TranformProb):
     """
         This class adds gaussian noise of stdev between min and max with a probability p
     """
+
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
@@ -100,6 +115,7 @@ class BandStopFilter(TranformProb):
     """
         This class applies a band-stop filter (10 Hz width)
     """
+
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
