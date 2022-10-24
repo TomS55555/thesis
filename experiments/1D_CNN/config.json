@@ -1,5 +1,5 @@
 {
-  "DATA_PATH": "data/",
+  "DATA_PATH": "../thesis01/data/",
   "batch_size": 64,
   "max_epochs": 30,
   "CHECKPOINT_PATH": "checkpoints",
@@ -9,7 +9,7 @@
                          "weight_decay": 1e-4
                         },
   "first_patient": 1,
-  "num_patients_train": 500,
-  "num_patients_test": 20,
-  "num_workers": 12
+  "num_patients_train": 10,
+  "num_patients_test": 10,
+  "num_workers": 0
 }

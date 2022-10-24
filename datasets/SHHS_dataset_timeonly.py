@@ -74,21 +74,25 @@ class EEGdataModule(pl.LightningDataModule):
 
 
 class EEGdataset(torch.utils.data.Dataset):
-    def __init__(self, data_path, first_patient, num_patients, transform=None):
+    def __init__(self, data_path, first_patient, num_patients, window_size=1, transform=None):
         super().__init__()
         self.data_path = data_path
         self.transform = transform
+        self.window_size = window_size
         X1_list = []
         labels_list = []
-        # TODO: Make the fetching of data more efficient
         for patient in range(first_patient, first_patient + num_patients):
             datapoint = data_path + "n" + f"{patient:0=4}" + "_eeg.mat"
             try:
                 f = h5py.File(datapoint, 'r')
-                x1 = torch.Tensor(np.array(f.get("X1")))
+                x1 = torch.as_tensor(np.array(f.get("X1")))
+                # Normalization
+                DATA_MEANS = x1.mean(dim=0, keepdim=True)
+                DATA_STD = x1.std(dim=0, keepdim=True)
+                x1 = (x1 - DATA_MEANS) / DATA_STD
                 x1 = x1[None, :]
                 X1_list.append(x1.permute(2, 0, 1))
-                label = torch.Tensor(np.array(f.get("label"))[0])
+                label = torch.as_tensor(np.array(f.get("label"))[0])
                 labels_list.append(label)
             except FileNotFoundError as e:
                 print("Couldn't find file at path: ", datapoint)  # No problem if some patients are missing
@@ -98,17 +102,15 @@ class EEGdataset(torch.utils.data.Dataset):
         if self.labels.size(0) == 0:
             raise FileNotFoundError  # No data found at all, raise an error
 
-        # Normalization
-        DATA_MEANS = self.X1.mean(dim=2, keepdim=True)
-        DATA_STD = self.X1.std(dim=2, keepdim=True)
-        self.X1 = (self.X1 - DATA_MEANS) / DATA_STD
-
     def __len__(self):
-        return self.labels.size(0)
+        return self.labels.size(0) - self.window_size  # Avoid problems at end of dataset
 
     def __getitem__(self, item):
-
-        return self.X1[item], self.labels[item]
+        if self.transform is None:
+            return self.X1[item:item+self.window_size], self.labels[item:item+self.window_size]
+        else:
+            return self.transform(self.X1[item:item+self.window_size]), \
+                   [self.labels[item:item+self.window_size] for i in range(self.transform.n_views)]
 
 
 """
@@ -116,8 +118,6 @@ class EEGdataset(torch.utils.data.Dataset):
     and an index which is a cumulative sum of all patients. The function __get_item__ can then directly
     index the correct file and fetch the correct datapoint.
 """
-
-
 class SHHS_dataset(torch.utils.data.Dataset):
     def __init__(self, data_path, first_patient, num_patients, window_size=1, transform=None):
         super().__init__()

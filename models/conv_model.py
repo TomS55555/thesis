@@ -88,9 +88,11 @@ class CNNmodel(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         inputs, labels = batch
-        preds = self.model(inputs)
-        loss = self.loss_module(preds, labels.long())
-        acc = (preds.argmax(dim=-1) == labels).float().mean()
+        assert inputs.shape[1] == 1
+        print("BATCH SHAPE: ", inputs.shape)
+        preds = self.model(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
+        loss = self.loss_module(preds, labels.squeeze().long())
+        acc = (preds.argmax(dim=-1) == labels.squeeze()).float().mean()
 
         # Logs the accuracy per epoch to tensorboard (weighted average over batches)
         self.log('train_acc', acc, on_step=False, on_epoch=True)
@@ -99,13 +101,13 @@ class CNNmodel(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         inputs, labels = batch
-        preds = self.model(inputs)
-        acc = (labels == preds.argmax(dim=-1)).float().mean()
+        preds = self.model(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
+        acc = (labels.squeeze() == preds.argmax(dim=-1)).float().mean()
         self.log('val_acc', acc)
 
     def test_step(self, batch, batch_idx):
         inputs, labels = batch
-        preds = self.model(inputs)
-        acc = (labels == preds.argmax(dim=-1)).float().mean()
+        preds = self.model(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
+        acc = (labels.squeeze() == preds.argmax(dim=-1)).float().mean()
         self.log('test_acc', acc)
 
