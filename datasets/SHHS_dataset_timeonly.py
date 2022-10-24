@@ -1,14 +1,17 @@
+import os.path
+import constants
 import pytorch_lightning as pl
 import torch.utils.data as data
 import h5py
 import torch
 import numpy as np
 
-
 """
     This class acts as a wrapper for the EEGdataset class (also in this file)
     DO NOT FORGET TO CALL the setup method!!  
 """
+
+
 class EEGdataModule(pl.LightningDataModule):
     @staticmethod
     def add_argparse_args(parent_parser, **kwargs):
@@ -20,7 +23,8 @@ class EEGdataModule(pl.LightningDataModule):
         parser.add_argument("--num_patients_test", type=int)
         return parent_parser
 
-    def __init__(self, DATA_PATH, batch_size, data_split, num_patients_train, num_patients_test, num_workers, first_patient=1, **kwargs):
+    def __init__(self, DATA_PATH, batch_size, data_split, num_patients_train, num_patients_test, num_workers,
+                 first_patient=1, **kwargs):
         super().__init__()
         self.data_dir = DATA_PATH
         self.batch_size = batch_size
@@ -28,11 +32,11 @@ class EEGdataModule(pl.LightningDataModule):
         self.num_patients_train = num_patients_train
         self.num_patients_test = num_patients_test
         self.first_patient_train = first_patient
-        self.first_patient_test = self.first_patient_train+self.num_patients_train
+        self.first_patient_test = self.first_patient_train + self.num_patients_train
         self.num_workers = num_workers
 
     def setup(self, stage=None):
-        #TODO: maybe add this code to the initialization?
+        # TODO: maybe add this code to the initialization?
         eeg_trainval = EEGdataset(data_path=self.data_dir,
                                   first_patient=self.first_patient_train,
                                   num_patients=self.num_patients_train)
@@ -65,8 +69,10 @@ class EEGdataModule(pl.LightningDataModule):
     Finally the data of the different patients are concatenated into one big tensor
     
     I am aware that this implementation might not be computationally optimal: it is probably better to load a patient from a file,
-    normalize the data and concatenate it immediatly into a tensor
+    normalize the data and concatenate it immediately into a tensor
 """
+
+
 class EEGdataset(torch.utils.data.Dataset):
     def __init__(self, data_path, first_patient, num_patients, transform=None):
         super().__init__()
@@ -75,7 +81,7 @@ class EEGdataset(torch.utils.data.Dataset):
         X1_list = []
         labels_list = []
         # TODO: Make the fetching of data more efficient
-        for patient in range(first_patient, first_patient+num_patients):
+        for patient in range(first_patient, first_patient + num_patients):
             datapoint = data_path + "n" + f"{patient:0=4}" + "_eeg.mat"
             try:
                 f = h5py.File(datapoint, 'r')
@@ -90,7 +96,7 @@ class EEGdataset(torch.utils.data.Dataset):
         self.labels = torch.cat(labels_list, 0)
         self.labels = self.labels - torch.ones(self.labels.size(0))  # Change label range from 1->5 to 0->4
         if self.labels.size(0) == 0:
-            raise FileNotFoundError     # No data found at all, raise an error
+            raise FileNotFoundError  # No data found at all, raise an error
 
         # Normalization
         DATA_MEANS = self.X1.mean(dim=2, keepdim=True)
@@ -101,25 +107,30 @@ class EEGdataset(torch.utils.data.Dataset):
         return self.labels.size(0)
 
     def __getitem__(self, item):
+
         return self.X1[item], self.labels[item]
+
 
 """
     This class efficiently fetches data from the SHHS dataset. It does this by keeping a list of patients 
     and an index which is a cumulative sum of all patients. The function __get_item__ can then directly
     index the correct file and fetch the correct datapoint.
 """
+
+
 class SHHS_dataset(torch.utils.data.Dataset):
-    def __init__(self, data_path, first_patient, num_patients, transform=None):
+    def __init__(self, data_path, first_patient, num_patients, window_size=1, transform=None):
         super().__init__()
         self.first_patient = first_patient
         self.num_patients = num_patients
-        index_file_path = data_path+'/patient_mat_list.txt'
-        try:
-            with open(index_file_path, 'r') as f:
-                index_file = f.readlines()
-        except FileNotFoundError as e:
+        self.window_size = window_size
+        self.data_path = data_path
+        index_file_path = os.path.join(data_path, constants.PATIENT_INFO_FILE)
+        if not os.path.exists(index_file_path):
             print("Could not find file: ", index_file_path)
             exit(1)
+        with open(index_file_path, 'r') as f:
+            index_file = f.readlines()
         self.paths = list()
         self.index = list()
         for line in index_file:
@@ -131,18 +142,38 @@ class SHHS_dataset(torch.utils.data.Dataset):
         self.index = np.cumsum(np.asarray(self.index))
 
     def __len__(self):
-        return self.index[self.first_patient+self.num_patients-1]-self.index[self.first_patient]
+        if self.first_patient > 0:
+            return (self.index[self.first_patient + self.num_patients] - self.index[
+                self.first_patient - 1])
+        return self.index[self.num_patients]
 
     def __getitem__(self, item):
-        idx = np.argmax(self.index > item)-1 + self.index[self.first_patient]
-        datapoint = self.paths[idx]
-        try:
-            f = h5py.File(datapoint, 'r')
-            X1 = torch.as_tensor(np.array(f.get("X1")))
-            X1 = X1[None, :]
-            labels = torch.as_tensor(np.array(f.get("label"))[0])
-        except FileNotFoundError as e:
-            print("Couldn't find file at path: ", datapoint)  # Exit if some patients are missing
+        if self.first_patient > 0:
+            index_item = item + self.index[self.first_patient-1]
+            patient_idx = np.argmax(self.index > index_item)
+            item_in_patient = index_item - self.index[patient_idx - 1]
+        else:
+            index_item = item
+            item_in_patient = item
+            patient_idx = np.argmax(self.index > index_item)
+
+        # datapoint = self.paths[patient_idx]
+        datapoint = self.data_path + "/n" + f"{patient_idx+1:0=4}" + "_eeg.mat"
+        if not os.path.exists(datapoint):
+            print("Couldn't find file: ", datapoint)
             exit(1)
+        f = h5py.File(datapoint, 'r')
+        X1 = torch.as_tensor(np.array(f.get("X1")))
 
+        # Normalization
+        DATA_MEANS = X1.mean(dim=0, keepdim=True)
+        DATA_STD = X1.std(dim=0, keepdim=True)
+        X1 = (X1 - DATA_MEANS) / DATA_STD
 
+        labels = torch.as_tensor(np.array(f.get("label"))[0])
+
+        if self.index[patient_idx] - index_item < self.window_size:  # Return last window of patient if not enough room
+            # starting at item
+            return X1[None, :, -self.window_size:].permute(2, 0, 1), labels[-self.window_size:]
+        return X1[None, :, item_in_patient:item_in_patient + self.window_size].permute(2, 0, 1), \
+               labels[item_in_patient:item_in_patient + self.window_size]
