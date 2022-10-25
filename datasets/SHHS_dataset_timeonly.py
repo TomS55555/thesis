@@ -6,13 +6,12 @@ import h5py
 import torch
 import numpy as np
 
-"""
-    This class acts as a wrapper for the EEGdataset class (also in this file)
-    DO NOT FORGET TO CALL the setup method!!  
-"""
-
 
 class EEGdataModule(pl.LightningDataModule):
+    """
+        This class acts as a wrapper for the SHHS_dataset classes (also in this file)
+        DO NOT FORGET TO CALL the setup method!!
+    """
     @staticmethod
     def add_argparse_args(parent_parser, **kwargs):
         parser = parent_parser.add_argument_group("EEGdataModule")
@@ -37,7 +36,7 @@ class EEGdataModule(pl.LightningDataModule):
 
     def setup(self, stage=None):
         # TODO: maybe add this code to the initialization?
-        eeg_trainval = EEGdataset(data_path=self.data_dir,
+        eeg_trainval = SHHS_dataset_1(data_path=self.data_dir,
                                   first_patient=self.first_patient_train,
                                   num_patients=self.num_patients_train)
         num = np.array(self.data_split).sum()
@@ -48,7 +47,7 @@ class EEGdataModule(pl.LightningDataModule):
 
         self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)
 
-        self.eeg_test = EEGdataset(data_path=self.data_dir,
+        self.eeg_test = SHHS_dataset_1(data_path=self.data_dir,
                                    first_patient=self.first_patient_test,
                                    num_patients=self.num_patients_test)
 
@@ -62,18 +61,14 @@ class EEGdataModule(pl.LightningDataModule):
         return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers)
 
 
-"""
-    This class loads the dataset as defined in /esat/biomeddata/SHHS_dataset/no_backup
-    Only the *_eeg.mat files are used and the number of patients to use is specified in the initialization
-    Some patients are missing in the files, but this is ignored
-    Finally the data of the different patients are concatenated into one big tensor
-    
-    I am aware that this implementation might not be computationally optimal: it is probably better to load a patient from a file,
-    normalize the data and concatenate it immediately into a tensor
-"""
-
-
-class EEGdataset(torch.utils.data.Dataset):
+class SHHS_dataset_1(torch.utils.data.Dataset):
+    """
+        This class loads the dataset as defined in /esat/biomeddata/SHHS_dataset/no_backup
+        Only the *_eeg.mat files are used and the number of patients to use is specified in the initialization
+        Some patients are missing in the files, but this is ignored
+        Finally the data of the different patients are concatenated into one big tensor, which can then be indexed
+        directly with __get_item__()
+    """
     def __init__(self, data_path, first_patient, num_patients, window_size=1, transform=None):
         super().__init__()
         self.data_path = data_path
@@ -113,12 +108,15 @@ class EEGdataset(torch.utils.data.Dataset):
                    [self.labels[item:item+self.window_size] for i in range(self.transform.n_views)]
 
 
-"""
-    This class efficiently fetches data from the SHHS dataset. It does this by keeping a list of patients 
-    and an index which is a cumulative sum of all patients. The function __get_item__ can then directly
-    index the correct file and fetch the correct datapoint.
-"""
-class SHHS_dataset(torch.utils.data.Dataset):
+class SHHS_dataset_2(torch.utils.data.Dataset):
+    """
+        This class fetches data from the SHHS dataset by keeping a list of patients
+        and an index which is a cumulative sum of all patients. The function __get_item__ can then directly
+        index the correct file and fetch the correct datapoint.
+
+        However this implementation turns out to be at least 10x slower than the other one and I will therefore
+        discard it for now.
+    """
     def __init__(self, data_path, first_patient, num_patients, window_size=1, transform=None):
         super().__init__()
         self.first_patient = first_patient
