@@ -45,8 +45,7 @@ class AmplitudeScale(TranformProb):
         super().__init__(mini, maxi, prob, batch_size)
 
     def action(self, x):
-        x *= self.u[..., None]  # Broadcast to correct dimension
-        return x
+        return x * self.u[..., None]  # Broadcast to correct dimension
 
 
 def roll_with_different_shifts(x, shifts):
@@ -67,7 +66,9 @@ class TimeShift(TranformProb):
     def action(self, x):
         shifts = int(self.u)  # Uniform number between min and max
         # TODO: do a proper timeshift and try to implement it with tensor operations
-        y = roll_with_different_shifts(x, shifts)
+        # y = roll_with_different_shifts(x, shifts)
+        y = torch.zeros_like(x)
+        y[..., shifts:] = x[..., :-shifts]
         return y
 
 
@@ -80,8 +81,7 @@ class DCShift(TranformProb):
         super().__init__(mini, maxi, prob, batch_size)
 
     def action(self, x):
-        x += self.u[..., None]  # Broadcast to correct dimension
-        return x
+        return x + self.u[..., None]
 
 
 class ZeroMask(TranformProb):
@@ -95,8 +95,12 @@ class ZeroMask(TranformProb):
     def action(self, x):
         u = int(self.u)
         start = int(constants.SLEEP_EPOCH_SIZE * torch.rand(1))
+        y = x.detach().clone()
         if start > constants.SLEEP_EPOCH_SIZE - u:
-            x[start:] = 0  # TODO: make this work for a batch!
+            y[..., start:] = 0  # TODO: make this work for a batch!
+        else:
+            y[..., start:start+u] = 0
+        return y
 
 
 class GaussianNoise(TranformProb):
@@ -108,7 +112,7 @@ class GaussianNoise(TranformProb):
         super().__init__(mini, maxi, prob, batch_size)
 
     def action(self, x):
-        x += self.u * torch.randn(self.batch_size)
+        return x + self.u * torch.randn(constants.SLEEP_EPOCH_SIZE)
 
 
 class BandStopFilter(TranformProb):
