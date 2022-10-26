@@ -1,27 +1,14 @@
-"""
-    This file is used to train and evaluate the 1D convolutional model defined in models/conv_model
-    It will be updated to support other models such as a RNN
-
-        The structure of this file is also inspired by the tutorials at https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial5/Inception_ResNet_DenseNet.html
-        and on the pytorch-lightning tutorial about the use of hyperparameters in the CLI: https://pytorch-lightning.readthedocs.io/en/stable/common/hyperparameters.html
-"""
-
-import argparse
-import sys
 import os
-sys.path.extend([os.getcwd()])
-from argparse import ArgumentParser
+
 import pytorch_lightning as pl
+from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
 
-import torch
-from models.conv_model import CNNmodel_supervised
-from pytorch_lightning import Trainer
 from datasets.SHHS_dataset_timeonly import EEGdataModule
-import json
+from models.conv_model import CNNmodel_supervised
 
 
-def train(args):
+def train_cnn_supervised(args, device):
     save_name = args.model_name
     dict_args = vars(args)
     pl.seed_everything(42) # To be reproducable
@@ -60,32 +47,3 @@ def train(args):
     result = {"test": test_result[0]["test_acc"], "val": val_result[0]["test_acc"]}
 
     return model, result
-
-
-if __name__ == "__main__":
-    device = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
-    print("Using device", device)
-    parser = ArgumentParser()
-    # add all the available trainer options to argparse
-    # ie: now --accelerator --devices --num_nodes ... --fast_dev_run all work in the cli
-    parser = Trainer.add_argparse_args(parser)
-
-    # add PROGRAM level args
-    parser.add_argument("--model_name", type=str, default="cnn_model01")
-
-    # add model specific args
-    parser = CNNmodel_supervised.add_model_specific_args(parser)
-
-    # add data specific args
-    parser = EEGdataModule.add_argparse_args(parser)
-
-    parser.add_argument("--load_json", help="Load settings from file json format. Command line options override values in file.")
-
-    args = parser.parse_args()
-
-    if args.load_json:
-        with open(args.load_json, 'rt') as f:
-            args = parser.parse_args(namespace=argparse.Namespace(**json.load(f)))
-
-    mod, res = train(args)
-    print(res)

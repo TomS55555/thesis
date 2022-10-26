@@ -9,50 +9,73 @@ import torch.nn as nn
 import torch
 import torch.optim as optim
 import constants
+from models.mymodules import CNN_head, CNN_block, SimpleMLP
+import torch.functional as F
 
 
-class CNN_block(nn.Module):
-    """
-        One CNN block consists of a 1D (3) convolution, a Max pooling and a Batch normalization
-    """
-    def __init__(self, input_size, kernel_size, in_channels, out_channels):
+class CNNmodel_SimCLR(pl.LightningModule):
+    def __init__(self, hidden_dim, lr, temperature, weight_decay, max_epochs=500):
         super().__init__()
-        self.net = nn.Sequential(
-            nn.Conv1d(in_channels=in_channels,
-                      out_channels=out_channels,
-                      kernel_size=kernel_size,
-                      padding="same"),
-            nn.BatchNorm1d(out_channels),
-            nn.ReLU(),
-            nn.MaxPool1d(2)
+        self.save_hyperparameters()
+        assert self.hparams.temperature > 0.0, 'The temperature must be a positive float!'
+        # Base model f(.)
+        self.f = CNN_head()
+        # The MLP for g(.) consists of Linear->ReLU->Linear
+        self.convnet.fc = nn.Sequential(
+            self.convnet.fc,  # Linear(ResNet output, 4*hidden_dim)
+            nn.ReLU(inplace=True),
+            nn.Linear(4*hidden_dim, hidden_dim)
         )
 
-    def forward(self, x):
-        return self.net(x)
+    def configure_optimizers(self):
+        optimizer = optim.AdamW(self.parameters(),
+                                lr=self.hparams.lr,
+                                weight_decay=self.hparams.weight_decay)
+        lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
+                                                            T_max=self.hparams.max_epochs,
+                                                            eta_min=self.hparams.lr/50)
+        return [optimizer], [lr_scheduler]
+
+    def info_nce_loss(self, batch, mode='train'):
+        imgs, _ = batch
+        imgs = torch.cat(imgs, dim=0)
+
+        # Encode all images
+        feats = self.convnet(imgs)
+        # Calculate cosine similarity
+        cos_sim = F.cosine_similarity(feats[:,None,:], feats[None,:,:], dim=-1)
+        # Mask out cosine similarity to itself
+        self_mask = torch.eye(cos_sim.shape[0], dtype=torch.bool, device=cos_sim.device)
+        cos_sim.masked_fill_(self_mask, -9e15)
+        # Find positive example -> batch_size//2 away from the original example
+        pos_mask = self_mask.roll(shifts=cos_sim.shape[0]//2, dims=0)
+        # InfoNCE loss
+        cos_sim = cos_sim / self.hparams.temperature
+        nll = -cos_sim[pos_mask] + torch.logsumexp(cos_sim, dim=-1)
+        nll = nll.mean()
+
+        # Logging loss
+        self.log(mode+'_loss', nll)
+        # Get ranking position of positive example
+        comb_sim = torch.cat([cos_sim[pos_mask][:,None],  # First position positive example
+                              cos_sim.masked_fill(pos_mask, -9e15)],
+                             dim=-1)
+        sim_argsort = comb_sim.argsort(dim=-1, descending=True).argmin(dim=-1)
+        # Logging ranking metrics
+        self.log(mode+'_acc_top1', (sim_argsort == 0).float().mean())
+        self.log(mode+'_acc_top5', (sim_argsort < 5).float().mean())
+        self.log(mode+'_acc_mean_pos', 1+sim_argsort.float().mean())
+
+        return nll
+
+    def training_step(self, batch, batch_idx):
+        return self.info_nce_loss(batch, mode='train')
+
+    def validation_step(self, batch, batch_idx):
+        self.info_nce_loss(batch, mode='val')
 
 
-def create_model(model_hparams):
-    model = nn.Sequential(
-        CNN_block(constants.SLEEP_EPOCH_SIZE, 3, 1, 32),
-        CNN_block(1500, 3, 32, 64),
-        CNN_block(750, 3, 64, 64),
-        nn.Flatten(),
-        nn.Linear(in_features=375*64, out_features=256),
-        nn.ReLU(),
-        nn.Linear(in_features=256, out_features=10)
-    )
-    return model
-
-
-class CNNmodel(pl.LightningModule):
-    @staticmethod
-    def add_model_specific_args(parent_parser):
-        parser = parent_parser.add_argument_group("CNNmodel")
-        parser.add_argument("--model_hparams", nargs="*")
-        parser.add_argument("--optimizer_name", type=str, default="Adam")
-        parser.add_argument("--optimizer_hparams", nargs="*")
-        # parser.add_argument("--hidden_layers", nargs=3, type=int, default=[256])
-        return parent_parser
+class CNNmodel_supervised(pl.LightningModule):
 
     def __init__(self, model_name, model_hparams, optimizer_name, optimizer_hparams, **kwargs):
         super().__init__()
@@ -61,7 +84,12 @@ class CNNmodel(pl.LightningModule):
         self.loss_module = nn.CrossEntropyLoss()
 
         # Create model
-        self.model = create_model(model_hparams)
+        self.model = nn.Sequential(
+            CNN_head(**model_hparams),
+            SimpleMLP(in_features=int(constants.SLEEP_EPOCH_SIZE/8 * model_hparams["conv_filters"][-1]),
+                      hidden_dim=model_hparams["hidden_dim"],
+                      out_features=constants.N_CLASSES)
+        )
         self.model_name = model_name
 
         # Example input for visualizing the graph in Tensorboard
@@ -88,11 +116,10 @@ class CNNmodel(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         inputs, labels = batch
-        assert inputs.shape[1] == 1
-        print("BATCH SHAPE: ", inputs.shape)
         preds = self.model(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
-        loss = self.loss_module(preds, labels.squeeze().long())
         acc = (preds.argmax(dim=-1) == labels.squeeze()).float().mean()
+
+        loss = self.loss_module(preds, labels.squeeze().long())
 
         # Logs the accuracy per epoch to tensorboard (weighted average over batches)
         self.log('train_acc', acc, on_step=False, on_epoch=True)
