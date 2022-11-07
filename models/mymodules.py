@@ -45,7 +45,8 @@ class CNN_block(nn.Module):
             nn.Conv1d(in_channels=in_channels,
                       out_channels=out_channels,
                       kernel_size=kernel_size,
-                      padding="same"),
+                      padding="same",
+                      bias=False),
             nn.BatchNorm1d(out_channels),
             nn.ReLU(),
             nn.MaxPool1d(2)
