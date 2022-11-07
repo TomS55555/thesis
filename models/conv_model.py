@@ -22,12 +22,11 @@ class CNNmodel_SimCLR(pl.LightningModule):
         self.f = CNN_head(**model_hparams)
         # The MLP for g(.) consists of Linear->ReLU->Linear
         self.g = SimpleMLP(
-            in_features=int(constants.SLEEP_EPOCH_SIZE/8 * model_hparams["conv_filters"][-1]),
+            in_features=model_hparams['conv_filters'][-1],
             hidden_dim=4*hidden_dim,
-            out_features=hidden_dim)
+            out_features=hidden_dim
+        )
         self.net = nn.Sequential(self.f, self.g)
-        self.model_name = model_name
-
 
     def configure_optimizers(self):
         optimizer = optim.AdamW(self.parameters(),
@@ -44,7 +43,6 @@ class CNNmodel_SimCLR(pl.LightningModule):
 
         # Encode all images
         feats = self.net(inputs)
-
         # Calculate cosine similarity
         cos_sim = F.cosine_similarity(feats[:, None, :], feats[None, :, :], dim=-1)
         # Mask out cosine similarity to itself
