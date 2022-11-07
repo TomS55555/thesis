@@ -9,8 +9,16 @@ class ContrastiveTransformations(object):
         self.base_transforms = base_transforms
         self.n_views = n_views
 
-    def __call__(self, x):
-        return [self.base_transforms(x) for i in range(self.n_views)]
+    # TODO: optimize this procedure
+    # Idea: copy x once here, change x itself in all
+    def __call__(self, x, prev_x):
+        ylist = list()
+        for i in range(self.n_views):
+            y = torch.clone(x)
+            for T in self.base_transforms:
+                y = T(y, prev_x)
+            ylist.append(y)
+        return torch.as_tensor(ylist)
 
 
 class TranformProb(ABC):
@@ -23,16 +31,16 @@ class TranformProb(ABC):
         self.max = maxi
         self.prob = prob
         self.batch_size = batch_size
-        self.u = self.min + torch.rand(batch_size) * (
-                    self.max - self.min)  # Uniform number between min and max (different for every sample)
 
     @abstractmethod
-    def action(self, x):
+    def action(self, x, x_prev):
         pass
 
-    def __call__(self, x):
+    def __call__(self, x, x_prev):
+        self.u = self.min + torch.rand(self.batch_size) * (
+                self.max - self.min)  # Uniform number between min and max (different for every sample)
         if torch.rand(1) < self.prob:
-            x = self.action(x)
+            x = self.action(x, x_prev)
         return x
 
 
@@ -44,7 +52,7 @@ class AmplitudeScale(TranformProb):
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
-    def action(self, x):
+    def action(self, x, x_prev):
         return x * self.u[..., None]  # Broadcast to correct dimension
 
 
@@ -63,14 +71,14 @@ class TimeShift(TranformProb):
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
-    def action(self, x):
+    def action(self, x, x_prev):
         shifts = int(self.u)  # Uniform number between min and max
         # TODO: do a proper timeshift and try to implement it with tensor operations
         # y = roll_with_different_shifts(x, shifts)
         y = torch.zeros_like(x)
         y[..., shifts:] = x[..., :-shifts]
+        y[..., :shifts] = x_prev[..., -shifts:]
         return y
-
 
 class DCShift(TranformProb):
     """
@@ -80,7 +88,7 @@ class DCShift(TranformProb):
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
-    def action(self, x):
+    def action(self, x, x_prev):
         return x + self.u[..., None]
 
 
@@ -92,7 +100,7 @@ class ZeroMask(TranformProb):
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
-    def action(self, x):
+    def action(self, x, x_prev):
         u = int(self.u)
         start = int(constants.SLEEP_EPOCH_SIZE * torch.rand(1))
         y = x.detach().clone()
@@ -111,7 +119,7 @@ class GaussianNoise(TranformProb):
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
-    def action(self, x):
+    def action(self, x, x_prev):
         return x + self.u * torch.randn(constants.SLEEP_EPOCH_SIZE)
 
 
@@ -123,5 +131,5 @@ class BandStopFilter(TranformProb):
     def __init__(self, mini, maxi, prob, batch_size, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
 
-    def action(self, x):
+    def action(self, x, x_prev):
         pass

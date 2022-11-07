@@ -10,22 +10,23 @@ import torch
 import torch.optim as optim
 import constants
 from models.mymodules import CNN_head, CNN_block, SimpleMLP
-import torch.functional as F
+import torch.nn.functional as F
 
 
 class CNNmodel_SimCLR(pl.LightningModule):
-    def __init__(self, hidden_dim, lr, temperature, weight_decay, max_epochs=500):
+    def __init__(self, model_name, model_hparams, hidden_dim, lr, temperature, weight_decay, max_epochs=500):
         super().__init__()
         self.save_hyperparameters()
         assert self.hparams.temperature > 0.0, 'The temperature must be a positive float!'
         # Base model f(.)
-        self.f = CNN_head()
+        self.f = CNN_head(**model_hparams)
         # The MLP for g(.) consists of Linear->ReLU->Linear
-        self.convnet.fc = nn.Sequential(
-            self.convnet.fc,  # Linear(ResNet output, 4*hidden_dim)
-            nn.ReLU(inplace=True),
-            nn.Linear(4*hidden_dim, hidden_dim)
+        self.g = SimpleMLP(
+            in_features=model_hparams['conv_filters'][-1],
+            hidden_dim=4*hidden_dim,
+            out_features=hidden_dim
         )
+        self.net = nn.Sequential(self.f, self.g)
 
     def configure_optimizers(self):
         optimizer = optim.AdamW(self.parameters(),
@@ -37,13 +38,13 @@ class CNNmodel_SimCLR(pl.LightningModule):
         return [optimizer], [lr_scheduler]
 
     def info_nce_loss(self, batch, mode='train'):
-        imgs, _ = batch
-        imgs = torch.cat(imgs, dim=0)
+        inputs, _ = batch
+        inputs = torch.cat(inputs, dim=0)
 
         # Encode all images
-        feats = self.convnet(imgs)
+        feats = self.net(inputs)
         # Calculate cosine similarity
-        cos_sim = F.cosine_similarity(feats[:,None,:], feats[None,:,:], dim=-1)
+        cos_sim = F.cosine_similarity(feats[:, None, :], feats[None, :, :], dim=-1)
         # Mask out cosine similarity to itself
         self_mask = torch.eye(cos_sim.shape[0], dtype=torch.bool, device=cos_sim.device)
         cos_sim.masked_fill_(self_mask, -9e15)

@@ -93,18 +93,21 @@ class SHHS_dataset_1(torch.utils.data.Dataset):
                 print("Couldn't find file at path: ", datapoint)  # No problem if some patients are missing
         self.X1 = torch.cat(X1_list, 0)
         self.labels = torch.cat(labels_list, 0)
-        self.labels = self.labels - torch.ones(self.labels.size(0))  # Change label range from 1->5 to 0->4
+        self.labels = self.labels - torch.ones(self.labels.size(0))  # Change label range from 1->5 to 0->4s
+        self.length = self.labels.size(0) - self.window_size  # Avoid problems at end of dataset
         if self.labels.size(0) == 0:
             raise FileNotFoundError  # No data found at all, raise an error
 
     def __len__(self):
-        return self.labels.size(0) - self.window_size  # Avoid problems at end of dataset
+        return self.length
 
     def __getitem__(self, item):
+        inputs = self.X1[item:item+self.window_size]  # Pointer to the data
         if self.transform is None:
-            return self.X1[item:item+self.window_size], self.labels[item:item+self.window_size]
+            return inputs, self.labels[item:item+self.window_size]
         else:
-            return self.transform(self.X1[item:item+self.window_size]), \
+            prev_inputs = self.X1[item-1:item-1+self.window_size] if item > 0 else inputs
+            return self.transform(inputs, prev_inputs), \
                    [self.labels[item:item+self.window_size] for i in range(self.transform.n_views)]
 
 
