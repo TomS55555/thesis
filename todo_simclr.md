@@ -1,12 +1,11 @@
 # TO DO:
 
-- [ ] Call __get_item__() on dataset from SimCLR tutorial to see what it looks like
-	- Make sure own dataset does the same thing
-- [ ] Find out how optional arguments work in python such that dataset augmentation can be made more efficient
+- [x] Implement data augmentations
+- [x] Implement SimCLR and make sure it trains
+- [ ] Implement a classifier on top of SimCLR
+- [ ] Train SimCLR on cluster
+- [ ] Improve efficiency of data augmentations
 - [ ] Improve train_functions
-- [ ] Time the fetching of data somehow, at least make sure it is not too excessive
-- [ ] Train SimCLR on a small dataset
-
 
 -------------------
 ## MORE COMPLICATED:
