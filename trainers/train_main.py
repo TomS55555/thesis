@@ -8,7 +8,8 @@ from argparse import ArgumentParser
 import argparse
 import json
 from datasets.SHHS_dataset_timeonly import EEGdataModule
-from train_functions import train_cnn_supervised, train_simclr
+from train_CNNmodel_supervised import train_cnn_supervised
+from train_simclr import train_simclr
 
 
 if __name__ == "__main__":

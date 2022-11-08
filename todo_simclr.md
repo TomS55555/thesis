@@ -5,10 +5,13 @@
 - [ ] Implement a classifier on top of SimCLR
 - [ ] Train SimCLR on cluster
 - [ ] Improve efficiency of data augmentations
-- [ ] Improve train_functions
-
+- [ ] Maybe look at the clustering of data points in the high dimensional space with e.g. t-SNE
+----------------
+### Notes on imlementation:
+- Improve structure of trainers
+- Maybe remove the datamodule class?
 -------------------
-## MORE COMPLICATED:
+### More complicated:
 - Get a better understanding of the implementation of the info_nce_loss function
 - Optimize the data-loading process: find out what the bottleneck is and how the interaction between CPU
   and GPU can be optimized
