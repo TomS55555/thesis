@@ -1,0 +1,31 @@
+{
+  "MODEL_TYPE": "CNN_model_simclr",
+  "model_name": "simclr01",
+  "model_hparams": {
+    "conv_filters": [32, 64, 64],
+    "hidden_dim": 256
+  },
+
+  "DATA_PATH": "../thesis01/data/",
+  "CHECKPOINT_PATH": "checkpoints",
+  "first_patient": 1,
+  "num_patients_train": 10,
+  "num_patients_test": 10,
+
+  "num_workers": 0,
+  "batch_size": 256,
+  "hidden_dim": 128,
+  "max_epochs": 30,
+  "lr": 5e-4,
+  "temperature": 0.07,
+  "weight_decay": 1e-4,
+
+  "amplitude-min": 0.5,
+  "amplitude-max": 2,
+  "timeshift-min": 5,
+  "timeshift-max": 50,
+  "zeromask-min": 0,
+  "zeromask-max": 150,
+  "noise-min": 0,
+  "noise-max": 0.2
+}

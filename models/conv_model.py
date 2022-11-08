@@ -14,7 +14,7 @@ import torch.nn.functional as F
 
 
 class CNNmodel_SimCLR(pl.LightningModule):
-    def __init__(self, model_name, model_hparams, hidden_dim, lr, temperature, weight_decay, max_epochs=500):
+    def __init__(self, model_name, model_hparams, hidden_dim, lr, temperature, weight_decay, max_epochs=500, **kwargs):
         super().__init__()
         self.save_hyperparameters()
         assert self.hparams.temperature > 0.0, 'The temperature must be a positive float!'
@@ -22,7 +22,7 @@ class CNNmodel_SimCLR(pl.LightningModule):
         self.f = CNN_head(**model_hparams)
         # The MLP for g(.) consists of Linear->ReLU->Linear
         self.g = SimpleMLP(
-            in_features=model_hparams['conv_filters'][-1],
+            in_features=int(constants.SLEEP_EPOCH_SIZE/8 * model_hparams['conv_filters'][-1]),
             hidden_dim=4*hidden_dim,
             out_features=hidden_dim
         )
@@ -39,10 +39,10 @@ class CNNmodel_SimCLR(pl.LightningModule):
 
     def info_nce_loss(self, batch, mode='train'):
         inputs, _ = batch
-        inputs = torch.cat(inputs, dim=0)
+        # inputs = torch.cat(inputs, dim=0)
 
         # Encode all images
-        feats = self.net(inputs)
+        feats = self.net(torch.squeeze(inputs, dim=1))  # Remove redundant dimension (which is not used in 1D convolutional network)
         # Calculate cosine similarity
         cos_sim = F.cosine_similarity(feats[:, None, :], feats[None, :, :], dim=-1)
         # Mask out cosine similarity to itself

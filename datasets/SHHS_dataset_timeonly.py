@@ -23,7 +23,7 @@ class EEGdataModule(pl.LightningDataModule):
         return parent_parser
 
     def __init__(self, DATA_PATH, batch_size, data_split, num_patients_train, num_patients_test, num_workers,
-                 first_patient=1, **kwargs):
+                 first_patient=1, transform=None, **kwargs):
         super().__init__()
         self.data_dir = DATA_PATH
         self.batch_size = batch_size
@@ -33,6 +33,7 @@ class EEGdataModule(pl.LightningDataModule):
         self.first_patient_train = first_patient
         self.first_patient_test = self.first_patient_train + self.num_patients_train
         self.num_workers = num_workers
+        self.transform = transform
 
     def setup(self, stage=None):
         # TODO: maybe add this code to the initialization?

@@ -18,7 +18,7 @@ class ContrastiveTransformations(object):
             for T in self.base_transforms:
                 y = T(y, prev_x)
             ylist.append(y)
-        return torch.as_tensor(ylist)
+        return ylist
 
 
 class TranformProb(ABC):
@@ -49,7 +49,7 @@ class AmplitudeScale(TranformProb):
         This class applies an amplitude scale (uniformly) between min and max with a probability p
     """
 
-    def __init__(self, mini, maxi, prob, batch_size, **kwargs):
+    def __init__(self, mini, maxi, prob, batch_size):
         super().__init__(mini, maxi, prob, batch_size)
 
     def action(self, x, x_prev):
@@ -68,7 +68,7 @@ class TimeShift(TranformProb):
         This class applies a time shift between min and max (uniformly) samples with a probability p
     """
 
-    def __init__(self, mini, maxi, prob, batch_size, **kwargs):
+    def __init__(self, mini, maxi, prob, batch_size):
         super().__init__(mini, maxi, prob, batch_size)
 
     def action(self, x, x_prev):
@@ -116,7 +116,7 @@ class GaussianNoise(TranformProb):
         This class adds gaussian noise of stdev between min and max with a probability p
     """
 
-    def __init__(self, mini, maxi, prob, batch_size, **kwargs):
+    def __init__(self, mini, maxi, prob, batch_size):
         super().__init__(mini, maxi, prob, batch_size)
 
     def action(self, x, x_prev):

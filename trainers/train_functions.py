@@ -5,13 +5,14 @@ from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
 
 from datasets.SHHS_dataset_timeonly import EEGdataModule
+from datasets.augmentations import ContrastiveTransformations, AmplitudeScale, TimeShift, ZeroMask, GaussianNoise
 from models.conv_model import CNNmodel_SimCLR, CNNmodel_supervised
 
 
 def train_cnn_supervised(args, device):
     save_name = args.model_name
     dict_args = vars(args)
-    pl.seed_everything(42) # To be reproducable
+    pl.seed_everything(42)  # To be reproducable
 
     data_module = EEGdataModule(**dict_args)
     data_module.setup()
@@ -54,7 +55,16 @@ def train_simclr(args, device):
     dict_args = vars(args)
     pl.seed_everything(42)  # To be reproducable
 
-    data_module = EEGdataModule(**dict_args)
+    p = 0.2  # probability of applying the transforms
+    contrast_transforms = ContrastiveTransformations(
+        [
+            AmplitudeScale(dict_args["amplitude-min"], dict_args["amplitude-max"], p, 1),
+            GaussianNoise(dict_args["noise-min"], dict_args["noise-max"], p, 1),
+            ZeroMask(dict_args["zeromask-min"], dict_args["zeromask-max"], p, 1),
+            TimeShift(dict_args["timeshift-min"], dict_args["timeshift-max"], p, 1)
+        ], n_views=2
+    )
+    data_module = EEGdataModule(transform=contrast_transforms, **dict_args)
     data_module.setup()
     trainer = Trainer.from_argparse_args(args,
                                          default_root_dir=os.path.join(args.CHECKPOINT_PATH, save_name),
@@ -86,3 +96,4 @@ def train_simclr(args, device):
     val_result = trainer.test(model, data_module.val_dataloader(), verbose=False)
     test_result = trainer.test(model, data_module.test_dataloader(), verbose=False)
     result = {"test": test_result[0]["test_acc"], "val": val_result[0]["test_acc"]}
+    return model, result
