@@ -8,8 +8,8 @@ from argparse import ArgumentParser
 import argparse
 import json
 from datasets.SHHS_dataset_timeonly import EEGdataModule
-from models.conv_model import CNNmodel_supervised, CNNmodel_SimCLR
-from train_functions import train_cnn_supervised
+from train_CNNmodel_supervised import train_cnn_supervised
+from train_simclr import train_simclr
 
 
 if __name__ == "__main__":
@@ -39,8 +39,8 @@ if __name__ == "__main__":
 
     if args.MODEL_TYPE == "CNN_model_supervised":
         mod, res = train_cnn_supervised(args, device)
-    elif args.MODEL_TYPE == "":
-        pass
+    elif args.MODEL_TYPE == "CNN_model_simclr":
+        mod, res = train_simclr(args, device)
     else:
         print("Model type not recognized!")
     print(res)

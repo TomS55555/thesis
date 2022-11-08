@@ -29,7 +29,7 @@ class CNN_head(nn.Module):
             CNN_block(constants.SLEEP_EPOCH_SIZE, 3, 1, conv_filters[0]),
             CNN_block(constants.SLEEP_EPOCH_SIZE/2, 3, conv_filters[0], conv_filters[1]),
             CNN_block(constants.SLEEP_EPOCH_SIZE/4, 3, conv_filters[1], conv_filters[2]),
-            nn.Flatten())
+            nn.Flatten())  # The result is of size int(constants.SLEEP_EPOCH_SIZE/8 * model_hparams["conv_filters"][-1])
 
     def forward(self, x):
         return self.model(x)
@@ -45,7 +45,8 @@ class CNN_block(nn.Module):
             nn.Conv1d(in_channels=in_channels,
                       out_channels=out_channels,
                       kernel_size=kernel_size,
-                      padding="same"),
+                      padding="same",
+                      bias=False),
             nn.BatchNorm1d(out_channels),
             nn.ReLU(),
             nn.MaxPool1d(2)

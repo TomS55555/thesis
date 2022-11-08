@@ -11,7 +11,7 @@ from models.conv_model import CNNmodel_supervised
 def train_cnn_supervised(args, device):
     save_name = args.model_name
     dict_args = vars(args)
-    pl.seed_everything(42) # To be reproducable
+    pl.seed_everything(42)  # To be reproducable
 
     data_module = EEGdataModule(**dict_args)
     data_module.setup()
