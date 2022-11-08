@@ -9,7 +9,7 @@
   "DATA_PATH": "../thesis01/data/",
   "CHECKPOINT_PATH": "checkpoints",
   "first_patient": 1,
-  "num_patients_train": 10,
+  "num_patients_train": 100,
   "num_patients_test": 10,
 
   "num_workers": 0,
