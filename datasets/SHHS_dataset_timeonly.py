@@ -12,6 +12,7 @@ class EEGdataModule(pl.LightningDataModule):
         This class acts as a wrapper for the SHHS_dataset classes (also in this file)
         DO NOT FORGET TO CALL the setup method!!
     """
+
     @staticmethod
     def add_argparse_args(parent_parser, **kwargs):
         parser = parent_parser.add_argument_group("EEGdataModule")
@@ -38,8 +39,9 @@ class EEGdataModule(pl.LightningDataModule):
     def setup(self, stage=None):
         # TODO: maybe add this code to the initialization?
         eeg_trainval = SHHS_dataset_1(data_path=self.data_dir,
-                                  first_patient=self.first_patient_train,
-                                  num_patients=self.num_patients_train)
+                                      first_patient=self.first_patient_train,
+                                      num_patients=self.num_patients_train,
+                                      transform=self.transform)
         num = np.array(self.data_split).sum()
         piece = eeg_trainval.__len__() // num
         split = [self.data_split[0] * piece, eeg_trainval.__len__() - self.data_split[0] * piece]
@@ -49,8 +51,8 @@ class EEGdataModule(pl.LightningDataModule):
         self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)
 
         self.eeg_test = SHHS_dataset_1(data_path=self.data_dir,
-                                   first_patient=self.first_patient_test,
-                                   num_patients=self.num_patients_test)
+                                       first_patient=self.first_patient_test,
+                                       num_patients=self.num_patients_test)
 
     def train_dataloader(self):
         return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)
@@ -70,6 +72,7 @@ class SHHS_dataset_1(torch.utils.data.Dataset):
         Finally the data of the different patients are concatenated into one big tensor, which can then be indexed
         directly with __get_item__()
     """
+
     def __init__(self, data_path, first_patient, num_patients, window_size=1, transform=None):
         super().__init__()
         self.data_path = data_path
@@ -103,13 +106,13 @@ class SHHS_dataset_1(torch.utils.data.Dataset):
         return self.length
 
     def __getitem__(self, item):
-        inputs = self.X1[item:item+self.window_size]  # Pointer to the data
+        inputs = self.X1[item:item + self.window_size]  # Pointer to the data
         if self.transform is None:
-            return inputs, self.labels[item:item+self.window_size]
+            return inputs, self.labels[item:item + self.window_size]
         else:
-            prev_inputs = self.X1[item-1:item-1+self.window_size] if item > 0 else inputs
-            return self.transform(inputs, prev_inputs), \
-                   [self.labels[item:item+self.window_size] for i in range(self.transform.n_views)]
+            prev_inputs = self.X1[item - 1:item - 1 + self.window_size] if item > 0 else inputs
+            return self.transform(inputs, prev_inputs), self.labels[item:item + self.window_size]
+
 
 
 class SHHS_dataset_2(torch.utils.data.Dataset):
@@ -121,6 +124,7 @@ class SHHS_dataset_2(torch.utils.data.Dataset):
         However this implementation turns out to be at least 10x slower than the other one and I will therefore
         discard it for now.
     """
+
     def __init__(self, data_path, first_patient, num_patients, window_size=1, transform=None):
         super().__init__()
         self.first_patient = first_patient
@@ -151,7 +155,7 @@ class SHHS_dataset_2(torch.utils.data.Dataset):
 
     def __getitem__(self, item):
         if self.first_patient > 0:
-            index_item = item + self.index[self.first_patient-1]
+            index_item = item + self.index[self.first_patient - 1]
             patient_idx = np.argmax(self.index > index_item)
             item_in_patient = index_item - self.index[patient_idx - 1]
         else:
@@ -160,7 +164,7 @@ class SHHS_dataset_2(torch.utils.data.Dataset):
             patient_idx = np.argmax(self.index > index_item)
 
         # datapoint = self.paths[patient_idx]
-        datapoint = self.data_path + "/n" + f"{patient_idx+1:0=4}" + "_eeg.mat"
+        datapoint = self.data_path + "/n" + f"{patient_idx + 1:0=4}" + "_eeg.mat"
         if not os.path.exists(datapoint):
             print("Couldn't find file: ", datapoint)
             exit(1)

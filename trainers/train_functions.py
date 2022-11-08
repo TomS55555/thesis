@@ -6,7 +6,8 @@ from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
 
 from datasets.SHHS_dataset_timeonly import EEGdataModule
 from datasets.augmentations import ContrastiveTransformations, AmplitudeScale, TimeShift, ZeroMask, GaussianNoise
-from models.conv_model import CNNmodel_SimCLR, CNNmodel_supervised
+from models.conv_model import CNNmodel_supervised
+from models.simclr_model import CNNmodel_SimCLR
 
 
 def train_cnn_supervised(args, device):
