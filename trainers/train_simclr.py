@@ -14,7 +14,7 @@ def train_simclr(args, device):
     dict_args = vars(args)
     pl.seed_everything(42)  # To be reproducable
 
-    p = 0.2  # probability of applying the transforms
+    p = dict_args["transform-prob"]  # probability of applying the transforms
     contrast_transforms = ContrastiveTransformations(
         [
             AmplitudeScale(dict_args["amplitude-min"], dict_args["amplitude-max"], p, 1),
