@@ -9,12 +9,12 @@
   "DATA_PATH": "../thesis01/data/",
   "CHECKPOINT_PATH": "checkpoints",
   "first_patient": 1,
-  "num_patients_train": 10,
-  "num_patients_test": 10,
+  "num_patients_train": 500,
+  "num_patients_test": 100,
 
-  "num_workers": 0,
+  "num_workers": 12,
   "batch_size": 64,
-  "max_epochs": 30,
+  "max_epochs": 20,
   "optimizer_name": "Adam",
   "optimizer_hparams":  {
                          "lr": 1e-4,
