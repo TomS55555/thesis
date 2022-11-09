@@ -3,13 +3,14 @@ import pytorch_lightning as pl
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
+import constants
 
 
 class LogisticRegression(pl.LightningModule):
-    def __init__(self, feature_dim, num_classes, lr, weight_decay, max_epochs):
+    def __init__(self, feature_dim, lr, weight_decay, max_epochs=100, **kwargs):
         super().__init__()
         self.save_hyperparameters()
-        self.model = nn.Linear(feature_dim, num_classes)
+        self.model = nn.Linear(feature_dim, constants.N_CLASSES)
 
     def configure_optimizers(self):
         optimizer = optim.AdamW(self.parameters(),
@@ -23,8 +24,8 @@ class LogisticRegression(pl.LightningModule):
 
     def _calculate_loss(self, batch, mode='train'):
         feats, labels = batch
-        preds = self.model(feats)
-        loss = F.cross_entropy(preds, labels)
+        preds = self.model(feats.squeeze(dim=1))
+        loss = F.cross_entropy(preds, labels.squeeze().long())
         acc = (preds.argmax(dim=-1) == labels).float().mean()
 
         self.log(mode + '_loss', loss)

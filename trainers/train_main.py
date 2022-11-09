@@ -10,6 +10,7 @@ import json
 from datasets.SHHS_dataset_timeonly import EEGdataModule
 from train_CNNmodel_supervised import train_cnn_supervised
 from train_simclr import train_simclr
+from train_simclr_classifier import train_simclr_classifier
 
 
 if __name__ == "__main__":
@@ -41,6 +42,8 @@ if __name__ == "__main__":
         mod, res = train_cnn_supervised(args, device)
     elif args.MODEL_TYPE == "CNN_model_simclr":
         mod, res = train_simclr(args, device)
+    elif args.MODEL_TYPE == "LogisticRegressionOnSimCLR":
+        mod, res = train_simclr_classifier(args, device)
     else:
         print("Model type not recognized!")
     print(res)

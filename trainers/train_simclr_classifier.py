@@ -35,24 +35,26 @@ def train_simclr_classifier(args, device):
                            data_split=[3, 1],
                            num_patients_train=num_patients_per_label,
                            num_patients_test=num_patients_per_label,
-                           num_workers=args.NUM_WORKERS
+                           num_workers=args.num_workers
                            )
-
+        dm.setup()
         sub_train_set = prepare_data_features(model, dm.train_dataloader(), device, **dict_args)
         test_feats_simclr = prepare_data_features(model, dm.test_dataloader(), device, **dict_args)
 
-        _, small_set_results = train_logreg(batch_size=64,
-                                            train_feats_data=sub_train_set,
+        _, small_set_results = train_logreg(train_feats_data=sub_train_set,
                                             test_feats_data=test_feats_simclr,
                                             model_suffix=num_patients_per_label,
                                             feature_dim=int(constants.SLEEP_EPOCH_SIZE/8 * args.model_hparams['conv_filters'][-1]),
-                                            num_classes=10,
-                                            lr=1e-3,
-                                            weight_decay=1e-3)
+                                            device=device,
+                                            **dict_args)
         results[num_patients_per_label] = small_set_results
+
 
     dataset_sizes = sorted([k for k in results])
     test_scores = [results[k]["test"] for k in dataset_sizes]
+
+    for k, score in zip(dataset_sizes, test_scores):
+        print(f'Test accuracy for {k:3d} patients: {100 * score:4.2f}%')
 
     fig = plt.figure(figsize=(6, 4))
     plt.plot(dataset_sizes, test_scores, '--', color="#000", marker="*", markeredgecolor="#000", markerfacecolor="y",
@@ -64,9 +66,6 @@ def train_simclr_classifier(args, device):
     plt.ylabel("Test accuracy")
     plt.minorticks_off()
     plt.show()
-
-    for k, score in zip(dataset_sizes, test_scores):
-        print(f'Test accuracy for {k:3d} patients: {100 * score:4.2f}%')
 
 
 def train_logreg(batch_size, train_feats_data, test_feats_data, model_suffix, device, max_epochs=100, **kwargs):
@@ -116,7 +115,7 @@ def prepare_data_features(model, data_loader, device, **kwargs):
     feats, labels = [], []
     for batch_inputs, batch_labels in tqdm(data_loader):
         batch_inputs = batch_inputs.to(device)
-        batch_feats = network(batch_inputs)
+        batch_feats = network(batch_inputs.squeeze(dim=1))
         feats.append(batch_feats.detach().cpu())
         labels.append(batch_labels)
 
