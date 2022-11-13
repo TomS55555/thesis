@@ -1,3 +1,5 @@
 /data/
 /checkpoints/supervised01/
 /checkpoints/simclr01/
+/__pycache__/
+*.pyc
