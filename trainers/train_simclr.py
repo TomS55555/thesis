@@ -39,16 +39,9 @@ def train_simclr(args, device):
 
     trainer.logger._default_hp_metric = None  # Optional logging argument that we don't need
 
-    # Check whether pretrained model exists. If yes, load it and skip training
-    pretrained_filename = os.path.join(args.CHECKPOINT_PATH, save_name + ".ckpt")
-    if os.path.isfile(pretrained_filename):
-        print(f"Found pretrained model at {pretrained_filename}, loading...")
-        model = CNNmodel_SimCLR.load_from_checkpoint(
-            pretrained_filename)  # Automatically loads the model with the saved hyperparameters
-    else:
-        model = CNNmodel_SimCLR(**dict_args)
-        trainer.fit(model, data_module.train_dataloader(), data_module.val_dataloader())
-        model = CNNmodel_SimCLR.load_from_checkpoint(
+    model = CNNmodel_SimCLR(**dict_args)
+    trainer.fit(model, data_module.train_dataloader(), data_module.val_dataloader())
+    model = CNNmodel_SimCLR.load_from_checkpoint(
             trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training
 
     # Test best model on validation and test set

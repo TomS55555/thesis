@@ -14,18 +14,14 @@ import torch.utils.data as data
 from copy import deepcopy
 import torch.nn as nn
 import matplotlib.pyplot as plt
+from utils.load_and_save_model import load_model
 
 
 def train_simclr_classifier(args, device):
     dict_args = vars(args)
     pretrained_filename = os.path.join(dict_args['CHECKPOINT_PATH'], "simclr01.ckpt") # load trained simclr model
 
-    if os.path.isfile(pretrained_filename):
-        print(f"Found pretrained model at {pretrained_filename}, loading...")
-    else:
-        print(f"No pretrained simclr model found at {pretrained_filename}, exiting ...")
-        exit(1)
-    model = CNNmodel_SimCLR.load_from_checkpoint(pretrained_filename)
+    model = load_model(CNNmodel_SimCLR, pretrained_filename)
 
 
     results = {}
