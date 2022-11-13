@@ -17,6 +17,7 @@
   and GPU can be optimized
  	- What is the maximum amount of patients that can be loaded in a specific amount of RAM? 
  		- How exactly does memory get allocated at the OS-level, diagnostics about this?
+    - https://towardsdatascience.com/efficient-pytorch-part-1-fe40ed5db76c 
 - Find out why opening files is so slow; what goes wrong at the OS-level?
 
 -----------------
