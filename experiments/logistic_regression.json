@@ -1,14 +1,15 @@
 {
   "MODEL_TYPE": "LogisticRegressionOnSimCLR",
   "model_name": "logistic_regression01",
-  "model_hparams": {
-    "conv_filters": [32, 64, 64],
-    "hidden_dim": 256
-  },
+
+  "encoder_path": "checkpoints/simclr01.ckpt",
 
   "DATA_PATH": "../thesis01/data/",
+  "data_split": [3, 1],
   "CHECKPOINT_PATH": "checkpoints",
   "first_patient": 1,
+  "num_patients_train": 5,
+  "num_patients_test": 5,
   "batch_size": 64,
 
   "num_workers": 12,
