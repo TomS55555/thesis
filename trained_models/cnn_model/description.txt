@@ -1,0 +1,18 @@
+
+Model description:
+
+| Name        | Type             | Params | In sizes     | Out sizes
+----------------------------------------------------------------------------
+0 | loss_module | CrossEntropyLoss | 0      | ?            | ?
+1 | model       | Sequential       | 6.2 M  | [1, 1, 3000] | [1, 5]
+----------------------------------------------------------------------------
+6.2 M     Trainable params
+0         Non-trainable params
+6.2 M     Total params
+24.658    Total estimated model params size (MB)
+
+----------------
+Trained on 100 patients, tested on 50 patients
+
+Accuracy on validation set: 74.8%
+Accuracy on test set: 75%
