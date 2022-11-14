@@ -18,9 +18,9 @@
   "data_hparams": {
     "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
     "first_patient": 1,
-    "num_patients_train": 100,
+    "num_patients_train": 150,
     "data_split": [3, 1],
-    "num_patients_test": 10,
+    "num_patients_test": 50,
     "batch_size": 512,
     "num_workers": 12,
 
