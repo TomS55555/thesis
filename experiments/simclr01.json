@@ -1,32 +1,42 @@
 {
   "MODEL_TYPE": "CNN_model_simclr",
   "model_name": "simclr01",
-  "model_hparams": {
+  "CHECKPOINT_PATH": "checkpoints",
+  "max_epochs": 30,
+  "temperature": 0.05,
+
+  "cnn_encoder_hparams": {
     "conv_filters": [32, 64, 64],
-    "hidden_dim": 256
+    "representation_dim": 100
   },
 
-  "DATA_PATH": "../thesis01/data/",
-  "CHECKPOINT_PATH": "checkpoints",
-  "first_patient": 1,
-  "num_patients_train": 100,
-  "num_patients_test": 10,
+  "projection_head_hparams": {
+    "use_MLP": 0,
+    "hidden_dim": 200
+  },
 
-  "num_workers": 12,
-  "batch_size": 512,
-  "hidden_dim": 128,
-  "max_epochs": 30,
-  "lr": 5e-4,
-  "temperature": 0.05,
-  "weight_decay": 1e-4,
+  "data_hparams": {
+    "DATA_PATH": "../thesis01/data/",
+    "first_patient": 1,
+    "num_patients_train": 100,
+    "data_split": [3, 1],
+    "num_patients_test": 10,
+    "batch_size": 512,
+    "num_workers": 12,
 
-  "transform-prob": 1.0,
-  "amplitude-min": 0.5,
-  "amplitude-max": 2,
-  "timeshift-min": 5,
-  "timeshift-max": 300,
-  "zeromask-min": 0,
-  "zeromask-max": 300,
-  "noise-min": 0,
-  "noise-max": 0.3
+    "transform-prob": 1.0,
+    "amplitude-min": 0.5,
+    "amplitude-max": 2,
+    "timeshift-min": 5,
+    "timeshift-max": 300,
+    "zeromask-min": 0,
+    "zeromask-max": 300,
+    "noise-min": 0,
+    "noise-max": 0.3
+  },
+
+  "optim_hparams": {
+    "lr": 5e-4,
+    "weight_decay": 1e-4
+  }
 }

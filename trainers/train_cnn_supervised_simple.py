@@ -13,7 +13,7 @@ def train_cnn_supervised_simple(args, device):
     dict_args = vars(args)
     pl.seed_everything(42)  # To be reproducable
 
-    data_module = EEGdataModule(**dict_args)
+    data_module = EEGdataModule(**dict_args['data_hparams'])
     data_module.setup()
 
     trainer = Trainer.from_argparse_args(args,

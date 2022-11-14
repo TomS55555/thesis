@@ -39,7 +39,7 @@ class CNNmodel_SimCLR(pl.LightningModule):
         inputs, _ = batch
         inputs = torch.cat(inputs, dim=0)
 
-        # Encode all images
+        # Encode all sequences
         feats = self.net(torch.squeeze(inputs, dim=1))  # Remove redundant dimension (which is not used in 1D convolutional network)
         # Calculate cosine similarity
         cos_sim = F.cosine_similarity(feats[:, None, :], feats[None, :, :], dim=-1)
@@ -72,3 +72,8 @@ class CNNmodel_SimCLR(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         self.info_nce_loss(batch, mode='val')
+
+    def test_step(self, batch, batch_idx):
+        return self.info_nce_loss(batch, mode='test')
+
+

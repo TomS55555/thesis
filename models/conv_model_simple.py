@@ -17,19 +17,20 @@ class CNNmodel_supervised_simple(pl.LightningModule):
     """
         The same CNNmodel but with a logistic classifier
     """
-    def __init__(self, model_name, model_hparams, optimizer_name, optimizer_hparams, **kwargs):
+    def __init__(self, cnn_encoder_hparams, optim_hparams, **kwargs):
         super().__init__()
         # Exports the hyperparameters to a YAML file, and create "self.hparams" namespace
         self.save_hyperparameters()
         self.loss_module = nn.CrossEntropyLoss()
 
+        self.optim_hparams = optim_hparams
+
         # Create model
         self.model = nn.Sequential(
-            CNN_head(**model_hparams),
-            nn.Linear(in_features= int(model_hparams["conv_filters"][-1] * constants.SLEEP_EPOCH_SIZE/8),
+            CNN_head(**cnn_encoder_hparams),
+            nn.Linear(in_features=cnn_encoder_hparams['representation_dim'],
                       out_features=constants.N_CLASSES),
         )
-        self.model_name = model_name
 
         # Example input for visualizing the graph in Tensorboard
         self.example_input_array = torch.zeros((1, 1, 3000), dtype=torch.float32)
@@ -38,15 +39,8 @@ class CNNmodel_supervised_simple(pl.LightningModule):
         return self.model(x)
 
     def configure_optimizers(self):
-        # We will support Adam or SGD as optimizers.
-        if self.hparams.optimizer_name == "Adam":
-            # AdamW is Adam with a correct implementation of weight decay (see here for details: https://arxiv.org/pdf/1711.05101.pdf)
-            optimizer = optim.AdamW(
-                self.parameters(), **self.hparams.optimizer_hparams)
-        elif self.hparams.optimizer_name == "SGD":
-            optimizer = optim.SGD(self.parameters(), **self.hparams.optimizer_hparams)
-        else:
-            assert False, f"Unknown optimizer: \"{self.hparams.optimizer_name}\""
+        # AdamW is Adam with a correct implementation of weight decay (see here for details: https://arxiv.org/pdf/1711.05101.pdf)
+        optimizer = optim.AdamW(self.parameters(), **self.optim_hparams)
 
         # We will reduce the learning rate by 0.1 after 100 and 150 epochs
         scheduler = optim.lr_scheduler.MultiStepLR(

@@ -23,13 +23,15 @@ class CNN_head(nn.Module):
     """
         Defines the CNN head
     """
-    def __init__(self, conv_filters, **kwargs):
+    def __init__(self, conv_filters, representation_dim):
         super().__init__()
         self.model = nn.Sequential(
             CNN_block(constants.SLEEP_EPOCH_SIZE, 3, 1, conv_filters[0]),
             CNN_block(constants.SLEEP_EPOCH_SIZE/2, 3, conv_filters[0], conv_filters[1]),
             CNN_block(constants.SLEEP_EPOCH_SIZE/4, 3, conv_filters[1], conv_filters[2]),
-            nn.Flatten())  # The result is of size int(constants.SLEEP_EPOCH_SIZE/8 * model_hparams["conv_filters"][-1])
+            nn.Flatten(), # The result is of size int(constants.SLEEP_EPOCH_SIZE/8 * model_hparams["conv_filters"][-1])
+            nn.Linear(int(constants.SLEEP_EPOCH_SIZE/8 * conv_filters[-1]), representation_dim)
+        )
 
     def forward(self, x):
         return self.model(x)
