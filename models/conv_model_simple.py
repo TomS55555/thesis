@@ -26,7 +26,7 @@ class CNNmodel_supervised_simple(pl.LightningModule):
         # Create model
         self.model = nn.Sequential(
             CNN_head(**model_hparams),
-            nn.Linear(in_features= model_hparams["conv_filters"][-1],
+            nn.Linear(in_features= int(model_hparams["conv_filters"][-1] * constants.SLEEP_EPOCH_SIZE/8),
                       out_features=constants.N_CLASSES),
         )
         self.model_name = model_name
