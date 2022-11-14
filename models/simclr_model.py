@@ -12,27 +12,27 @@ class CNNmodel_SimCLR(pl.LightningModule):
     """
         This class implements SimCLR with a 1D convolutional head
     """
-    def __init__(self, model_name, model_hparams, hidden_dim, lr, temperature, weight_decay, max_epochs=500, **kwargs):
+    def __init__(self, cnn_encoder_hparams, projection_head_hparams, optim_hparams, **kwargs):
         super().__init__()
         self.save_hyperparameters()
         assert self.hparams.temperature > 0.0, 'The temperature must be a positive float!'
+        self.optim_hparams = optim_hparams
         # Base model f(.)
-        self.f = CNN_head(**model_hparams)
+        self.f = CNN_head(**cnn_encoder_hparams)
         # The MLP for g(.) consists of Linear->ReLU->Linear
         self.g = SimpleMLP(
-            in_features=int(constants.SLEEP_EPOCH_SIZE/8 * model_hparams['conv_filters'][-1]),
-            hidden_dim=4*hidden_dim,
-            out_features=hidden_dim
+            in_features=cnn_encoder_hparams['representation_dim'],
+            hidden_dim=4*projection_head_hparams['hidden_dim'],
+            out_features=projection_head_hparams['hidden_dim']
         )
         self.net = nn.Sequential(self.f, self.g)
 
     def configure_optimizers(self):
         optimizer = optim.AdamW(self.parameters(),
-                                lr=self.hparams.lr,
-                                weight_decay=self.hparams.weight_decay)
+                                **self.optim_hparams)
         lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
                                                             T_max=self.hparams.max_epochs,
-                                                            eta_min=self.hparams.lr/50)
+                                                            eta_min=self.optim_hparams['lr']/50)
         return [optimizer], [lr_scheduler]
 
     def info_nce_loss(self, batch, mode='train'):

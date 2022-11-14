@@ -14,16 +14,18 @@ def train_simclr(args, device):
     dict_args = vars(args)
     pl.seed_everything(42)  # To be reproducable
 
-    p = dict_args["transform-prob"]  # probability of applying the transforms
+    data_hparams = dict_args['data_hparams']
+
+    p = data_hparams["transform-prob"]  # probability of applying the transforms
     contrast_transforms = ContrastiveTransformations(
         [
-            AmplitudeScale(dict_args["amplitude-min"], dict_args["amplitude-max"], p, 1),
-            GaussianNoise(dict_args["noise-min"], dict_args["noise-max"], p, 1),
-            ZeroMask(dict_args["zeromask-min"], dict_args["zeromask-max"], p, 1),
-            TimeShift(dict_args["timeshift-min"], dict_args["timeshift-max"], p, 1)
+            AmplitudeScale(data_hparams["amplitude-min"], data_hparams["amplitude-max"], p, 1),
+            GaussianNoise(data_hparams["noise-min"], data_hparams["noise-max"], p, 1),
+            ZeroMask(data_hparams["zeromask-min"], data_hparams["zeromask-max"], p, 1),
+            TimeShift(data_hparams["timeshift-min"], data_hparams["timeshift-max"], p, 1)
         ], n_views=2
     )
-    data_module = EEGdataModule(transform=contrast_transforms, **dict_args)
+    data_module = EEGdataModule(transform=contrast_transforms, **data_hparams)
     data_module.setup()
     trainer = Trainer.from_argparse_args(args,
                                          default_root_dir=os.path.join(args.CHECKPOINT_PATH, save_name),

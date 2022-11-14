@@ -16,7 +16,7 @@
   },
 
   "data_hparams": {
-    "DATA_PATH": "../thesis01/data/",
+    "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
     "first_patient": 1,
     "num_patients_train": 100,
     "data_split": [3, 1],
