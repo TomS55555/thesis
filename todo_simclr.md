@@ -24,3 +24,5 @@
 
 ## Questions:
 - What is the temperature parameter in nce_loss
+- What are the important features of EEG-signals that make classification possible? How do humans do it?
+  - The algorithm should be optimized for this!

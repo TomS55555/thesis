@@ -25,12 +25,12 @@
     "num_workers": 12,
 
     "transform-prob": 1.0,
-    "amplitude-min": 0.5,
-    "amplitude-max": 2,
+    "amplitude-min": 0.75,
+    "amplitude-max": 1.5,
     "timeshift-min": 5,
     "timeshift-max": 300,
-    "zeromask-min": 0,
-    "zeromask-max": 300,
+    "zeromask-min": 300,
+    "zeromask-max": 500,
     "noise-min": 0,
     "noise-max": 0.3
   },
