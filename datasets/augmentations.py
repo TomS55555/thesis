@@ -136,6 +136,6 @@ class BandStopFilter(TranformProb):
     def action(self, x, x_prev):
         start_freq = int(self.u)
         sos = signal.butter(8, [start_freq, start_freq + self.freq_window], btype="bandstop", output="sos", fs=constants.fs)
-        x_filtered = torch.as_tensor(signal.sosfilt(sos, x.squeeze()))
+        x_filtered = torch.as_tensor(signal.sosfilt(sos, x.squeeze()), dtype=torch.float32)
         x_filtered = x_filtered[None, None, :]
         return x_filtered
