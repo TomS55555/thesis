@@ -25,11 +25,13 @@ class CNNmodel_supervised_simple(pl.LightningModule):
 
         self.optim_hparams = optim_hparams
 
+        self.head = CNN_head(**cnn_encoder_hparams)
+        self.classifier = nn.Linear(in_features=cnn_encoder_hparams['representation_dim'],
+                      out_features=constants.N_CLASSES)
         # Create model
         self.model = nn.Sequential(
-            CNN_head(**cnn_encoder_hparams),
-            nn.Linear(in_features=cnn_encoder_hparams['representation_dim'],
-                      out_features=constants.N_CLASSES),
+            self.head,
+            self.classifier
         )
 
         # Example input for visualizing the graph in Tensorboard
