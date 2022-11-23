@@ -30,7 +30,8 @@ class CNNmodel_SimCLR(pl.LightningModule):
 
     def configure_optimizers(self):
         optimizer = optim.AdamW(self.parameters(),
-                                **self.optim_hparams)
+                                lr=self.optim_hparams["lr"],
+                                weight_decay=self.optim_hparams["weight_decay"])
         lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
                                                             T_max=self.optim_hparams['max_epochs'],
                                                             eta_min=self.optim_hparams['lr']/50)
