@@ -1,6 +1,7 @@
 import torch
 from abc import ABC, abstractmethod
 import constants
+import scipy.signal as signal
 
 
 class ContrastiveTransformations(object):
@@ -128,8 +129,13 @@ class BandStopFilter(TranformProb):
         This class applies a band-stop filter (10 Hz width)
     """
 
-    def __init__(self, mini, maxi, prob, batch_size, **kwargs):
+    def __init__(self, mini, maxi, prob, batch_size, freq_window, **kwargs):
         super().__init__(mini, maxi, prob, batch_size)
+        self.freq_window = freq_window
 
     def action(self, x, x_prev):
-        pass
+        start_freq = int(self.u)
+        sos = signal.butter(8, [start_freq, start_freq + self.freq_window], btype="bandstop", output="sos", fs=constants.fs)
+        x_filtered = torch.as_tensor(signal.sosfilt(sos, x.squeeze()))
+        x_filtered = x_filtered[None, None, :]
+        return x_filtered

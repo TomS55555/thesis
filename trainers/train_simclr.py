@@ -5,7 +5,7 @@ from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
 
 from datasets.SHHS_dataset_timeonly import EEGdataModule
-from datasets.augmentations import ContrastiveTransformations, AmplitudeScale, TimeShift, ZeroMask, GaussianNoise
+from datasets.augmentations import ContrastiveTransformations, AmplitudeScale, TimeShift, ZeroMask, GaussianNoise, BandStopFilter, DCShift
 from models.simclr_model import CNNmodel_SimCLR
 
 
@@ -22,7 +22,8 @@ def train_simclr(args, device):
             AmplitudeScale(data_hparams["amplitude-min"], data_hparams["amplitude-max"], p, 1),
             GaussianNoise(data_hparams["noise-min"], data_hparams["noise-max"], p, 1),
             ZeroMask(data_hparams["zeromask-min"], data_hparams["zeromask-max"], p, 1),
-            TimeShift(data_hparams["timeshift-min"], data_hparams["timeshift-max"], p, 1)
+            TimeShift(data_hparams["timeshift-min"], data_hparams["timeshift-max"], p, 1),
+            BandStopFilter(data_hparams['bandstop-min'], data_hparams["bandstop-max"], p, 1, data_hparams['freq-window'])
         ], n_views=2
     )
     data_module = EEGdataModule(transform=contrast_transforms, **data_hparams)
