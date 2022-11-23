@@ -12,10 +12,11 @@ class CNNmodel_SimCLR(pl.LightningModule):
     """
         This class implements SimCLR with a 1D convolutional head
     """
-    def __init__(self, cnn_encoder_hparams, projection_head_hparams, optim_hparams, **kwargs):
+    def __init__(self, cnn_encoder_hparams, projection_head_hparams, optim_hparams, temperature, **kwargs):
         super().__init__()
         self.save_hyperparameters()
-        assert self.hparams.temperature > 0.0, 'The temperature must be a positive float!'
+        self.temperature = temperature
+        assert self.temperature > 0.0, 'The temperature must be a positive float!'
         self.optim_hparams = optim_hparams
         # Base model f(.)
         self.f = CNN_head(**cnn_encoder_hparams)
@@ -31,7 +32,7 @@ class CNNmodel_SimCLR(pl.LightningModule):
         optimizer = optim.AdamW(self.parameters(),
                                 **self.optim_hparams)
         lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
-                                                            T_max=self.hparams.max_epochs,
+                                                            T_max=self.optim_hparams['max_epochs'],
                                                             eta_min=self.optim_hparams['lr']/50)
         return [optimizer], [lr_scheduler]
 
@@ -49,7 +50,7 @@ class CNNmodel_SimCLR(pl.LightningModule):
         # Find positive example -> batch_size//2 away from the original example
         pos_mask = self_mask.roll(shifts=cos_sim.shape[0]//2, dims=0)
         # InfoNCE loss
-        cos_sim = cos_sim / self.hparams.temperature
+        cos_sim = cos_sim / self.temperature
         nll = -cos_sim[pos_mask] + torch.logsumexp(cos_sim, dim=-1)
         nll = nll.mean()
 

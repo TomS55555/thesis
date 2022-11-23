@@ -2,10 +2,10 @@
 
 - [x] Implement data augmentations
 - [x] Implement SimCLR and make sure it trains
-- [ ] Implement a classifier on top of SimCLR
-- [ ] Train SimCLR on cluster
+- [x] Implement a classifier on top of SimCLR
+- [x] Train SimCLR on cluster
 - [ ] Improve efficiency of data augmentations
-- [ ] Maybe look at the clustering of data points in the high dimensional space with e.g. t-SNE
+- [x] Maybe look at the clustering of data points in the high dimensional space with e.g. t-SNE
 ----------------
 ### Notes on imlementation:
 - Improve structure of trainers
@@ -23,6 +23,6 @@
 -----------------
 
 ## Questions:
-- What is the temperature parameter in nce_loss
+- What labels correspond to which sleep stage?
 - What are the important features of EEG-signals that make classification possible? How do humans do it?
   - The algorithm should be optimized for this!
