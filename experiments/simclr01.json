@@ -39,7 +39,6 @@
   },
 
   "optim_hparams": {
-    "max_epochs": 30,
     "lr": 3e-4,
     "weight_decay": 1e-4
   }
