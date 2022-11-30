@@ -14,7 +14,7 @@ import torch.utils.data as data
 from copy import deepcopy
 import torch.nn as nn
 import matplotlib.pyplot as plt
-from utils.load_and_save_model import load_model
+from utils.helper_functions import load_model
 
 
 def train_simclr_classifier(args, device):

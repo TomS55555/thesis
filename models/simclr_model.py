@@ -2,30 +2,21 @@ import pytorch_lightning as pl
 import torch.nn as nn
 import torch
 import torch.optim as optim
-import constants
-from models.mymodules import CNN_head, CNN_block, SimpleMLP
 import torch.nn.functional as F
 
 
-# TODO: Make this class generic for other heads
-class CNNmodel_SimCLR(pl.LightningModule):
+class SimCLR(pl.LightningModule):
     """
-        This class implements SimCLR with a 1D convolutional head
+        This class implements the SimCLR model for any encoder and projection head
     """
-    def __init__(self, cnn_encoder_hparams, projection_head_hparams, optim_hparams, temperature, **kwargs):
+    def __init__(self, encoder, projector, optim_hparams, temperature, **kwargs):
         super().__init__()
         self.save_hyperparameters()
         self.temperature = temperature
         assert self.temperature > 0.0, 'The temperature must be a positive float!'
         self.optim_hparams = optim_hparams
-        # Base model f(.)
-        self.f = CNN_head(**cnn_encoder_hparams)
-        # The MLP for g(.) consists of Linear->ReLU->Linear
-        self.g = SimpleMLP(
-            in_features=cnn_encoder_hparams['representation_dim'],
-            hidden_dim=4*projection_head_hparams['hidden_dim'],
-            out_features=projection_head_hparams['hidden_dim']
-        )
+        self.f = encoder
+        self.g = projector
         self.net = nn.Sequential(self.f, self.g)
 
     def configure_optimizers(self):

@@ -1,0 +1,35 @@
+{
+  "MODEL_TYPE": "SupervisedModel",
+  "save_name": "cnn_supervised",
+  "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
+  "CHECKPOINT_PATH": "checkpoints",
+
+
+  "encoder": "CNN_head",
+  "encoder_hparams": {
+    "conv_filters": [32, 64, 64],
+    "representation_dim": 100
+  },
+
+  "classifier": "logistic",
+  "classifier_hparams": {
+    "input_dim": 100
+  },
+
+  "data_hparams": {
+    "first_patient": 1,
+    "num_patients_train": 150,
+    "data_split": [4, 1],
+    "num_patients_test": 50,
+    "batch_size": 64,
+    "num_workers": 1
+  },
+
+  "trainer_hparams": {
+    "max_epochs": 15
+  },
+  "optim_hparams": {
+    "lr": 1e-4,
+    "weight_decay": 1e-4
+  }
+}

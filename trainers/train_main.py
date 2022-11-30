@@ -11,6 +11,7 @@ from datasets.SHHS_dataset_timeonly import EEGdataModule
 from train_cnn_supervised import train_cnn_supervised
 from train_cnn_supervised_simple import train_cnn_supervised_simple
 from train_simclr import train_simclr
+from train_supervised import train_supervised
 
 
 if __name__ == "__main__":
@@ -22,13 +23,22 @@ if __name__ == "__main__":
     parser = Trainer.add_argparse_args(parser)
 
     # add PROGRAM level args
-    parser.add_argument("--model_name", type=str)
-    parser.add_argument("--model_hparams", nargs="*")
-    parser.add_argument("--optimizer_name", type=str, default="Adam")
-    parser.add_argument("--optimizer_hparams", nargs="*")
+    parser.add_argument("--MODEL_TYPE", type=str)
+    parser.add_argument("--save_name", type=str)
+    parser.add_argument("--DATA_PATH", type=str)
+    parser.add_argument("--CHECKPOINT_PATH", type=str)
 
-    # add data specific args
-    parser = EEGdataModule.add_argparse_args(parser)
+    parser.add_argument("--data_hparams", nargs="*")
+    parser.add_argument("--optim_hparams", nargs="*")
+
+    parser.add_argument("--encoder", type=str)
+    parser.add_argument("--encoder_hparams", nargs="*")
+
+    parser.add_argument("--projection_head", type=str)
+    parser.add_argument("--projection_head_hparams", nargs="*")
+
+    parser.add_argument("--classifier", type=str)
+    parser.add_argument("--classifier_hparams", nargs="*")
 
     parser.add_argument("--load_json", help="Load settings from file json format. Command line options override values in file.")
 
@@ -44,9 +54,8 @@ if __name__ == "__main__":
         mod, res = train_cnn_supervised_simple(args, device)
     elif args.MODEL_TYPE == "CNN_model_simclr":
         mod, res = train_simclr(args, device)
-    elif args.MODEL_TYPE == "LogisticRegressionOnSimCLR":
-        pass
-        #mod, res = train_simclr_classifier(args, device)
+    elif args.MODEL_TYPE == "SupervisedModel":
+        mod, res = train_supervised(args, device)
     else:
         print("Model type not recognized!")
     print(res)

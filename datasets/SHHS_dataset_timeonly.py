@@ -12,17 +12,6 @@ class EEGdataModule(pl.LightningDataModule):
         This class acts as a wrapper for the SHHS_dataset classes (also in this file)
         DO NOT FORGET TO CALL the setup method!!
     """
-
-    @staticmethod
-    def add_argparse_args(parent_parser, **kwargs):
-        parser = parent_parser.add_argument_group("EEGdataModule")
-        parser.add_argument("--DATA_PATH", type=str)
-        parser.add_argument("--batch_size", type=int, default=64)
-        parser.add_argument("--data_split", nargs="*", type=int, default=[3, 1])
-        parser.add_argument("--num_patients_train", type=int)
-        parser.add_argument("--num_patients_test", type=int)
-        return parent_parser
-
     def __init__(self, DATA_PATH, batch_size, data_split, num_patients_train, num_patients_test, num_workers,
                  first_patient=1, transform=None, **kwargs):
         super().__init__()

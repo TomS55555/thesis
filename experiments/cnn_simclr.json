@@ -1,24 +1,26 @@
 {
   "MODEL_TYPE": "CNN_model_simclr",
-  "model_name": "simclr01",
+  "save_name": "cnn_simclr",
+  "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
   "CHECKPOINT_PATH": "checkpoints",
-  "max_epochs": 30,
   "temperature": 0.05,
 
-  "cnn_encoder_hparams": {
+  "encoder": "CNN_head",
+  "encoder_hparams": {
     "conv_filters": [32, 64, 64],
     "representation_dim": 100
   },
 
+  "projection_head": "MLP",
   "projection_head_hparams": {
-    "use_MLP": 0,
-    "hidden_dim": 200
+    "input_dim": 100,
+    "hidden_dim": 300,
+    "output_dim": 100
   },
 
   "data_hparams": {
-    "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
     "first_patient": 1,
-    "num_patients_train": 150,
+    "num_patients_train": 400,
     "data_split": [3, 1],
     "num_patients_test": 50,
     "batch_size": 1024,
@@ -36,6 +38,10 @@
     "bandstop-min": 3,
     "bandstop-max": 45,
     "freq-window": 3
+  },
+
+  "trainer_hparams": {
+    "max_epochs": 30
   },
 
   "optim_hparams": {

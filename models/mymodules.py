@@ -7,12 +7,12 @@ class SimpleMLP(nn.Module):
     """
         Defines a simple MLP with one hidden layer
     """
-    def __init__(self, in_features: int, hidden_dim: int, out_features: int):
+    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):
         super().__init__()
         self.model = nn.Sequential(
-            nn.Linear(in_features=in_features, out_features=hidden_dim),
+            nn.Linear(in_features=input_dim, out_features=hidden_dim),
             nn.ReLU(inplace=True),
-            nn.Linear(in_features=hidden_dim, out_features=out_features)
+            nn.Linear(in_features=hidden_dim, out_features=output_dim)
         )
 
     def forward(self, x):
