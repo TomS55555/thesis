@@ -20,7 +20,7 @@ def train_supervised(args, device, pretrained_encoder=None, dm=None):
         accelerator="gpu" if str(device).startswith("cuda") else "cpu",
         devices=1,  # How many GPUs/CPUs to use
         callbacks=[
-            ModelCheckpoint(save_weights_only=True, mode="max", monitor="val_acc", save_last=True),
+            ModelCheckpoint(save_weights_only=True, mode="max", monitor="val_loss", save_last=True),
             # Save the best checkpoint based on the maximum val_acc recorded. Saves only weights and not optimizer
             LearningRateMonitor("epoch")],  # Log learning rate every epoch
         enable_progress_bar=True,

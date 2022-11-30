@@ -45,8 +45,9 @@ class SupervisedModel(pl.LightningModule):
         return loss  # Return tensor to call ".backward" on
 
     def validation_step(self, batch, batch_idx):
-        acc, _ = self.common_step(batch)
+        acc, loss = self.common_step(batch, calculate_loss=True)
         self.log('val_acc', acc)
+        self.log('val_loss', loss)
 
     def test_step(self, batch, batch_idx):
         acc, _ = self.common_step(batch)
