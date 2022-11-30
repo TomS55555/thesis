@@ -1,5 +1,7 @@
+import sys
+import os
+sys.path.extend([os.getcwd()])
 from datasets.SHHS_dataset_timeonly import EEGdataModule
-
 from models.simclr_model import SimCLR
 import torch
 from argparse import Namespace
