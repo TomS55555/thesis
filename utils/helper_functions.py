@@ -32,6 +32,9 @@ class SimCLRdataModule(pl.LightningDataModule):
 
 @torch.no_grad()
 def prepare_data_features(model, data_loader, device):
+    """
+        TODO: check whether deepcopy actually works when you want to train the encoder as well
+    """
     # Prepare model
     network = deepcopy(model.f)
     network.g = nn.Identity()  # Removing projection head g(.)
