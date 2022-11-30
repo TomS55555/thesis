@@ -9,7 +9,7 @@ from datasets.SHHS_dataset_timeonly import EEGdataModule
 from models.supervised_model import SupervisedModel
 
 
-def train_supervised(args, device, pretrained_encoder=None, dm=None):
+def train_supervised(args, device, pretrained_encoder=None, pretrained_classifier=None, dm=None):
     pl.seed_everything(42)  # To be reproducable
 
     data_module = EEGdataModule(DATA_PATH=args.DATA_PATH, **args.data_hparams) if dm is None else dm
@@ -33,7 +33,7 @@ def train_supervised(args, device, pretrained_encoder=None, dm=None):
     encoder = constants.ENCODERS[args.encoder](
         **args.encoder_hparams) if pretrained_encoder is None else pretrained_encoder
 
-    classifier = constants.CLASSIFIERS[args.classifier](**args.classifier_hparams)
+    classifier = constants.CLASSIFIERS[args.classifier](**args.classifier_hparams) if pretrained_classifier is None else pretrained_classifier
 
     model = SupervisedModel(encoder, classifier, args.optim_hparams)
     trainer.fit(model, data_module.train_dataloader(), data_module.val_dataloader())

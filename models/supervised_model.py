@@ -13,6 +13,8 @@ class SupervisedModel(pl.LightningModule):
         super().__init__()
         self.save_hyperparameters()
         self.optim_hparams = optim_hparams
+        self.encoder = encoder
+        self.classifier = classifier
         self.net = nn.Sequential(encoder, classifier)
         self.loss_module = nn.CrossEntropyLoss()
 
