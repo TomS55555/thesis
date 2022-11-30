@@ -11,8 +11,8 @@ import constants
 import json
 
 result_file_name = "cnn_simclr_results.json"
-checkpoint_path = 'checkpoints'
-encoder_path = "../trained_models/cnn_simclr01.ckpt"
+checkpoint_path = 'checkpoints_results'
+encoder_path = "trained_models/cnn_simclr01.ckpt"
 pretrained_model = load_model(SimCLR, encoder_path)  # Load pretrained simclr model
 
 patients_list = [3, 5, 10, 20, 50, 100] # n_patients used for training
