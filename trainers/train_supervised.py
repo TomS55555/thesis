@@ -9,10 +9,10 @@ from datasets.SHHS_dataset_timeonly import EEGdataModule
 from models.supervised_model import SupervisedModel
 
 
-def train_supervised(args, device, pretrained_encoder=None):
+def train_supervised(args, device, pretrained_encoder=None, dm=None):
     pl.seed_everything(42)  # To be reproducable
 
-    data_module = EEGdataModule(DATA_PATH=args.DATA_PATH, **args.data_hparams)
+    data_module = EEGdataModule(DATA_PATH=args.DATA_PATH, **args.data_hparams) if dm is None else dm
     data_module.setup()
 
     trainer = Trainer(

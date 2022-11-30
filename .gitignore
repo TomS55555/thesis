@@ -4,3 +4,4 @@
 *.pyc
 /checkpoints/
 /__pychache__/
+/dataset_konstantinos/

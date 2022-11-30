@@ -24,7 +24,7 @@ def train_simclr(args, device):
             # Save the best checkpoint based on the maximum val_acc recorded. Saves only weights and not optimizer
             LearningRateMonitor("epoch")],  # Log learning rate every epoch
         enable_progress_bar=True,
-        **args.train_hparams
+        **args.trainer_hparams
     )
 
     trainer.logger._default_hp_metric = None  # Optional logging argument that we don't need

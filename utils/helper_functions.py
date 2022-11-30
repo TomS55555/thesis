@@ -8,7 +8,27 @@ from copy import deepcopy
 import torch.nn as nn
 import torch.utils.data as data
 from tqdm.notebook import tqdm
+import pytorch_lightning as pl
 
+
+class SimCLRdataModule(pl.LightningDataModule):
+  def __init__(self, pretrained_model, dm, batch_size, num_workers, device):
+      super().__init__()
+      self.train_ds = prepare_data_features(pretrained_model, dm.train_dataloader(), device)
+      self.val_ds = prepare_data_features(pretrained_model, dm.val_dataloader(), device)
+      self.test_ds = prepare_data_features(pretrained_model, dm.test_dataloader(), device)
+      self.num_workers = num_workers
+      self.batch_size = batch_size
+
+  def train_dataloader(self):
+    return data.DataLoader(self.train_ds, batch_size=self.batch_size, shuffle=True,
+                                   drop_last=False, pin_memory=True, num_workers=self.num_workers)
+  def val_dataloader(self):
+    return data.DataLoader(self.val_ds, batch_size=self.batch_size, shuffle=True,
+                                   drop_last=False, pin_memory=True, num_workers=self.num_workers)
+  def test_dataloader(self):
+    return data.DataLoader(self.test_ds, batch_size=self.batch_size, shuffle=False,
+                                   drop_last=False, pin_memory=True, num_workers=self.num_workers)
 
 @torch.no_grad()
 def prepare_data_features(model, data_loader, device):
