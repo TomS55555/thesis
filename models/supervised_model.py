@@ -60,7 +60,7 @@ class SupervisedModel(pl.LightningModule):
         inputs, labels = batch
         preds = self.net(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
         preds = preds.argmax(dim=-1)
-        labels = labels.squeeze()
+        labels = labels.squeeze().type(torch.int64)
         acc = (preds == labels).float().mean()
 
         self.log('test_acc', acc)
