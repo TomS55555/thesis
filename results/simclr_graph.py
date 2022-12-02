@@ -10,17 +10,18 @@ from trainers.train_supervised import train_supervised
 import constants
 import json
 
-result_file_name = "cnn_simclr_results.json"
-checkpoint_path = 'checkpoints_results'
+result_file_name = "cnn_simclr_results1.json"
+checkpoint_path = 'checkpoints_results1'
 encoder_path = "trained_models/cnn_simclr01.ckpt"
 pretrained_model = load_model(SimCLR, encoder_path)  # Load pretrained simclr model
 
-patients_list = [3, 5, 10, 20, 50, 100] # n_patients used for training
+first_patient = 10  # This implicitly defines the test-set, play with it and average results
+patients_list = [3, 5, 10, 20, 50, 100, 250]  # n_patients used for training
 
 data_args = {
   "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
   "data_split": [4, 1],
-  "first_patient": 15,
+  "first_patient": first_patient,
   "num_patients_train": 15,
   "num_patients_test": 30,
   "batch_size": 64,
@@ -43,11 +44,15 @@ logistic_args = {
   "data_hparams": data_args,
 
   "trainer_hparams": {
-    "max_epochs": 20
+    "max_epochs": 30
   },
   "optim_hparams": {
     "lr": 1e-3,
-    "weight_decay": 1e-4
+    "weight_decay": 1e-4,
+    "lr_hparams": {
+        "gamma": 0.1,
+        "milestones": [20]
+    }
   }
 }
 
@@ -70,11 +75,12 @@ supervised_args = {
   "data_hparams": data_args,
 
   "trainer_hparams": {
-    "max_epochs": 30
+    "max_epochs": 40
   },
   "optim_hparams": {
-    "lr": 1e-4,
-    "weight_decay": 1e-4
+    "lr": 1e-5,
+    "weight_decay": 5e-4,
+    "lr_hparams": None
   }
 }
 
@@ -91,17 +97,18 @@ finetune_logistic_args = {
   },
 
   "classifier": "logistic",
-  "classifier_hparams":{
+  "classifier_hparams": {
       "input_dim": 100
   },
   "data_hparams": data_args,
 
-  "trainer_hparams":{
-    "max_epochs": 50
+  "trainer_hparams": {
+    "max_epochs": 70
   },
   "optim_hparams": {
-    "lr": 1e-6,
-    "weight_decay": 0
+    "lr": 2e-6,
+    "weight_decay": 0,
+    "lr_hparams": None
   }
 }
 

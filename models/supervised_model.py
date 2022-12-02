@@ -22,12 +22,16 @@ class SupervisedModel(pl.LightningModule):
         return self.net(x)
 
     def configure_optimizers(self):
-        optimizer = optim.AdamW(self.parameters(), **self.optim_hparams)
+        optimizer = optim.AdamW(self.parameters(),
+                                lr=self.optim_hparams['lr'],
+                                weight_decay=self.optim_hparams['weight_decay'])
 
-        # We will reduce the learning rate by 0.1 after 100 and 150 epochs
-        scheduler = optim.lr_scheduler.MultiStepLR(
-            optimizer, milestones=[100, 150], gamma=0.1)
-        return [optimizer], [scheduler]
+        if self.optim_hparams['lr_hparams'] is not None:
+            scheduler = optim.lr_scheduler.MultiStepLR(
+                optimizer, **self.optim_hparams.lr_hparams)
+            return [optimizer], [scheduler]
+        else:
+            return optimizer
 
     def common_step(self, batch, calculate_loss=False):
         inputs, labels = batch
