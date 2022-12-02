@@ -44,5 +44,5 @@ def train_supervised(args, device, pretrained_encoder=None, pretrained_classifie
     # Test best model on validation and test set
     val_result = trainer.test(model, data_module.val_dataloader(), verbose=False)
     test_result = trainer.test(model, data_module.test_dataloader(), verbose=False)
-    result = {"test": test_result[0]["test_acc"], "val": val_result[0]["test_acc"]}
+    result = {"test_acc": test_result[0]["test_acc"], "test_kappa": test_result[0]["kappa"], "val": val_result[0]["test_acc"]}
     return model, result
