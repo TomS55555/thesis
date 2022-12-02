@@ -28,7 +28,7 @@ class SupervisedModel(pl.LightningModule):
 
         if self.optim_hparams['lr_hparams'] is not None:
             scheduler = optim.lr_scheduler.MultiStepLR(
-                optimizer, **self.optim_hparams.lr_hparams)
+                optimizer, **self.optim_hparams['lr_hparams'])
             return [optimizer], [scheduler]
         else:
             return optimizer

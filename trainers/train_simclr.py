@@ -44,5 +44,5 @@ def train_simclr(args, device):
 
     # Test best model on validation and test set
     val_result = trainer.test(model, data_module.val_dataloader(), verbose=False)
-    result = {"val": val_result[0]["test_acc"]}
+    result = {"val": val_result[0]["val_acc_top1"]}
     return model, result
