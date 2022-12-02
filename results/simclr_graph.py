@@ -112,13 +112,13 @@ def train_networks(n_patients, device):
     dm.setup()
     simclr_dm = SimCLRdataModule(pretrained_model, dm, data_args['batch_size'], data_args['num_workers'], device)
 
-    supervised_args['save_name'] = supervised_args['save_name'] + '_'+str(n_patients) + '_patients'
+    supervised_args['save_name'] = "supervised_simclr" + '_'+str(n_patients) + '_patients'
     sup_model, sup_res = train_supervised(Namespace(**supervised_args), device, dm=dm)
 
-    logistic_args['save_name'] = logistic_args['save_name'] + '_'+str(n_patients) + '_patients'
+    logistic_args['save_name'] = "logistic_on_simclr" + '_'+str(n_patients) + '_patients'
     logistic_model, logistic_res = train_supervised(Namespace(**logistic_args), device=device, dm=simclr_dm)
 
-    finetune_logistic_args['save_name'] = finetune_logistic_args['save_name'] + '_'+str(n_patients) + '_patients'
+    finetune_logistic_args['save_name'] = "finetuned_simclr" + '_'+str(n_patients) + '_patients'
 
     pretrained_encoder = type(pretrained_model.f)(**finetune_logistic_args['encoder_hparams'])
     pretrained_encoder.load_state_dict(pretrained_model.f.state_dict())
