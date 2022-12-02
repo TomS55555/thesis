@@ -2,6 +2,7 @@ import pytorch_lightning as pl
 import torch.nn as nn
 import torch
 from torch import optim
+from sklearn.metrics import cohen_kappa_score
 
 
 class SupervisedModel(pl.LightningModule):
@@ -56,5 +57,12 @@ class SupervisedModel(pl.LightningModule):
         self.log('val_loss', loss)
 
     def test_step(self, batch, batch_idx):
-        acc, _ = self.common_step(batch)
+        inputs, labels = batch
+        preds = self.net(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
+        preds = preds.argmax(dim=-1)
+        labels = labels.squeeze()
+        acc = (preds == labels).float().mean()
+
         self.log('test_acc', acc)
+        kappa = cohen_kappa_score(preds, labels)
+        self.log('kappa', kappa)
