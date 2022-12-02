@@ -1,6 +1,6 @@
 {
   "MODEL_TYPE": "CNN_model_simclr",
-  "save_name": "cnn_simclr",
+  "save_name": "cnn_simclr_500pat",
   "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
   "CHECKPOINT_PATH": "checkpoints",
   "temperature": 0.05,
@@ -20,7 +20,7 @@
 
   "data_hparams": {
     "first_patient": 1,
-    "num_patients_train": 300,
+    "num_patients_train": 500,
     "data_split": [4, 1],
     "num_patients_test": 50,
     "batch_size": 512,
@@ -41,11 +41,11 @@
   },
 
   "trainer_hparams": {
-    "max_epochs": 30
+    "max_epochs": 60
   },
 
   "optim_hparams": {
-    "max_epochs": 30,
+    "max_epochs": 60,
     "lr": 3e-4,
     "weight_decay": 1e-4
   }
