@@ -166,6 +166,7 @@ def main():
         for n_patients in patients_list:
             result = train_networks(data_args=data_args,
                                     supervised_args=supervised_args,
+                                    logistic_args=logistic_args,
                                     fine_tune_args=finetune_args,
                                     n_patients=n_patients,
                                     device=device)
