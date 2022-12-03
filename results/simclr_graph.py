@@ -119,8 +119,14 @@ def get_finetune_args(data_args, checkpoint_path):
     }
 
 
-def train_networks(data_args, logistic_args, supervised_args, fine_tune_args, n_patients, device):
+def train_networks(checkpoint_path, first_patient, n_patients, device):
+    data_args = get_data_args(first_patient)
     data_args["num_patients_train"] = n_patients
+
+    logistic_args = get_logistic_args(data_args, checkpoint_path)
+    finetune_args = get_finetune_args(data_args, checkpoint_path)
+    supervised_args = get_supervised_args(data_args, checkpoint_path)
+
     dm = EEGdataModule(**data_args)  # Load datamodule
     dm.setup()
     simclr_dm = SimCLRdataModule(pretrained_model, dm, data_args['batch_size'], data_args['num_workers'], device)
@@ -131,16 +137,16 @@ def train_networks(data_args, logistic_args, supervised_args, fine_tune_args, n_
     logistic_args['save_name'] = "logistic_on_simclr" + '_' + str(n_patients) + '_patients'
     logistic_model, logistic_res = train_supervised(Namespace(**logistic_args), device=device, dm=simclr_dm)
 
-    fine_tune_args['save_name'] = "finetuned_simclr" + '_' + str(n_patients) + '_patients'
+    finetune_args['save_name'] = "finetuned_simclr" + '_' + str(n_patients) + '_patients'
 
-    pretrained_encoder = type(pretrained_model.f)(**fine_tune_args['encoder_hparams'])
+    pretrained_encoder = type(pretrained_model.f)(**finetune_args['encoder_hparams'])
     pretrained_encoder.load_state_dict(pretrained_model.f.state_dict())
 
-    pretrained_classifier = type(logistic_model.classifier)(fine_tune_args['classifier_hparams']['input_dim'],
+    pretrained_classifier = type(logistic_model.classifier)(finetune_args['classifier_hparams']['input_dim'],
                                                             constants.N_CLASSES)
     pretrained_classifier.load_state_dict(logistic_model.classifier.state_dict())
 
-    fully_tuned_model, fully_tuned_res = train_supervised(Namespace(**fine_tune_args), device, dm=dm,
+    fully_tuned_model, fully_tuned_res = train_supervised(Namespace(**finetune_args), device, dm=dm,
                                                           pretrained_encoder=pretrained_encoder,
                                                           pretrained_classifier=pretrained_classifier)
     return {
@@ -157,17 +163,11 @@ def main():
         result_file_name = "cnn_simclr_results"+str(i)+".json"
         checkpoint_path = 'checkpoints_results'+str(i)
         first_patient = 50 * i + 7  # This implicitly defines the test-set, play with it and average results
-        data_args = get_data_args(first_patient)
-        logistic_args = get_logistic_args(data_args, checkpoint_path)
-        finetune_args = get_finetune_args(data_args, checkpoint_path)
-        supervised_args = get_supervised_args(data_args, checkpoint_path)
 
         results = dict()
         for n_patients in patients_list:
-            result = train_networks(data_args=data_args,
-                                    supervised_args=supervised_args,
-                                    logistic_args=logistic_args,
-                                    fine_tune_args=finetune_args,
+            result = train_networks(checkpoint_path=checkpoint_path,
+                                    first_patient=first_patient,
                                     n_patients=n_patients,
                                     device=device)
             results["n_patients" + "=" + str(n_patients)] = result
