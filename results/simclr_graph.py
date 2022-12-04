@@ -11,7 +11,7 @@ from trainers.train_supervised import train_supervised
 import constants
 import json
 
-encoder_path = "trained_models/cnn_simclr01.ckpt"
+encoder_path = "../trained_models/cnn_simclr_500pat.ckpt"
 pretrained_model = load_model(SimCLR, encoder_path)  # Load pretrained simclr model
 
 patients_list = [3, 5, 10, 20, 50, 100, 250]  # n_patients used for training
@@ -19,13 +19,13 @@ patients_list = [3, 5, 10, 20, 50, 100, 250]  # n_patients used for training
 
 def get_data_args(first_patient):
     return {
-        "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
+        #"DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
+        "DATA_PATH": "../data/",
         "data_split": [4, 1],
         "first_patient": first_patient,
-        "num_patients_train": 15,
-        "num_patients_test": 30,
+        "num_patients_test": 5,
         "batch_size": 64,
-        "num_workers": 12
+        "num_workers": 1
     }
 
 
@@ -43,7 +43,6 @@ def get_logistic_args(data_args, checkpoint_path):
         "classifier_hparams": {
             "input_dim": 100
         },
-        "data_hparams": data_args,
 
         "trainer_hparams": {
             "max_epochs": 30
@@ -76,7 +75,6 @@ def get_supervised_args(data_args, checkpoint_path):
         "classifier_hparams": {
             "input_dim": 100
         },
-        "data_hparams": data_args,
 
         "trainer_hparams": {
             "max_epochs": 40
@@ -106,7 +104,6 @@ def get_finetune_args(data_args, checkpoint_path):
         "classifier_hparams": {
             "input_dim": 100
         },
-        "data_hparams": data_args,
 
         "trainer_hparams": {
             "max_epochs": 60
@@ -135,6 +132,7 @@ def train_networks(checkpoint_path, first_patient, n_patients, device):
     sup_model, sup_res = train_supervised(Namespace(**supervised_args), device, dm=dm)
 
     logistic_args['save_name'] = "logistic_on_simclr" + '_' + str(n_patients) + '_patients'
+
     logistic_model, logistic_res = train_supervised(Namespace(**logistic_args), device=device, dm=simclr_dm)
 
     finetune_args['save_name'] = "finetuned_simclr" + '_' + str(n_patients) + '_patients'
@@ -145,10 +143,11 @@ def train_networks(checkpoint_path, first_patient, n_patients, device):
     pretrained_classifier = type(logistic_model.classifier)(finetune_args['classifier_hparams']['input_dim'],
                                                             constants.N_CLASSES)
     pretrained_classifier.load_state_dict(logistic_model.classifier.state_dict())
-
+    
     fully_tuned_model, fully_tuned_res = train_supervised(Namespace(**finetune_args), device, dm=dm,
                                                           pretrained_encoder=pretrained_encoder,
                                                           pretrained_classifier=pretrained_classifier)
+
     return {
         "sup_res": sup_res,
         "logistic_res": logistic_res,
@@ -156,16 +155,18 @@ def train_networks(checkpoint_path, first_patient, n_patients, device):
     }
 
 
+
 def main():
     device = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(device)
-    for i in range(3):
+    for i in range(4):
         result_file_name = "cnn_simclr_results"+str(i)+".json"
         checkpoint_path = 'checkpoints_results'+str(i)
         first_patient = 50 * i + 7  # This implicitly defines the test-set, play with it and average results
 
         results = dict()
         for n_patients in patients_list:
+            print("test ", n_patients)
             result = train_networks(checkpoint_path=checkpoint_path,
                                     first_patient=first_patient,
                                     n_patients=n_patients,
@@ -174,6 +175,8 @@ def main():
 
         with open(result_file_name, 'w+') as f:
             json.dump(results, f)
+
+
 
 
 if __name__ == "__main__":

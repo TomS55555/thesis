@@ -44,13 +44,13 @@ class EEGdataModule(pl.LightningDataModule):
                                        num_patients=self.num_patients_test)
 
     def train_dataloader(self):
-        return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)
+        return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers, drop_last=True)
 
     def val_dataloader(self):
-        return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)
+        return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers, drop_last=True)
 
     def test_dataloader(self):
-        return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers)
+        return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers, drop_last=True)
 
 
 class SHHS_dataset_1(torch.utils.data.Dataset):

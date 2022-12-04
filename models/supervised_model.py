@@ -1,3 +1,5 @@
+import math
+
 import pytorch_lightning as pl
 import torch.nn as nn
 import torch
@@ -39,7 +41,7 @@ class SupervisedModel(pl.LightningModule):
         preds = self.net(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
         acc = (preds.argmax(dim=-1) == labels.squeeze()).float().mean()
 
-        loss = self.loss_module(preds, labels.squeeze().long()) if calculate_loss else None
+        loss = self.loss_module(preds, labels.squeeze(dim=-1).long()) if calculate_loss else None
 
         return acc, loss
 
@@ -60,9 +62,12 @@ class SupervisedModel(pl.LightningModule):
         inputs, labels = batch
         preds = self.net(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
         preds = preds.argmax(dim=-1)
-        labels = labels.squeeze().type(torch.int64)
+        labels = labels.squeeze(dim=-1).type(torch.int64)
         acc = (preds == labels).float().mean()
 
         self.log('test_acc', acc)
         kappa = cohen_kappa_score(preds.cpu(), labels.cpu())
+        if math.isnan(kappa):
+            kappa = 0.5
+            print("KAPPA WAS NAN")
         self.log('kappa', kappa)
