@@ -22,7 +22,7 @@ def get_data_args(first_patient):
         "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
         "data_split": [4, 1],
         "first_patient": first_patient,
-        "num_patients_test": 5,
+        "num_patients_test": 50,
         "batch_size": 64,
         "num_workers": 1
     }
