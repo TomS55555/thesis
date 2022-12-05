@@ -11,7 +11,7 @@ from trainers.train_supervised import train_supervised
 import constants
 import json
 
-encoder_path = "../trained_models/cnn_simclr_500pat.ckpt"
+encoder_path = "trained_models/cnn_simclr_500pat.ckpt"
 pretrained_model = load_model(SimCLR, encoder_path)  # Load pretrained simclr model
 
 patients_list = [3, 5, 10, 20, 50, 100, 250]  # n_patients used for training
@@ -19,8 +19,7 @@ patients_list = [3, 5, 10, 20, 50, 100, 250]  # n_patients used for training
 
 def get_data_args(first_patient):
     return {
-        #"DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
-        "DATA_PATH": "../data/",
+        "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
         "data_split": [4, 1],
         "first_patient": first_patient,
         "num_patients_test": 5,
