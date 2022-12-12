@@ -1,1 +1,23 @@
-{"n_patients=3_test": {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}], "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}], "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]}, "n_patients=5_test": {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}], "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}], "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]}, "n_patients=10_test": {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}], "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}], "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]}, "n_patients=20_test": {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}], "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}], "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]}, "n_patients=50_test": {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}], "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}], "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]}, "n_patients=100_test": {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}], "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}], "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]}, "n_patients=250_test": {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}], "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}], "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]}}
+{"n_patients=3_test":
+      {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}],
+      "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}],
+        "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]},
+  "n_patients=5_test":
+      {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}],
+        "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}],
+        "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]},
+  "n_patients=10_test":
+      {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}],
+        "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}],
+        "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]},
+  "n_patients=20_test":
+      {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}],
+        "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}],
+        "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]},
+  "n_patients=50_test":
+      {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}],
+        "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}],
+        "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]},
+  "n_patients=100_test":
+      {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}],
+        "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}], "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]}, "n_patients=250_test": {"sup_res": [{"test_acc": 0.8084958791732788, "kappa": 0.5197559770342112}], "logistic_res": [{"test_acc": 0.7394170165061951, "kappa": 0.41658564525030484}], "fully_tuned_res": [{"test_acc": 0.796196460723877, "kappa": 0.4980732766454537}]}}

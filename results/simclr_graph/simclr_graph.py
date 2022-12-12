@@ -62,7 +62,7 @@ def train_networks(checkpoint_path, first_patient_train, n_patients, device):
     }
 
 
-def test_networks(first_patient_test, n_patients, checkpoint_path, data_path, device, batch_size=64, num_workers=12):
+def test_networks(n_patients_train, first_patient_test, n_patients_test, checkpoint_path, data_path, device, batch_size=64, num_workers=12):
     """
         1) Define test set
         2) Load models
@@ -72,7 +72,7 @@ def test_networks(first_patient_test, n_patients, checkpoint_path, data_path, de
 
     test_ds = SHHS_dataset_1(data_path=data_path,
                              first_patient=first_patient_test,
-                             num_patients=n_patients)
+                             num_patients=n_patients_test)
 
     test_dl = data.DataLoader(dataset=test_ds,
                               batch_size=batch_size,
@@ -94,15 +94,15 @@ def test_networks(first_patient_test, n_patients, checkpoint_path, data_path, de
         devices=1,  # How many GPUs/CPUs to use
         enable_progress_bar=True,)
 
-    save_name_sup = "supervised_simclr" + '_' + str(n_patients) + '_patients'
+    save_name_sup = "supervised_simclr" + '_' + str(n_patients_train) + '_patients'
     sup_model = load_model(SupervisedModel, get_checkpoint_path(checkpoint_path, save_name_sup))
     sup_res = trainer.test(sup_model, dataloaders=test_dl)
 
-    save_name_logistic = "logistic_on_simclr" + '_' + str(n_patients) + '_patients'
+    save_name_logistic = "logistic_on_simclr" + '_' + str(n_patients_train) + '_patients'
     logistic_model = load_model(SupervisedModel, get_checkpoint_path(checkpoint_path, save_name_logistic))
     logistic_res = trainer.test(logistic_model, dataloaders=test_features_dl)
 
-    save_name_finetuned = "finetuned_simclr" + '_' + str(n_patients) + '_patients'
+    save_name_finetuned = "finetuned_simclr" + '_' + str(n_patients_train) + '_patients'
     fully_tuned_model = load_model(SupervisedModel, get_checkpoint_path(checkpoint_path, save_name_finetuned))
 
     fully_tuned_res = trainer.test(fully_tuned_model, test_dl)
@@ -140,7 +140,8 @@ def main(args):
                                         device=device)
             elif args.mode == "test":
                 result = test_networks(first_patient_test=first_patients_test[i],
-                                       n_patients=50,
+                                       n_patients_train=n_patients,
+                                       n_patients_test=50,
                                        checkpoint_path=checkpoint_path,
                                        data_path=constants.SHHS_PATH_ESAT,
                                        device=device)
