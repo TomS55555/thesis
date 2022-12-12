@@ -62,34 +62,9 @@ def train_networks(checkpoint_path, first_patient_train, n_patients, device):
     }
 
 
-def test_networks(n_patients_train, first_patient_test, n_patients_test, checkpoint_path, data_path, device, batch_size=64, num_workers=12):
-    """
-        1) Define test set
-        2) Load models
-        3) Run test set on models
-        4) Return result in nice format
-    """
-
-    test_ds = SHHS_dataset_1(data_path=data_path,
-                             first_patient=first_patient_test,
-                             num_patients=n_patients_test)
-
-    test_dl = data.DataLoader(dataset=test_ds,
-                              batch_size=batch_size,
-                              shuffle=False,
-                              num_workers=num_workers)
-
-    test_features_ds = prepare_data_features(model=pretrained_model,
-                                             data_loader=test_dl,
-                                             device=device)
-
-    test_features_dl = data.DataLoader(dataset=test_features_ds,
-                                       batch_size=batch_size,
-                                       shuffle=False,
-                                       num_workers=num_workers)
-
+def test_networks(test_dl, test_features_dl, n_patients_train, checkpoint_path,  device):
     trainer = pl.Trainer(
-        default_root_dir=os.path.join(checkpoint_path, 'testing'),
+        default_root_dir="checkpoints_test",
         accelerator="gpu" if str(device).startswith("cuda") else "cpu",
         devices=1,  # How many GPUs/CPUs to use
         enable_progress_bar=True,)
@@ -122,33 +97,49 @@ def get_checkpoint_path(checkpoint_path, save_name):
     print("Found checkpoint: ", ckpt)
     return os.path.join(dir_path, ckpt)
 
-def main(args):
+
+def main_test(args):
     device = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(device)
-    for i in range(3):
-        result_file_name = "cnn_simclr_results"+str(i)+"_"+args.mode+".json"
-        checkpoint_path = 'checkpoints_results'+str(i)
+    n_patients_test = 50
+    results = dict()
+    for first_patient_test in first_patients_test:
+        results_testset = dict()
+        test_ds = SHHS_dataset_1(data_path=constants.SHHS_PATH_ESAT,
+                                 first_patient=first_patient_test,
+                                 num_patients=n_patients_test)
 
-        results = dict()
-        for n_patients in patients_list:
-            print("test ", n_patients)
-            result = ""
-            if args.mode == "train":
-                result = train_networks(checkpoint_path=checkpoint_path,
-                                        first_patient_train=first_patients_train[i],
-                                        n_patients=n_patients,
-                                        device=device)
-            elif args.mode == "test":
-                result = test_networks(first_patient_test=first_patients_test[i],
+        test_dl = data.DataLoader(dataset=test_ds,
+                                  batch_size=64,
+                                  shuffle=False,
+                                  num_workers=12)
+
+        test_features_ds = prepare_data_features(model=pretrained_model,
+                                                 data_loader=test_dl,
+                                                 device=device)
+
+        test_features_dl = data.DataLoader(dataset=test_features_ds,
+                                           batch_size=64,
+                                           shuffle=False,
+                                           num_workers=12)
+        for i in range(3):
+            checkpoint_path = 'checkpoints_results' + str(i)
+            results_testset['trained_models' + str(i)] = dict()
+            for n_patients in patients_list:
+                result = test_networks(test_dl=test_dl,
+                                       test_features_dl=test_features_dl,
                                        n_patients_train=n_patients,
-                                       n_patients_test=50,
                                        checkpoint_path=checkpoint_path,
-                                       data_path=constants.SHHS_PATH_ESAT,
                                        device=device)
-            results["n_patients" + "=" + str(n_patients)+"_"+args.mode] = result
+                results_testset['trained_models' + str(i)][str(n_patients)+"patients"] = result
+        results["first_test_patient="+str(first_patient_test)] = results_testset
 
-        with open(result_file_name, 'w+') as f:
-            json.dump(results, f)
+    with open("test_results.json", 'w+') as f:
+        json.dump(results, f)
+
+
+
+
 
 
 
@@ -156,4 +147,6 @@ def main(args):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--mode", required=True)
-    main(parser.parse_args())
+    args = parser.parse_args()
+    if args.mode == "test":
+        main_test(args)
