@@ -14,7 +14,7 @@ class SupervisedModel(pl.LightningModule):
 
     def __init__(self, encoder, classifier, optim_hparams):
         super().__init__()
-        self.save_hyperparameters()
+        self.save_hyperparameters(ignore=['encoder', 'classifier'])
         self.optim_hparams = optim_hparams
         self.encoder = encoder
         self.classifier = classifier

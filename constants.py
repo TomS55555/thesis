@@ -6,6 +6,8 @@ PATIENT_INFO_FILE = 'patient_mat_list.txt'
 N_CLASSES = 5
 fs = 100  # Sampling frequency
 
+SHHS_PATH_ESAT = "/esat/biomeddata/SHHS_Dataset/no_backup/"
+
 """
     These are the implemented encoders and projection heads which can be used in the json files
 """

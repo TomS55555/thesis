@@ -1,8 +1,12 @@
 # This file contains the args used in the trained models
+import
+
+import constants
+
 
 def get_data_args(first_patient_train=None, first_patient_test=None):
     return {
-        "DATA_PATH": "/esat/biomeddata/SHHS_Dataset/no_backup/",
+        "DATA_PATH": constants.SHHS_PATH_ESAT,
         "data_split": [4, 1],
         "first_patient_train": first_patient_train,
         "first_patient_test": first_patient_test,
