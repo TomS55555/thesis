@@ -125,7 +125,7 @@ def get_checkpoint_path(checkpoint_path, save_name):
 def main(args):
     device = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(device)
-    for i in range(4):
+    for i in range(3):
         result_file_name = "cnn_simclr_results"+str(i)+"_"+args.mode+".json"
         checkpoint_path = 'checkpoints_results'+str(i)
 
