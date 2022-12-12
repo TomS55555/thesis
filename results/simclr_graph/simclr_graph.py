@@ -13,7 +13,7 @@ import json
 from trained_models.train_args import get_data_args, get_logistic_args, get_finetune_args, get_supervised_args
 import torch.utils.data as data
 from models.supervised_model import SupervisedModel
-from pytorch_lightning as pl
+import pytorch_lightning as pl
 from argparse import ArgumentParser
 
 encoder_path = "trained_models/cnn_simclr_500pat.ckpt"
