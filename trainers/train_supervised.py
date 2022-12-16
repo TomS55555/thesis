@@ -5,13 +5,11 @@ from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
 
 import constants
-from datasets.SHHS_dataset_timeonly import EEGdataModule
+from datasets.datamodules import EEGdataModule
 from models.supervised_model import SupervisedModel
 
 
 def train_supervised(args, device, pretrained_encoder=None, pretrained_classifier=None, dm=None):
-    pl.seed_everything(42)  # To be reproducable
-
     if dm is None:
         data_module = EEGdataModule(DATA_PATH=args.DATA_PATH, **args.data_hparams)
         data_module.setup()
@@ -36,7 +34,8 @@ def train_supervised(args, device, pretrained_encoder=None, pretrained_classifie
     encoder = constants.ENCODERS[args.encoder](
         **args.encoder_hparams) if pretrained_encoder is None else pretrained_encoder
 
-    classifier = constants.CLASSIFIERS[args.classifier](**args.classifier_hparams) if pretrained_classifier is None else pretrained_classifier
+    classifier = constants.CLASSIFIERS[args.classifier](
+        **args.classifier_hparams) if pretrained_classifier is None else pretrained_classifier
 
     model = SupervisedModel(encoder, classifier, args.optim_hparams)
     trainer.fit(model, data_module.train_dataloader(), data_module.val_dataloader())
@@ -44,8 +43,4 @@ def train_supervised(args, device, pretrained_encoder=None, pretrained_classifie
     model = SupervisedModel.load_from_checkpoint(
         trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training
 
-    # Test best model on validation and test set
-    val_result = trainer.test(model, data_module.val_dataloader(), verbose=False)
-    test_result = trainer.test(model, data_module.test_dataloader(), verbose=False)
-    result = {"test_acc": test_result[0]["test_acc"], "test_kappa": test_result[0]["kappa"], "val": val_result[0]["test_acc"]}
-    return model, result
+    return model

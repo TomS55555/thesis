@@ -1,59 +1,12 @@
 import os.path
 import constants
-import pytorch_lightning as pl
 import torch.utils.data as data
 import h5py
 import torch
 import numpy as np
 
 
-class EEGdataModule(pl.LightningDataModule):
-    """
-        This class acts as a wrapper for the SHHS_dataset classes (also in this file)
-        DO NOT FORGET TO CALL the setup method!!
-    """
-    def __init__(self, DATA_PATH, batch_size, data_split, num_patients_train, num_patients_test, num_workers,
-                 first_patient=1, transform=None, **kwargs):
-        super().__init__()
-        self.data_dir = DATA_PATH
-        self.batch_size = batch_size
-        self.data_split = data_split
-        self.num_patients_train = num_patients_train
-        self.num_patients_test = num_patients_test
-        self.first_patient_train = first_patient
-        self.first_patient_test = self.first_patient_train + self.num_patients_train
-        self.num_workers = num_workers
-        self.transform = transform
-
-    def setup(self, stage=None):
-        # TODO: maybe add this code to the initialization?
-        eeg_trainval = SHHS_dataset_1(data_path=self.data_dir,
-                                      first_patient=self.first_patient_train,
-                                      num_patients=self.num_patients_train,
-                                      transform=self.transform)
-        num = np.array(self.data_split).sum()
-        piece = eeg_trainval.__len__() // num
-        split = [self.data_split[0] * piece, eeg_trainval.__len__() - self.data_split[0] * piece]
-
-        assert np.array(split).sum() == eeg_trainval.__len__()
-
-        self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)
-
-        self.eeg_test = SHHS_dataset_1(data_path=self.data_dir,
-                                       first_patient=self.first_patient_test,
-                                       num_patients=self.num_patients_test)
-
-    def train_dataloader(self):
-        return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers, drop_last=True)
-
-    def val_dataloader(self):
-        return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers, drop_last=True)
-
-    def test_dataloader(self):
-        return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers, drop_last=True)
-
-
-class SHHS_dataset_1(torch.utils.data.Dataset):
+class SHHSdataset(torch.utils.data.Dataset):
     """
         This class loads the dataset as defined in /esat/biomeddata/SHHS_dataset/no_backup
         Only the *_eeg.mat files are used and the number of patients to use is specified in the initialization
