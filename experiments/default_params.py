@@ -1,26 +1,25 @@
-# This file contains the args used in the trained models
-
+"""
+    Some default args are saved here for easy testing
+"""
 
 import constants
 
 
-def get_data_args(first_patient_train=None, first_patient_test=None):
+def get_data_args(first_patient, num_patients):
     return {
-        "DATA_PATH": constants.SHHS_PATH_ESAT,
+        "data_path": constants.SHHS_PATH_ESAT,
         "data_split": [4, 1],
-        "first_patient_train": first_patient_train,
-        "first_patient_test": first_patient_test,
-        "num_patients_test": 50,
+        "first_patient": first_patient,
+        "num_patients": num_patients,
         "batch_size": 64,
         "num_workers": 12
     }
 
 
-def get_logistic_args(data_path, checkpoint_path):
+def get_logistic_args(save_name, checkpoint_path):
     return {
         "MODEL_TYPE": "SupervisedModel",
-        "save_name": "logistic_on_simclr",
-        "DATA_PATH": data_path,
+        "save_name": save_name,
         "CHECKPOINT_PATH": checkpoint_path,
 
         "encoder": "None",
@@ -45,11 +44,10 @@ def get_logistic_args(data_path, checkpoint_path):
     }
 
 
-def get_supervised_args(data_path, checkpoint_path):
+def get_supervised_args(save_name, checkpoint_path):
     return {
         "MODEL_TYPE": "SupervisedModel",
-        "save_name": "supervised_simclr",
-        "DATA_PATH": data_path,
+        "save_name": save_name,
         "CHECKPOINT_PATH": checkpoint_path,
 
         "encoder": "CNN_head",
@@ -74,11 +72,10 @@ def get_supervised_args(data_path, checkpoint_path):
     }
 
 
-def get_finetune_args(data_path, checkpoint_path):
+def get_finetune_args(save_name, checkpoint_path):
     return {
         "MODEL_TYPE": "SupervisedModel",
-        "save_name": "finetuned_simclr",
-        "DATA_PATH": data_path,
+        "save_name": save_name,
         "CHECKPOINT_PATH": checkpoint_path,
 
         "encoder": "CNN_head",

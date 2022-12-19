@@ -12,9 +12,9 @@ class SupervisedModel(pl.LightningModule):
         General class for any combination of encoder head and classifier
     """
 
-    def __init__(self, encoder, classifier, optim_hparams):
+    def __init__(self, encoder: nn.Module, classifier: nn.Module, optim_hparams):
         super().__init__()
-        self.save_hyperparameters(ignore=['encoder', 'classifier'])
+        self.save_hyperparameters(ignore=['encoder', 'classifier'])  # encoder and classifier parameters are already saved because they are nn.Modules
         self.optim_hparams = optim_hparams
         self.encoder = encoder
         self.classifier = classifier
@@ -67,7 +67,4 @@ class SupervisedModel(pl.LightningModule):
 
         self.log('test_acc', acc)
         kappa = cohen_kappa_score(preds.cpu(), labels.cpu())
-        if math.isnan(kappa):
-            kappa = 0.5
-            print("KAPPA WAS NAN")
         self.log('kappa', kappa)

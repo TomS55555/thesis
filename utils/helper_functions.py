@@ -1,4 +1,3 @@
-from datasets.datasets import EEGdataModule
 from datasets.augmentations import ContrastiveTransformations, AmplitudeScale, TimeShift, ZeroMask, GaussianNoise, \
     BandStopFilter, DCShift
 
@@ -8,8 +7,6 @@ from copy import deepcopy
 import torch.nn as nn
 import torch.utils.data as data
 from tqdm.notebook import tqdm
-import pytorch_lightning as pl
-
 
 
 @torch.no_grad()
@@ -47,33 +44,16 @@ def load_model(model_type, checkpoint_path):
     return model
 
 
-def get_checkpoint_path(checkpoint_path, save_name):
+def get_checkpoint_path(train_path, save_name):
     """
         This function finds the trained model from a given checkpoint path and save name
     """
     rest_path = 'lightning_logs/version_0/checkpoints'
-    dir_path = os.path.join(checkpoint_path, save_name, rest_path)
+    dir_path = os.path.join(train_path, save_name, rest_path)
     dirs = os.listdir(dir_path)
     ckpt = list(filter(lambda x: x.startswith("epoch"), dirs))[0]
     print("Found checkpoint: ", ckpt)
     return os.path.join(dir_path, ckpt)
 
 
-def prepare_data_module(data_path, **data_hparams):
-    p = data_hparams["transform-prob"]  # probability of applying the transforms
-    contrast_transforms = ContrastiveTransformations(
-        [
-            AmplitudeScale(data_hparams["amplitude-min"], data_hparams["amplitude-max"], p, 1),
-            GaussianNoise(data_hparams["noise-min"], data_hparams["noise-max"], p, 1),
-            ZeroMask(data_hparams["zeromask-min"], data_hparams["zeromask-max"], p, 1),
-            TimeShift(data_hparams["timeshift-min"], data_hparams["timeshift-max"], p, 1),
-            BandStopFilter(data_hparams['bandstop-min'], data_hparams["bandstop-max"], p, 1,
-                           data_hparams['freq-window'])
-        ], n_views=2
-    )
-    data_module = EEGdataModule(
-        DATA_PATH=data_path,
-        transform=contrast_transforms,
-        **data_hparams)
-    data_module.setup()
-    return data_module
+

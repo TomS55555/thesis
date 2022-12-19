@@ -6,6 +6,7 @@ import constants
 from utils.helper_functions import load_model, get_checkpoint_path, prepare_data_features
 import pytorch_lightning as pl
 import torch.utils.data as data
+import os
 
 
 def train_networks(pretrained_model, data_args, logistic_args, supervised_args, finetune_args, device):
@@ -37,35 +38,37 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
                      pretrained_classifier=pretrained_classifier)
 
 
-def test_networks(test_ds, test_args, pretrained_model, logistic_path, supervised_path, finetune_path, device):
-
+def test_networks(test_ds, pretrained_model, train_path, logistic_save_name, supervised_save_name, finetune_save_name, device, batch_size=64, num_workers=12):
+    """
+        Checkpoint path is the path for the testing
+    """
     test_dl = data.DataLoader(dataset=test_ds,
-                              batch_size=test_args['batch_size'],
+                              batch_size=batch_size,
                               shuffle=False,
-                              num_workers=test_args['num_workers'])
+                              num_workers=num_workers)
 
     test_features_ds = prepare_data_features(model=pretrained_model,
                                              data_loader=test_dl,
                                              device=device)
 
     test_features_dl = data.DataLoader(dataset=test_features_ds,
-                                       batch_size=test_args['batch_size'],
+                                       batch_size=batch_size,
                                        shuffle=False,
-                                       num_workers=test_args['num_workers'])
+                                       num_workers=num_workers)
 
     trainer = pl.Trainer(
-        default_root_dir=test_args['checkpoint_path'],
+        default_root_dir=os.path.join(train_path, "testing"),
         accelerator="gpu" if str(device).startswith("cuda") else "cpu",
         devices=1,  # How many GPUs/CPUs to use
         enable_progress_bar=True, )
 
-    sup_model = load_model(SupervisedModel, supervised_path)
+    sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
     sup_res = trainer.test(sup_model, dataloaders=test_dl)
 
-    logistic_model = load_model(SupervisedModel, logistic_path)
+    logistic_model = load_model(SupervisedModel, get_checkpoint_path(train_path, logistic_save_name))
     logistic_res = trainer.test(logistic_model, dataloaders=test_features_dl)
 
-    fully_tuned_model = load_model(SupervisedModel, finetune_path)
+    fully_tuned_model = load_model(SupervisedModel, get_checkpoint_path(train_path, finetune_save_name))
     fully_tuned_res = trainer.test(fully_tuned_model, test_dl)
 
     return {

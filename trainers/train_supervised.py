@@ -11,7 +11,7 @@ from models.supervised_model import SupervisedModel
 
 def train_supervised(args, device, pretrained_encoder=None, pretrained_classifier=None, dm=None):
     if dm is None:
-        data_module = EEGdataModule(DATA_PATH=args.DATA_PATH, **args.data_hparams)
+        data_module = EEGdataModule(data_path=args.data_path, **args.data_hparams)
         data_module.setup()
     else:
         data_module = dm
