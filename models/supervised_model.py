@@ -66,5 +66,7 @@ class SupervisedModel(pl.LightningModule):
         acc = (preds == labels).float().mean()
 
         self.log('test_acc', acc)
-        kappa = cohen_kappa_score(preds.cpu(), labels.cpu())
+        preds.cpu()
+        labels.cpu()
+        kappa = 1.0 if torch.equal(preds, labels) else cohen_kappa_score(preds, labels)
         self.log('kappa', kappa)

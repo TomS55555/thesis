@@ -26,10 +26,10 @@ class CNN_head(nn.Module):
     def __init__(self, conv_filters, representation_dim):
         super().__init__()
         self.model = nn.Sequential(
-            CNN_block(constants.SLEEP_EPOCH_SIZE, 3, 1, conv_filters[0]),
-            CNN_block(constants.SLEEP_EPOCH_SIZE/2, 3, conv_filters[0], conv_filters[1]),
-            CNN_block(constants.SLEEP_EPOCH_SIZE/4, 3, conv_filters[1], conv_filters[2]),
-            nn.Flatten(), # The result is of size int(constants.SLEEP_EPOCH_SIZE/8 * model_hparams["conv_filters"][-1])
+            CNN_block(3, 1, conv_filters[0]),
+            CNN_block(3, conv_filters[0], conv_filters[1]),
+            CNN_block(3, conv_filters[1], conv_filters[2]),
+            nn.Flatten(),  # The result is of size int(constants.SLEEP_EPOCH_SIZE/8 * model_hparams["conv_filters"][-1])
             nn.Linear(int(constants.SLEEP_EPOCH_SIZE/8 * conv_filters[-1]), representation_dim)
         )
 
@@ -41,7 +41,7 @@ class CNN_block(nn.Module):
     """
         One CNN block consists of a 1D (3) convolution, a Max pooling and a Batch normalization
     """
-    def __init__(self, input_size, kernel_size, in_channels, out_channels):
+    def __init__(self, kernel_size, in_channels, out_channels):
         super().__init__()
         self.net = nn.Sequential(
             nn.Conv1d(in_channels=in_channels,
