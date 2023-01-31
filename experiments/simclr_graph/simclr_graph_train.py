@@ -64,9 +64,6 @@ def test(device, version):
         json.dump(results, f)
 
 
-
-
-
 def get_data_args(first_patient, num_patients):
     return {
         "data_path": constants.SHHS_PATH_ESAT,

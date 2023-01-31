@@ -7,6 +7,7 @@ N_CLASSES = 5
 fs = 100  # Sampling frequency
 
 SHHS_PATH_ESAT = "/esat/biomeddata/SHHS_Dataset/no_backup/"
+SHHS_PATH_DEKSTOP = "C:/Users/tomsm/PycharmProjects/thesis/data/"
 
 """
     These are the implemented encoders and projection heads which can be used in the json files

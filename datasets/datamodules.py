@@ -13,7 +13,7 @@ class EEGdataModule(pl.LightningDataModule):
     """
 
     def __init__(self, data_path, batch_size, data_split, num_patients, num_workers,
-                 first_patient=1, transform=None, test_dl=None):
+                 first_patient=1, transform=None, test_dl=None, **kwargs):
         super().__init__()
         self.batch_size = batch_size
         self.num_workers = num_workers
@@ -57,23 +57,3 @@ class SimCLRdataModule(pl.LightningDataModule):
     def val_dataloader(self):
         return data.DataLoader(self.val_ds, batch_size=self.batch_size, shuffle=True,
                                drop_last=False, pin_memory=True, num_workers=self.num_workers)
-
-
-def prepare_data_module(data_path, **data_hparams):
-    p = data_hparams["transform-prob"]  # probability of applying the transforms
-    contrast_transforms = ContrastiveTransformations(
-        [
-            AmplitudeScale(data_hparams["amplitude-min"], data_hparams["amplitude-max"], p, 1),
-            GaussianNoise(data_hparams["noise-min"], data_hparams["noise-max"], p, 1),
-            ZeroMask(data_hparams["zeromask-min"], data_hparams["zeromask-max"], p, 1),
-            TimeShift(data_hparams["timeshift-min"], data_hparams["timeshift-max"], p, 1),
-            BandStopFilter(data_hparams['bandstop-min'], data_hparams["bandstop-max"], p, 1,
-                           data_hparams['freq-window'])
-        ], n_views=2
-    )
-    data_module = EEGdataModule(
-        data_path=data_path,
-        transform=contrast_transforms,
-        **data_hparams)
-    data_module.setup()
-    return data_module
