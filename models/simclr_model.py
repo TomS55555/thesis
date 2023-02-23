@@ -29,8 +29,10 @@ class SimCLR(pl.LightningModule):
         return [optimizer], [lr_scheduler]
 
     def info_nce_loss(self, batch, mode='train'):
-        inputs, _ = batch
-        inputs = torch.cat(inputs, dim=0)
+        inputs, _ = batch  # Every input is a list of two augmented eeg epochs, make sure to use
+        # ContrastiveTransformations!
+        inputs = torch.cat(inputs, dim=0)  # Put the first version of the augmented epochs together and then the
+        # second version
 
         # Encode all sequences
         feats = self.net(torch.squeeze(inputs, dim=1))  # Remove redundant dimension (which is not used in 1D convolutional network)

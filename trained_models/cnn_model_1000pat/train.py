@@ -6,7 +6,7 @@ from argparse import Namespace
 
 device = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
 print(device)
-result_file_name = "simclr1000pat"
+result_file_name = "simclr5000pat"
 train_path = "training"
 
 
@@ -32,10 +32,11 @@ args = {
 
   "data_hparams": {
     "first_patient": 1,
-    "num_patients": 1000,
+    "num_patients": 5000,
     "data_split": [4, 1],
     "batch_size": 512,
-    "num_workers": 2,
+    "num_workers": 0,
+    "exclude_test_set": constants.TEST_SET_1,
 
     "transform-prob": 1.0,
     "amplitude-min": 0.9,

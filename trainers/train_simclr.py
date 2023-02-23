@@ -33,7 +33,6 @@ def train_simclr(args, device):
     data_module.setup()
 
     trainer = Trainer(
-        precision="bf16",
         default_root_dir=os.path.join(args.CHECKPOINT_PATH, args.save_name),
         accelerator="gpu" if str(device).startswith("cuda") else "cpu",
         devices=1,  # How many GPUs/CPUs to use

@@ -4,6 +4,7 @@ import torch.utils.data as data
 import h5py
 import torch
 import numpy as np
+from datasets.augmentations import ContrastiveTransformations
 
 
 class SHHSdataset(torch.utils.data.Dataset):
@@ -15,7 +16,12 @@ class SHHSdataset(torch.utils.data.Dataset):
         directly with __get_item__()
     """
 
-    def __init__(self, data_path, first_patient, num_patients, window_size=1, transform=None):
+    def __init__(self, data_path: str,
+                 first_patient: int,
+                 num_patients: int,
+                 window_size: int = 1,
+                 exclude_test_set: tuple = (),
+                 transform: ContrastiveTransformations = None):
         super().__init__()
         self.data_path = data_path
         self.transform = transform
@@ -23,6 +29,8 @@ class SHHSdataset(torch.utils.data.Dataset):
         X1_list = []
         labels_list = []
         for patient in range(first_patient, first_patient + num_patients):
+            if patient in exclude_test_set:
+                continue
             datapoint = data_path + "n" + f"{patient:0=4}" + "_eeg.mat"
             try:
                 f = h5py.File(datapoint, 'r')
@@ -54,7 +62,6 @@ class SHHSdataset(torch.utils.data.Dataset):
         else:
             prev_inputs = self.X1[item - 1:item - 1 + self.window_size] if item > 0 else inputs
             return self.transform(inputs, prev_inputs), self.labels[item:item + self.window_size]
-
 
 
 class SHHS_dataset_2(torch.utils.data.Dataset):

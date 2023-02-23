@@ -30,11 +30,11 @@ class EEGdataModule(pl.LightningDataModule):
 
     def train_dataloader(self):
         return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers,
-                               drop_last=True)
+                               drop_last=True, pin_memory=True)
 
     def val_dataloader(self):
         return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers,
-                               drop_last=True)
+                               drop_last=True, pin_memory=True)
 
     def test_dataloader(self):
         if self.test_dl is None:
