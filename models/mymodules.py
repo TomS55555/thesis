@@ -96,3 +96,106 @@ class CNN_block(nn.Module):
 
     def forward(self, x):
         return self.net(x)
+
+
+class BIG_CNN_head(nn.Module):
+    """
+        This is a big convolutional net based on the paper 'A convolutional net for sleep-stage scoring
+        from raw single-channel EEG' which reportedly got an accuracy of 87% on the SHHS dataset
+        It uses the two previous epochs and the next one for temporal context
+
+        Input: 12000 -> 6000 -> 3000 -> 1500 -> 750 -> 375
+    """
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Conv1d(in_channels=1,
+                      out_channels=128,
+                      kernel_size=7,
+                      stride=2,
+                      padding=3,
+                      bias=False),  # Output: 6000
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=128,
+                      out_channels=128,
+                      kernel_size=7,
+                      stride=2,
+                      padding=3,
+                      bias=False),  # Output: 3000
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=128,
+                      out_channels=128,
+                      kernel_size=7,
+                      stride=2,
+                      padding=3,
+                      bias=False),  # Output: 1500
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=128,
+                      out_channels=128,
+                      kernel_size=7,
+                      stride=2,
+                      padding=3,
+                      bias=False),  # Output: 750
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=128,
+                      out_channels=128,
+                      kernel_size=7,
+                      stride=2,
+                      padding=3,
+                      bias=False),  # Output: 375
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=128,
+                      out_channels=256,
+                      kernel_size=5,
+                      stride=2,
+                      padding=2,
+                      bias=False),  # Output: 188
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=256,
+                      out_channels=256,
+                      kernel_size=5,
+                      stride=2,
+                      padding=2,
+                      bias=False),  # Output: 94
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=256,
+                      out_channels=256,
+                      kernel_size=5,
+                      stride=2,
+                      padding=2,
+                      bias=False),  # Output: 47
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=256,
+                      out_channels=256,
+                      kernel_size=5,
+                      stride=2,
+                      padding=2,
+                      bias=False),  # Output: 24
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=256,
+                      out_channels=256,
+                      kernel_size=5,
+                      stride=2,
+                      padding=2,
+                      bias=False),  # Output: 12
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=256,
+                      out_channels=256,
+                      kernel_size=3,
+                      stride=2,
+                      padding=1,
+                      bias=False),  # Output: 6
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Conv1d(in_channels=256,
+                      out_channels=256,
+                      kernel_size=3,
+                      stride=2,
+                      padding=1,
+                      bias=False),  # Output: 3
+            nn.LeakyReLU(negative_slope=0.1),
+            nn.Flatten(),  # Output: 768
+            nn.Linear(768, 100)
+        )
+
+    def forward(self, x):
+        return self.net(x)

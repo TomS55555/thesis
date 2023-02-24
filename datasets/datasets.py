@@ -23,6 +23,8 @@ class SHHSdataset(torch.utils.data.Dataset):
                  exclude_test_set: tuple = (),
                  transform: ContrastiveTransformations = None):
         super().__init__()
+        if window_size != 1 and window_size != 4:
+            raise NotImplementedError("Only window size 1 and 4 are supported")
         self.data_path = data_path
         self.transform = transform
         self.window_size = window_size
@@ -56,12 +58,19 @@ class SHHSdataset(torch.utils.data.Dataset):
         return self.length
 
     def __getitem__(self, item):
-        inputs = self.X1[item:item + self.window_size]  # Pointer to the data
-        if self.transform is None:
-            return inputs, self.labels[item:item + self.window_size]
+        if self.window_size == 4:
+            inputs = self.X1[item:item + self.window_size].view(1, 1, self.window_size*constants.SLEEP_EPOCH_SIZE)
+            prev_inputs = self.X1[item-1: item-1 + self.window_size].view(1, 1, self.window_size*constants.SLEEP_EPOCH_SIZE) if item > 0 else inputs
+            label = self.labels[item+2]
         else:
-            prev_inputs = self.X1[item - 1:item - 1 + self.window_size] if item > 0 else inputs
-            return self.transform(inputs, prev_inputs), self.labels[item:item + self.window_size]
+            inputs = self.X1[item]
+            prev_inputs = self.X1[item-1] if item > 0 else inputs
+            label = self.labels[item]
+
+        if self.transform is None:
+            return inputs, label
+        else:
+            return self.transform(inputs, prev_inputs), label
 
 
 class SHHS_dataset_2(torch.utils.data.Dataset):
@@ -74,7 +83,12 @@ class SHHS_dataset_2(torch.utils.data.Dataset):
         discard it for now.
     """
 
-    def __init__(self, data_path, first_patient, num_patients, window_size=1, transform=None):
+    def __init__(self, data_path: str,
+                 first_patient: int,
+                 num_patients: int,
+                 window_size: int = 1,
+                 exclude_test_set: tuple = (),
+                 transform: ContrastiveTransformations = None):
         super().__init__()
         self.first_patient = first_patient
         self.num_patients = num_patients

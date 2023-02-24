@@ -2,6 +2,37 @@ import torch
 from abc import ABC, abstractmethod
 import constants
 import scipy.signal as signal
+import torch.nn as nn
+
+class AugmentationModule(nn.Module):
+    def __init__(self,
+                 amplitude_min: int,
+                 amplitude_max: int,
+                 timeshift_min: int,
+                 timeshift_max: int,
+                 zeromask_min: int,
+                 zeromask_max: int,
+                 noise_min: float,
+                 noise_max: float,
+                 bandstop_min: int,
+                 bandstop_max: int,
+                 freq_window: int):
+        super().__init__()
+        self.amplitude_min = amplitude_min
+        self.amplitude_max = amplitude_max
+        self.timeshift_min = timeshift_min
+        self.timeshift_max = timeshift_max
+        self.zeromask_min = zeromask_min
+        self.zeromask_max = zeromask_max
+        self.noise_min = noise_min
+        self.noise_max = noise_max
+        self.bandstop_min = bandstop_min
+        self.bandstop_max = bandstop_max
+        self.freq_window = freq_window
+    def forward(self, x):
+        # Must work for a batch!!
+        x = x * (self.amplitude_min + torch.rand(1)*(self.amplitude_max-self.amplitude_min))  # Amplitude scale
+
 
 
 class ContrastiveTransformations(object):
@@ -54,7 +85,7 @@ class AmplitudeScale(TranformProb):
         super().__init__(mini, maxi, prob, batch_size)
 
     def action(self, x, x_prev):
-        return x * self.u[..., None]  # Broadcast to correct dimension
+        return x * self.u.unsqueeze(1)
 
 
 def roll_with_different_shifts(x, shifts):
