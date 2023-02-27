@@ -6,10 +6,12 @@
 - [x] Train SimCLR on cluster
 - [ ] Improve efficiency of data augmentations
 - [x] Maybe look at the clustering of data points in the high dimensional space with e.g. t-SNE
-----------------
-### Notes on imlementation:
-- Improve structure of trainers
-- Maybe remove the datamodule class?
+
+- [ ] Implement contrastive transformations at a batch level such that they can be done on the GPU because CPU is bottleneck
+- [ ] Implement other way to load dataset (use h5py fileformat) and compare its speed in a jupyter notebook to the other 
+- [ ] Connect to google cloud and try to train a simple network there with a simple setup
+- [ ] Hire better equipment from google cloud and train SimCLR on whole dataset
+
 -------------------
 ### More complicated:
 - Get a better understanding of the implementation of the info_nce_loss function
