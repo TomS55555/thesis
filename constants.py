@@ -9,6 +9,7 @@ fs = 100  # Sampling frequency
 
 SHHS_PATH_ESAT = "/esat/biomeddata/SHHS_Dataset/no_backup/"
 SHHS_PATH_DEKSTOP = "C:/Users/tomsm/PycharmProjects/thesis/data/"
+SHHS_PATH_LAPTOP = "C:/Users/tomsm/PycharmProjects/thesis02/data/"
 
 """
     These are the implemented encoders and projection heads which can be used in the json files
