@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.extend([os.getcwd()])
+
 import time
 
 import constants
