@@ -91,6 +91,8 @@ class SHHS_dataset_2(torch.utils.data.Dataset):
                  transform: ContrastiveTransformations = None):
         super().__init__()
         self.first_patient = first_patient
+        if self.first_patient < 1 or self.first_patient > 5793:
+            raise FileNotFoundError("First patient must be within bounds of dataset size")
         self.num_patients = num_patients
         self.window_size = window_size
         self.data_path = data_path
@@ -104,45 +106,45 @@ class SHHS_dataset_2(torch.utils.data.Dataset):
         self.index = list()
         for line in index_file:
             path, idx = line.split('-')
+            sub_paths = path.split('/')
+            datapoint = os.path.join(data_path, sub_paths[-1])
             idx = int(idx)
             assert idx > 1
-            self.paths.append(path)
+            self.paths.append(datapoint)
             self.index.append(idx)
-        self.index = np.cumsum(np.asarray(self.index))
+        self.index = np.cumsum(np.asarray(self.index))-1
+
 
     def __len__(self):
-        if self.first_patient > 0:
-            return (self.index[self.first_patient + self.num_patients] - self.index[
-                self.first_patient - 1])
-        return self.index[self.num_patients]
+        return self.index[self.num_patients-1]
 
     def __getitem__(self, item):
-        if self.first_patient > 0:
-            index_item = item + self.index[self.first_patient - 1]
-            patient_idx = np.argmax(self.index > index_item)
-            item_in_patient = index_item - self.index[patient_idx - 1]
-        else:
-            index_item = item
-            item_in_patient = item
-            patient_idx = np.argmax(self.index > index_item)
 
-        # datapoint = self.paths[patient_idx]
-        datapoint = self.data_path + "/n" + f"{patient_idx + 1:0=4}" + "_eeg.mat"
+        index_item = item
+        item_in_patient = item
+        patient_idx = np.argmax(self.index >= index_item)
+
+        if patient_idx > 0:
+            item_in_patient = item - self.index[patient_idx-1]-1
+
+        datapoint = self.paths[patient_idx]
+
+        # datapoint = self.data_path + "/n" + f"{patient_idx + 1:0=4}" + "_eeg.mat"
         if not os.path.exists(datapoint):
             print("Couldn't find file: ", datapoint)
             exit(1)
-        f = h5py.File(datapoint, 'r')
-        X1 = torch.as_tensor(np.array(f.get("X1")))
+
+        with h5py.File(datapoint, 'r') as f:
+            X1 = torch.as_tensor(np.array(f.get("X1")))
+            labels = torch.as_tensor(np.array(f.get("label"))[0])-1
 
         # Normalization
         DATA_MEANS = X1.mean(dim=0, keepdim=True)
         DATA_STD = X1.std(dim=0, keepdim=True)
         X1 = (X1 - DATA_MEANS) / DATA_STD
 
-        labels = torch.as_tensor(np.array(f.get("label"))[0])
-
         if self.index[patient_idx] - index_item < self.window_size:  # Return last window of patient if not enough room
             # starting at item
             return X1[None, :, -self.window_size:].permute(2, 0, 1), labels[-self.window_size:]
-        return X1[None, :, item_in_patient:item_in_patient + self.window_size].permute(2, 0, 1), \
-               labels[item_in_patient:item_in_patient + self.window_size]
+        return X1[None, :, item_in_patient:item_in_patient + self.window_size].permute(2, 0, 1).squeeze(0), \
+               labels[item_in_patient:item_in_patient + self.window_size].squeeze()

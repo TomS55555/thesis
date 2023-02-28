@@ -3,7 +3,7 @@ from utils.helper_functions import prepare_data_features
 import pytorch_lightning as pl
 import torch.utils.data as data
 import numpy as np
-from datasets.datasets import SHHSdataset
+from datasets.datasets import SHHSdataset, SHHS_dataset_2
 
 
 class EEGdataModule(pl.LightningDataModule):
