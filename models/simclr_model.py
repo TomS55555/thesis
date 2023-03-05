@@ -9,7 +9,7 @@ class SimCLR(pl.LightningModule):
     """
         This class implements the SimCLR model for any encoder and projection head
     """
-    def __init__(self, encoder, projector, optim_hparams, temperature, **kwargs):
+    def __init__(self, aug_module, encoder, projector, optim_hparams, temperature, **kwargs):
         super().__init__()
         self.save_hyperparameters()
         self.temperature = temperature
@@ -18,6 +18,7 @@ class SimCLR(pl.LightningModule):
         self.f = encoder
         self.g = projector
         self.net = nn.Sequential(self.f, self.g)
+        self.aug_module = aug_module
 
     def configure_optimizers(self):
         optimizer = optim.AdamW(self.parameters(),
@@ -31,11 +32,15 @@ class SimCLR(pl.LightningModule):
     def info_nce_loss(self, batch, mode='train'):
         inputs, _ = batch  # Every input is a list of two augmented eeg epochs, make sure to use
         # ContrastiveTransformations!
-        inputs = torch.cat(inputs, dim=0)  # Put the first version of the augmented epochs together and then the
+        # inputs = torch.cat(inputs, dim=0)  # Put the first version of the augmented epochs together and then the
         # second version
+        inputs = torch.squeeze(inputs, dim=1)
+        with torch.no_grad():
+            inputs = torch.cat((self.aug_module.augment(inputs.clone()), self.aug_module.augment(inputs.clone())))
+
 
         # Encode all sequences
-        feats = self.net(torch.squeeze(inputs, dim=1))  # Remove redundant dimension (which is not used in 1D convolutional network)
+        feats = self.net(inputs.unsqueeze(dim=1))  # Remove redundant dimension (which is not used in 1D convolutional network)
         # Calculate cosine similarity
         cos_sim = F.cosine_similarity(feats[:, None, :], feats[None, :, :], dim=-1)
         # Mask out cosine similarity to itself

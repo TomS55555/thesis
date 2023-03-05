@@ -14,23 +14,26 @@ def train_simclr(args, device):
     pl.seed_everything(42)  # To be reproducable
 
     data_hparams = args.data_hparams
+    aug_module = AugmentationModule(batch_size=data_hparams['batch_size'])
 
-    p = data_hparams["transform-prob"]  # probability of applying the transforms
-    contrast_transforms = ContrastiveTransformations(
-        [
-            AmplitudeScale(data_hparams["amplitude-min"], data_hparams["amplitude-max"], p, 1),
-            GaussianNoise(data_hparams["noise-min"], data_hparams["noise-max"], p, 1),
-            ZeroMask(data_hparams["zeromask-min"], data_hparams["zeromask-max"], p, 1),
-            TimeShift(data_hparams["timeshift-min"], data_hparams["timeshift-max"], p, 1),
-            BandStopFilter(data_hparams['bandstop-min'], data_hparams["bandstop-max"], p, 1,
-                           data_hparams['freq-window'])
-        ], n_views=2
-    )
+
+
+    # p = data_hparams["transform-prob"]  # probability of applying the transforms
+    # contrast_transforms = ContrastiveTransformations(
+    #     [
+    #         AmplitudeScale(data_hparams["amplitude-min"], data_hparams["amplitude-max"], p, 1),
+    #         GaussianNoise(data_hparams["noise-min"], data_hparams["noise-max"], p, 1),
+    #         ZeroMask(data_hparams["zeromask-min"], data_hparams["zeromask-max"], p, 1),
+    #         TimeShift(data_hparams["timeshift-min"], data_hparams["timeshift-max"], p, 1),
+    #         BandStopFilter(data_hparams['bandstop-min'], data_hparams["bandstop-max"], p, 1,
+    #                        data_hparams['freq-window'])
+    #     ], n_views=2
+    # )
     data_module = EEGdataModule(
         data_path=args.DATA_PATH,
-        transform=contrast_transforms,
+   #     transform=contrast_transforms,
         **data_hparams)
-    data_module.setup()
+
 
     trainer = Trainer(
         default_root_dir=os.path.join(args.CHECKPOINT_PATH, args.save_name),
@@ -53,14 +56,15 @@ def train_simclr(args, device):
     model = SimCLR(encoder=encoder,
                    projector=proj_head,
                    optim_hparams=args.optim_hparams,
-                   temperature=args.temperature)
+                   temperature=args.temperature,
+                   aug_module=aug_module)
 
     trainer.fit(model, data_module.train_dataloader(), data_module.val_dataloader())
 
-    model = SimCLR.load_from_checkpoint(
-        trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training
+    #model = SimCLR.load_from_checkpoint(
+     #   trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training
 
     # Test best model on validation and test set
-    val_result = trainer.test(model, data_module.val_dataloader(), verbose=False)
-    result = {"val": val_result[0]["val_acc_top1"]}
-    return model, result
+    #val_result = trainer.test(model, data_module.val_dataloader(), verbose=False)
+    #result = {"val": val_result[0]["val_acc_top1"]}
+    return model, {}

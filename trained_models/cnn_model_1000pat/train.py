@@ -1,3 +1,9 @@
+import os
+import sys
+sys.path.extend([os.getcwd()])
+
+import time
+
 import constants
 
 import torch
@@ -30,15 +36,7 @@ args = {
     "output_dim": 100
   },
 
-  "data_hparams": {
-    "first_patient": 1000,
-    "num_patients": 200,
-    "data_split": [4, 1],
-    "batch_size": 512,
-    "num_workers": 2,
-    "exclude_test_set": constants.TEST_SET_1,
-
-    "transform-prob": 1.0,
+  "aug_hparams": {
     "amplitude-min": 0.9,
     "amplitude-max": 1.1,
     "timeshift-min": 5,
@@ -52,18 +50,30 @@ args = {
     "freq-window": 3
   },
 
+  "data_hparams": {
+    "first_patient": 1000,
+    "num_patients": 50,
+    "data_split": [4, 1],
+    "batch_size": 512,
+    "num_workers": 0,
+    "exclude_test_set": constants.TEST_SET_1,
+  },
+
   "trainer_hparams": {
-    "max_epochs": 2,
-    "profiler": "simple"
+    "max_epochs": 1,
+    #"profiler": "pytorch"
   },
 
   "optim_hparams": {
-    "max_epochs": 2,
+    "max_epochs": 1,
     "lr": 3e-4,
     "weight_decay": 1e-4
   }
 }
 
 if __name__ == "__main__":
+    start = time.time()
     model, result = train_simclr(Namespace(**args), device)
+    end = time.time()
     print(result)
+    print("Elapsed time: ", (end-start))
