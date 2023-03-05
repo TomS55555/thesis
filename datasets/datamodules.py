@@ -12,28 +12,56 @@ class EEGdataModule(pl.LightningDataModule):
         DO NOT FORGET TO CALL the setup method!!
     """
 
-    def __init__(self, data_path, batch_size, data_split, num_patients, num_workers,
-                 first_patient=1, transform=None, test_dl=None, **kwargs):
+    def __init__(self,
+                 data_path: str,
+                 batch_size: int,
+                 data_split,
+                 num_patients: int,
+                 num_workers: int,
+                 first_patient: int = 1,
+                 num_ds: int = 1,  # This property can be used to load a different dataset every epoch
+                 transform=None,
+                 test_dl=None, **kwargs):
         super().__init__()
+        self.data_path = data_path
+        self.first_patient = first_patient
+        self.num_patients = num_patients
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.test_dl = test_dl
+        self.num_ds = num_ds
+        self.data_split = data_split
 
-        eeg_trainval = SHHSdataset(data_path=data_path,
+        self.num_patients_per_ds = num_patients // self.num_ds
+        self.eeg_train = None
+        self.eeg_val = None
+        self.epoch = 1
+
+    def load_dataset(self, idx):
+        first_patient = self.first_patient + idx * self.num_patients_per_ds  # ! Make sure idx starts at 0
+        eeg_trainval = SHHSdataset(data_path=self.data_path,
                                    first_patient=first_patient,
-                                   num_patients=num_patients,
-                                   transform=transform)
-        num = np.array(data_split).sum()
+                                   num_patients=self.num_patients_per_ds)
+
+        num = np.array(self.data_split).sum()
         piece = eeg_trainval.__len__() // num
-        split = [data_split[0] * piece, eeg_trainval.__len__() - data_split[0] * piece]
-        self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)
+        split = [self.data_split[0] * piece, eeg_trainval.__len__() - self.data_split[0] * piece]
+        #self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)
+        self.eeg_train = eeg_trainval
+        self.epoch += 1
 
     def train_dataloader(self):
-        return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers,
+        idx = self.epoch % self.num_ds  # self.trainer.current_epoch % self.num_ds
+        self.load_dataset(idx)
+        # TODO: set shuffle to true!
+        return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers,
                                drop_last=True, pin_memory=True)
 
     def val_dataloader(self):
-        return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers,
+        idx = self.epoch % self.num_ds  # self.trainer.current_epoch % self.num_ds
+        self.load_dataset(idx)
+        # TODO: set shuffle to true!
+        return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers,
                                drop_last=True, pin_memory=True)
 
     def test_dataloader(self):
