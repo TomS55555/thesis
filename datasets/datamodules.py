@@ -29,6 +29,7 @@ class EEGdataModule(pl.LightningDataModule):
         self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)
 
     def train_dataloader(self):
+        epoch = 1 # self.trainer.current_epoch
         return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers,
                                drop_last=True, pin_memory=True)
 
