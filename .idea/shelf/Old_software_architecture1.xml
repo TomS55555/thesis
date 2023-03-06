@@ -1,0 +1,39 @@
+<changelist name="Old_software_architecture1" date="1666426750513" recycled="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1/shelved.patch" />
+  <option name="DESCRIPTION" value="Old software architecture" />
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="experiments/1D_CNN/trained_models/model01/lightning_logs/version_0/events.out.tfevents.1666095223.DESKTOPTOM.9332.0" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1/events.out.tfevents.1666095223.DESKTOPTOM.9332.0" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="experiments/1D_CNN/trained_models/model01/lightning_logs/version_1/checkpoints/epoch=10-step=187.ckpt" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1/epoch=10-step=187.ckpt" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="experiments/1D_CNN/trained_models/model01/lightning_logs/version_1/events.out.tfevents.1666096507.DESKTOPTOM.14496.0" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1/events.out.tfevents.1666096507.DESKTOPTOM.14496.0" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="experiments/1D_CNN/trained_models/model01/lightning_logs/version_2/checkpoints/epoch=13-step=1302.ckpt" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1/epoch=13-step=1302.ckpt" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="experiments/1D_CNN/trained_models/model01/lightning_logs/version_2/events.out.tfevents.1666096871.DESKTOPTOM.15344.0" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1/events.out.tfevents.1666096871.DESKTOPTOM.15344.0" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="experiments/1D_CNN/trained_models/model01/lightning_logs/version_2/events.out.tfevents.1666097482.DESKTOPTOM.15344.1" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1/events.out.tfevents.1666097482.DESKTOPTOM.15344.1" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="experiments/1D_CNN/trained_models/model01/lightning_logs/version_2/events.out.tfevents.1666097485.DESKTOPTOM.15344.2" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1/events.out.tfevents.1666097485.DESKTOPTOM.15344.2" />
+  </binary>
+</changelist>

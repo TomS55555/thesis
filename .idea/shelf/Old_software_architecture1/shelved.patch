@@ -1,0 +1,836 @@
+Index: experiments/1D_CNN/train.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/1D_CNN/train.py b/experiments/1D_CNN/train.py
+new file mode 100644
+--- /dev/null	
++++ b/experiments/1D_CNN/train.py	
+@@ -0,0 +1,47 @@
++import pytorch_lightning as pl
++import os
++from task import CNNmodel
++from data import EEGdataModule
++import torch
++
++from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
++
++
++DATASET_PATH = '../../data/'
++CHECKPOINT_PATH = 'trained_models'
++save_name = "model01"
++
++device = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
++print("Using device", device)
++
++datamodule = EEGdataModule(DATASET_PATH, batch_size=64)
++datamodule.setup()
++pl.seed_everything(42)  # To be reproducable
++
++
++trainer = pl.Trainer(default_root_dir=os.path.join(CHECKPOINT_PATH, save_name),
++                     gpus=1 if str(device) == "cuda:0" else 0,
++                     max_epochs=20,
++                     callbacks=[ModelCheckpoint(save_weights_only=True, mode="max", monitor="val_acc"),
++                                LearningRateMonitor("epoch")],
++                     enable_progress_bar=True)
++
++trainer.logger._log_graph = True
++trainer.logger._default_hp_metric = None
++# Check whether pretrained model exists. If yes, load it and skip training
++pretrained_filename = os.path.join(CHECKPOINT_PATH, save_name + ".ckpt")
++
++model = CNNmodel(model_name="1D_CNN",
++                 model_hparams={},
++                 optimizer_name="Adam",
++                 optimizer_hparams={
++                     "lr": 1e-3,
++                     "weight_decay": 1e-4
++                 })
++trainer.fit(model, datamodule.train_dataloader(), datamodule.val_dataloader())
++# model = CNNmodel.load_from_checkpoint(trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training
++
++# Test best model on validation and test set
++val_result = trainer.test(model, datamodule.val_dataloader(), verbose=False)
++test_result = trainer.test(model, datamodule.train_dataloader(), verbose=False)
++result = {"test": test_result[0]["test_acc"], "val": val_result[0]["test_acc"]}
+Index: experiments/1D_CNN/trained_models/model01/lightning_logs/version_2/hparams.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/1D_CNN/trained_models/model01/lightning_logs/version_2/hparams.yaml b/experiments/1D_CNN/trained_models/model01/lightning_logs/version_2/hparams.yaml
+new file mode 100644
+--- /dev/null	
++++ b/experiments/1D_CNN/trained_models/model01/lightning_logs/version_2/hparams.yaml	
+@@ -0,0 +1,6 @@
++model_hparams: {}
++model_name: 1D_CNN
++optimizer_hparams:
++  lr: 0.001
++  weight_decay: 0.0001
++optimizer_name: Adam
+Index: experiments/1D_CNN/model_test.ipynb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/1D_CNN/model_test.ipynb b/experiments/1D_CNN/model_test.ipynb
+new file mode 100644
+--- /dev/null	
++++ b/experiments/1D_CNN/model_test.ipynb	
+@@ -0,0 +1,324 @@
++{
++ "cells": [
++  {
++   "cell_type": "code",
++   "execution_count": 1,
++   "outputs": [],
++   "source": [
++    "import pytorch_lightning as pl\n",
++    "import torch.nn as nn\n",
++    "import torch\n",
++    "import torch.optim as optim"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 2,
++   "outputs": [],
++   "source": [
++    "class CNN_block(nn.Module):\n",
++    "    \"\"\"\n",
++    "    One CNN block consists of a 1D (3) convolution, a Max pooling and a Batch normalization\n",
++    "    \"\"\"\n",
++    "    def __init__(self, input_size, kernel_size, in_channels, out_channels):\n",
++    "        super().__init__()\n",
++    "        self.net = nn.Sequential(\n",
++    "            nn.Conv1d(in_channels=in_channels,\n",
++    "                      out_channels=out_channels,\n",
++    "                      kernel_size=kernel_size,\n",
++    "                      padding=\"same\"),\n",
++    "            nn.BatchNorm1d(out_channels),\n",
++    "            nn.ReLU(),\n",
++    "            nn.MaxPool1d(2)\n",
++    "        )\n",
++    "\n",
++    "    def forward(self, x):\n",
++    "        return self.net(x)"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 3,
++   "outputs": [],
++   "source": [
++    "def create_model(model_name, model_hparams):\n",
++    "    model = nn.Sequential(\n",
++    "        CNN_block(3000, 3, 1, 32),\n",
++    "        CNN_block(1500, 3, 32, 64),\n",
++    "        CNN_block(750, 3, 64, 64),\n",
++    "        nn.Flatten(),\n",
++    "        nn.Linear(in_features=375*64, out_features=256),\n",
++    "        nn.ReLU(),\n",
++    "        nn.Linear(in_features=256, out_features=5)\n",
++    "    )\n",
++    "    return model"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 4,
++   "outputs": [],
++   "source": [
++    "class CNNmodel(pl.LightningModule):\n",
++    "    def __init__(self, model_name, model_hparams, optimizer_name, optimizer_hparams):\n",
++    "        super().__init__()\n",
++    "        # Exports the hyperparameters to a YAML file, and create \"self.hparams\" namespace\n",
++    "        self.save_hyperparameters()\n",
++    "        self.loss_module = nn.CrossEntropyLoss()\n",
++    "\n",
++    "        # Create model\n",
++    "        self.model = create_model(model_name, model_hparams)\n",
++    "\n",
++    "        # Example input for visualizing the graph in Tensorboard\n",
++    "        self.example_input_array = torch.zeros((1, 3000), dtype=torch.float32)\n",
++    "\n",
++    "    def forward(self, x):\n",
++    "        return self.model(x)\n",
++    "\n",
++    "    def configure_optimizers(self):\n",
++    "        # We will support Adam or SGD as optimizers.\n",
++    "        if self.hparams.optimizer_name == \"Adam\":\n",
++    "            # AdamW is Adam with a correct implementation of weight decay (see here for details: https://arxiv.org/pdf/1711.05101.pdf)\n",
++    "            optimizer = optim.AdamW(\n",
++    "                self.parameters(), **self.hparams.optimizer_hparams)\n",
++    "        elif self.hparams.optimizer_name == \"SGD\":\n",
++    "            optimizer = optim.SGD(self.parameters(), **self.hparams.optimizer_hparams)\n",
++    "        else:\n",
++    "            assert False, f\"Unknown optimizer: \\\"{self.hparams.optimizer_name}\\\"\"\n",
++    "\n",
++    "        # We will reduce the learning rate by 0.1 after 100 and 150 epochs\n",
++    "        scheduler = optim.lr_scheduler.MultiStepLR(\n",
++    "            optimizer, milestones=[100, 150], gamma=0.1)\n",
++    "        return [optimizer], [scheduler]\n",
++    "\n",
++    "    def training_step(self, batch, batch_idx):\n",
++    "        inputs, labels = batch\n",
++    "        preds = self.model(inputs)\n",
++    "        loss = self.loss_module(preds, labels)\n",
++    "        acc = (preds.argmax(dim=-1) == labels).float().mean()\n",
++    "\n",
++    "        # Logs the accuracy per epoch to tensorboard (weighted average over batches)\n",
++    "        self.log('train_acc', acc, on_step=False, on_epoch=True)\n",
++    "        self.log('train_loss', loss)\n",
++    "        return loss  # Return tensor to call \".backward\" on\n",
++    "\n",
++    "    def validation_step(self, batch, batch_idx):\n",
++    "        inputs, labels = batch\n",
++    "        preds = self.model(inputs)\n",
++    "        acc = (labels == preds.argmax(dim=-1)).float().mean()\n",
++    "        self.log('val_acc', acc)\n",
++    "\n",
++    "    def test_step(self, batch, batch_idx):\n",
++    "        inputs, labels = batch\n",
++    "        preds = self.model(inputs)\n",
++    "        acc = (labels == preds.argmax(dim=-1)).float().mean()\n",
++    "        self.log('test_acc', acc)"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 5,
++   "outputs": [
++    {
++     "data": {
++      "text/plain": "torch.Size([64, 1, 3000])"
++     },
++     "execution_count": 5,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "from data import EEGdataModule\n",
++    "dm = EEGdataModule('../../data/')\n",
++    "dm.setup()\n",
++    "batch, labels = next(iter(dm.train_dataloader()))\n",
++    "batch.shape"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 6,
++   "outputs": [],
++   "source": [
++    "net = CNNmodel(model_name=\"1D_CNN\",\n",
++    "                 model_hparams={},\n",
++    "                 optimizer_name=\"Adam\",\n",
++    "                 optimizer_hparams={\n",
++    "                     \"lr\": 1e-3,\n",
++    "                     \"weight_decay\": 1e-4\n",
++    "                 })\n"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "markdown",
++   "source": [],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 7,
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "tensor([2., 2., 2., 4., 0., 2., 2., 0., 0., 0., 1., 2., 4., 2., 0., 2., 0., 2.,\n",
++      "        0., 2., 0., 2., 2., 2., 3., 0., 0., 3., 2., 3., 2., 2., 0., 0., 2., 4.,\n",
++      "        2., 0., 3., 2., 0., 2., 0., 2., 2., 3., 2., 0., 2., 0., 2., 2., 0., 0.,\n",
++      "        0., 4., 0., 4., 3., 0., 2., 2., 0., 0.])\n"
++     ]
++    }
++   ],
++   "source": [
++    "preds = net(batch)\n",
++    "print(labels)"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 8,
++   "outputs": [
++    {
++     "data": {
++      "text/plain": "tensor(1.6880, grad_fn=<NllLossBackward0>)"
++     },
++     "execution_count": 8,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "loss = nn.CrossEntropyLoss()\n",
++    "\n",
++    "loss(preds, labels.long())"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 4,
++   "outputs": [
++    {
++     "data": {
++      "text/plain": "torch.Size([5, 32, 3000])"
++     },
++     "execution_count": 4,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "input = torch.zeros((5,1,3000), dtype=torch.float32)\n",
++    "net = nn.Conv1d(in_channels=1, out_channels=32, kernel_size=3, padding=\"same\")\n",
++    "net2 = nn.BatchNorm1d(32)\n",
++    "net2(net(input)).shape"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 5,
++   "outputs": [
++    {
++     "ename": "TypeError",
++     "evalue": "__init__() missing 1 required positional argument: 'out_channels'",
++     "output_type": "error",
++     "traceback": [
++      "\u001B[1;31m---------------------------------------------------------------------------\u001B[0m",
++      "\u001B[1;31mTypeError\u001B[0m                                 Traceback (most recent call last)",
++      "Input \u001B[1;32mIn [5]\u001B[0m, in \u001B[0;36m<cell line: 3>\u001B[1;34m()\u001B[0m\n\u001B[0;32m      1\u001B[0m \u001B[38;5;28minput\u001B[39m \u001B[38;5;241m=\u001B[39m torch\u001B[38;5;241m.\u001B[39mzeros((\u001B[38;5;241m5\u001B[39m,\u001B[38;5;241m1\u001B[39m,\u001B[38;5;241m3000\u001B[39m), dtype\u001B[38;5;241m=\u001B[39mtorch\u001B[38;5;241m.\u001B[39mfloat32)\n\u001B[0;32m      3\u001B[0m net \u001B[38;5;241m=\u001B[39m nn\u001B[38;5;241m.\u001B[39mSequential(\n\u001B[1;32m----> 4\u001B[0m         \u001B[43mCNN_block\u001B[49m\u001B[43m(\u001B[49m\u001B[38;5;241;43m3000\u001B[39;49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[38;5;241;43m1\u001B[39;49m\u001B[43m,\u001B[49m\u001B[43m \u001B[49m\u001B[38;5;241;43m32\u001B[39;49m\u001B[43m)\u001B[49m,\n\u001B[0;32m      5\u001B[0m         CNN_block(\u001B[38;5;241m1500\u001B[39m, \u001B[38;5;241m32\u001B[39m, \u001B[38;5;241m64\u001B[39m),\n\u001B[0;32m      6\u001B[0m         CNN_block(\u001B[38;5;241m750\u001B[39m, \u001B[38;5;241m64\u001B[39m, \u001B[38;5;241m64\u001B[39m),\n\u001B[0;32m      7\u001B[0m         nn\u001B[38;5;241m.\u001B[39mFlatten(),\n\u001B[0;32m      8\u001B[0m         nn\u001B[38;5;241m.\u001B[39mLinear(in_features\u001B[38;5;241m=\u001B[39m\u001B[38;5;241m375\u001B[39m\u001B[38;5;241m*\u001B[39m\u001B[38;5;241m64\u001B[39m, out_features\u001B[38;5;241m=\u001B[39m\u001B[38;5;241m256\u001B[39m),\n\u001B[0;32m      9\u001B[0m         nn\u001B[38;5;241m.\u001B[39mReLU(),\n\u001B[0;32m     10\u001B[0m         nn\u001B[38;5;241m.\u001B[39mLinear(in_features\u001B[38;5;241m=\u001B[39m\u001B[38;5;241m256\u001B[39m, out_features\u001B[38;5;241m=\u001B[39m\u001B[38;5;241m10\u001B[39m)\n\u001B[0;32m     11\u001B[0m     )\n\u001B[0;32m     12\u001B[0m net(batch)\u001B[38;5;241m.\u001B[39mshape\n",
++      "\u001B[1;31mTypeError\u001B[0m: __init__() missing 1 required positional argument: 'out_channels'"
++     ]
++    }
++   ],
++   "source": [
++    "input = torch.zeros((5,1,3000), dtype=torch.float32)\n",
++    "\n",
++    "net = nn.Sequential(\n",
++    "        CNN_block(3000, 1, 32),\n",
++    "        CNN_block(1500, 32, 64),\n",
++    "        CNN_block(750, 64, 64),\n",
++    "        nn.Flatten(),\n",
++    "        nn.Linear(in_features=375*64, out_features=256),\n",
++    "        nn.ReLU(),\n",
++    "        nn.Linear(in_features=256, out_features=10)\n",
++    "    )\n",
++    "net(batch).shape"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [
++    "\n",
++    "from torchsummary import summary\n",
++    "summary(net, (1, 3000))"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "outputs": [],
++   "source": [],
++   "metadata": {
++    "collapsed": false
++   }
++  }
++ ],
++ "metadata": {
++  "kernelspec": {
++   "display_name": "Python 3",
++   "language": "python",
++   "name": "python3"
++  },
++  "language_info": {
++   "codemirror_mode": {
++    "name": "ipython",
++    "version": 2
++   },
++   "file_extension": ".py",
++   "mimetype": "text/x-python",
++   "name": "python",
++   "nbconvert_exporter": "python",
++   "pygments_lexer": "ipython2",
++   "version": "2.7.6"
++  }
++ },
++ "nbformat": 4,
++ "nbformat_minor": 0
++}
+Index: experiments/1D_CNN/task.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/1D_CNN/task.py b/experiments/1D_CNN/task.py
+new file mode 100644
+--- /dev/null	
++++ b/experiments/1D_CNN/task.py	
+@@ -0,0 +1,101 @@
++# Parts of this code are copied from https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial5/Inception_ResNet_DenseNet.html
++
++import pytorch_lightning as pl
++import torch.nn as nn
++import torch
++import torch.optim as optim
++
++
++class CNN_block(nn.Module):
++    """
++    One CNN block consists of a 1D (3) convolution, a Max pooling and a Batch normalization
++    """
++    def __init__(self, input_size, kernel_size, in_channels, out_channels):
++        super().__init__()
++        self.net = nn.Sequential(
++            nn.Conv1d(in_channels=in_channels,
++                      out_channels=out_channels,
++                      kernel_size=kernel_size,
++                      padding="same"),
++            nn.BatchNorm1d(out_channels),
++            nn.ReLU(),
++            nn.MaxPool1d(2)
++        )
++
++    def forward(self, x):
++        return self.net(x)
++
++
++def create_model(model_name, model_hparams):
++    model = nn.Sequential(
++        CNN_block(3000, 3, 1, 32),
++        CNN_block(1500, 3, 32, 64),
++        CNN_block(750, 3, 64, 64),
++        nn.Flatten(),
++        nn.Linear(in_features=375*64, out_features=256),
++        nn.ReLU(),
++        nn.Linear(in_features=256, out_features=10)
++    )
++    return model
++
++
++class CNNmodel(pl.LightningModule):
++    def __init__(self, model_name, model_hparams, optimizer_name, optimizer_hparams, **kwargs):
++        super().__init__()
++        # Exports the hyperparameters to a YAML file, and create "self.hparams" namespace
++        self.save_hyperparameters()
++        self.loss_module = nn.CrossEntropyLoss()
++
++        # Create model
++        self.model = create_model(model_name, model_hparams)
++
++        # Example input for visualizing the graph in Tensorboard
++        self.example_input_array = torch.zeros((1, 1, 3000), dtype=torch.float32)
++
++    def forward(self, x):
++        return self.model(x)
++
++    def configure_optimizers(self):
++        # We will support Adam or SGD as optimizers.
++        if self.hparams.optimizer_name == "Adam":
++            # AdamW is Adam with a correct implementation of weight decay (see here for details: https://arxiv.org/pdf/1711.05101.pdf)
++            optimizer = optim.AdamW(
++                self.parameters(), **self.hparams.optimizer_hparams)
++        elif self.hparams.optimizer_name == "SGD":
++            optimizer = optim.SGD(self.parameters(), **self.hparams.optimizer_hparams)
++        else:
++            assert False, f"Unknown optimizer: \"{self.hparams.optimizer_name}\""
++
++        # We will reduce the learning rate by 0.1 after 100 and 150 epochs
++        scheduler = optim.lr_scheduler.MultiStepLR(
++            optimizer, milestones=[100, 150], gamma=0.1)
++        return [optimizer], [scheduler]
++
++    def training_step(self, batch, batch_idx):
++        inputs, labels = batch
++        preds = self.model(inputs)
++        loss = self.loss_module(preds, labels.long())
++        acc = (preds.argmax(dim=-1) == labels).float().mean()
++
++        # Logs the accuracy per epoch to tensorboard (weighted average over batches)
++        self.log('train_acc', acc, on_step=False, on_epoch=True)
++        self.log('train_loss', loss)
++        return loss  # Return tensor to call ".backward" on
++
++    def validation_step(self, batch, batch_idx):
++        inputs, labels = batch
++        preds = self.model(inputs)
++        acc = (labels == preds.argmax(dim=-1)).float().mean()
++        self.log('val_acc', acc)
++
++    def test_step(self, batch, batch_idx):
++        inputs, labels = batch
++        preds = self.model(inputs)
++        acc = (labels == preds.argmax(dim=-1)).float().mean()
++        self.log('test_acc', acc)
++
++    @staticmethod
++    def add_model_specific_args(parent_parser):
++        parser = parent_parser.add_argument_group("CNNmodel")
++        parser.add_argument("--hidden_layers", type=list, default=[256])
++        return parent_parser
+Index: experiments/1D_CNN/train_arg.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/1D_CNN/train_arg.py b/experiments/1D_CNN/train_arg.py
+new file mode 100644
+--- /dev/null	
++++ b/experiments/1D_CNN/train_arg.py	
+@@ -0,0 +1,21 @@
++from argparse import ArgumentParser
++from task import CNNmodel
++from pytorch_lightning import Trainer
++
++parser = ArgumentParser()
++
++# add PROGRAM level args
++parser.add_argument("--data_path", type=str, default="data/")
++
++# add model specific args
++parser = CNNmodel.add_model_specific_args(parser)
++
++# add all the available trainer options to argparse
++# ie: now --accelerator --devices --num_nodes ... --fast_dev_run all work in the cli
++parser = Trainer.add_argparse_args(parser)
++
++args = parser.parse_args()
++trainer = Trainer.from_argparse_args(args)
++
++dict_args = vars(args)
++model = CNNmodel(**dict_args)
+Index: experiments/1D_CNN/trained_models/model01/lightning_logs/version_0/hparams.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/1D_CNN/trained_models/model01/lightning_logs/version_0/hparams.yaml b/experiments/1D_CNN/trained_models/model01/lightning_logs/version_0/hparams.yaml
+new file mode 100644
+--- /dev/null	
++++ b/experiments/1D_CNN/trained_models/model01/lightning_logs/version_0/hparams.yaml	
+@@ -0,0 +1,6 @@
++model_hparams: {}
++model_name: 1D_CNN
++optimizer_hparams:
++  lr: 0.001
++  weight_decay: 0.0001
++optimizer_name: Adam
+Index: datasets/SHHS_dataset_timeonly.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/datasets/SHHS_dataset_timeonly.py b/datasets/SHHS_dataset_timeonly.py
+new file mode 100644
+--- /dev/null	
++++ b/datasets/SHHS_dataset_timeonly.py	
+@@ -0,0 +1,42 @@
++import pytorch_lightning as pl
++import torch.utils.data as data
++import h5py
++import torch
++import numpy as np
++
++
++class EEGdataset(torch.utils.data.Dataset):
++    def __init__(self, data_path, first_patient=1, last_patient=10, transform=None):
++        super().__init__()
++        self.data_path = data_path
++        self.transform = transform
++        X1_list = []
++        labels_list = []
++        for patient in range(first_patient, last_patient):
++            datapoint = data_path + "n" + f"{patient:0=4}" + "_eeg.mat"
++            try:
++                f = h5py.File(datapoint, 'r')
++                x1 = torch.Tensor(np.array(f.get("X1")))
++                x1 = x1[None, :]
++                X1_list.append(x1.permute(2, 0, 1))
++                label = torch.Tensor(np.array(f.get("label"))[0])
++                labels_list.append(label)
++            except FileNotFoundError as e:
++                pass
++        self.X1 = torch.cat(X1_list, 0)
++        self.labels = torch.cat(labels_list, 0)
++        self.labels = self.labels - torch.ones(self.labels.size(0))  # Change label range from 1->5 to 0->4
++        if self.labels.size(0) == 0:
++            raise FileNotFoundError     # Data not found
++
++        # TODO: Normalization!!
++        DATA_MEANS = self.X1.mean(dim=2, keepdim=True)
++        DATA_STD = self.X1.std(dim=2, keepdim=True)
++        self.X1 = (self.X1 - DATA_MEANS) / DATA_STD
++
++
++    def __len__(self):
++        return self.labels.size(0)
++
++    def __getitem__(self, item):
++        return self.X1[item], self.labels[item]
+Index: experiments/1D_CNN/dataset_test.ipynb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/1D_CNN/dataset_test.ipynb b/experiments/1D_CNN/dataset_test.ipynb
+new file mode 100644
+--- /dev/null	
++++ b/experiments/1D_CNN/dataset_test.ipynb	
+@@ -0,0 +1,99 @@
++{
++ "cells": [
++  {
++   "cell_type": "code",
++   "execution_count": 1,
++   "metadata": {
++    "collapsed": true
++   },
++   "outputs": [],
++   "source": [
++    "from datasets.SHHS_dataset_timeonly import EEGdataset"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 2,
++   "outputs": [],
++   "source": [
++    "ds = EEGdataset('../../data/',1,3)"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 8,
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "torch.Size([1, 3000])\n"
++     ]
++    }
++   ],
++   "source": [
++    "datapoint, label = ds.__getitem__(2)\n",
++    "print(datapoint.shape)"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 4,
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "torch.Size([2162, 1, 3000])\n"
++     ]
++    }
++   ],
++   "source": [
++    "import torch\n",
++    "import h5py\n",
++    "import numpy as np\n",
++    "\n",
++    "data_path = '../../data/'\n",
++    "datapoint = data_path + \"n\" + f\"{1:0=4}\" + \"_eeg.mat\"\n",
++    "f = h5py.File(datapoint, 'r')\n",
++    "x1 = torch.Tensor(np.array(f.get(\"X1\")))\n",
++    "x1 = x1[None, :]\n",
++    "x2 = x1.permute(2,0,1)\n",
++    "x3 = x2.clone()\n",
++    "X1_list = [x2, x3]\n",
++    "X1 = torch.cat(X1_list)\n",
++    "print(X1.shape)"
++   ],
++   "metadata": {
++    "collapsed": false
++   }
++  }
++ ],
++ "metadata": {
++  "kernelspec": {
++   "display_name": "Python 3",
++   "language": "python",
++   "name": "python3"
++  },
++  "language_info": {
++   "codemirror_mode": {
++    "name": "ipython",
++    "version": 2
++   },
++   "file_extension": ".py",
++   "mimetype": "text/x-python",
++   "name": "python",
++   "nbconvert_exporter": "python",
++   "pygments_lexer": "ipython2",
++   "version": "2.7.6"
++  }
++ },
++ "nbformat": 4,
++ "nbformat_minor": 0
++}
+Index: experiments/1D_CNN/eval.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/1D_CNN/eval.py b/experiments/1D_CNN/eval.py
+new file mode 100644
+--- /dev/null	
++++ b/experiments/1D_CNN/eval.py	
+@@ -0,0 +1,45 @@
++import pytorch_lightning as pl
++import os
++from task import CNNmodel
++from data import EEGdataModule
++import torch
++
++from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
++
++
++DATASET_PATH = '../../data/'
++CHECKPOINT_PATH = 'trained_models'
++save_name = "model01"
++
++device = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
++print("Using device", device)
++
++datamodule = EEGdataModule(DATASET_PATH, batch_size=64)
++datamodule.setup()
++pl.seed_everything(42)  # To be reproducable
++
++test_path = "trained_models/model01/lightning_logs/version_2/checkpoints/epoch=13-step=1302.ckpt"
++
++trainer = pl.Trainer(gpus=1 if str(device) == "cuda:0" else 0,
++                     max_epochs=20,
++                     callbacks=[ModelCheckpoint(save_weights_only=True, mode="max", monitor="val_acc"),
++                                LearningRateMonitor("epoch")],
++                     enable_progress_bar=True)
++
++trainer.logger._log_graph = True
++trainer.logger._default_hp_metric = None
++# Check whether pretrained model exists. If yes, load it and skip training
++# pretrained_filename = os.path.join(CHECKPOINT_PATH, save_name + ".ckpt")
++if os.path.isfile(test_path):
++    print(f"Found pretrained model at {test_path}, loading...")
++    model = CNNmodel.load_from_checkpoint(test_path) # Automatically loads the model with the saved hyperparameters
++else:
++    print("Couldn't find pretrained model")
++    exit(1)
++
++# model = CNNmodel.load_from_checkpoint(trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training
++# Test best model on validation and test set
++val_result = trainer.test(model, datamodule.val_dataloader(), verbose=False)
++test_result = trainer.test(model, datamodule.test_dataloader(), verbose=False)
++result = {"test": test_result[0]["test_acc"], "val": val_result[0]["test_acc"]}
++print(result)
+Index: experiments/1D_CNN/data.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/1D_CNN/data.py b/experiments/1D_CNN/data.py
+new file mode 100644
+--- /dev/null	
++++ b/experiments/1D_CNN/data.py	
+@@ -0,0 +1,24 @@
++import pytorch_lightning as pl
++from datasets.SHHS_dataset_timeonly import EEGdataset
++import torch.utils.data as data
++
++
++class EEGdataModule(pl.LightningDataModule):
++    def __init__(self, data_dir, batch_size=64):
++        super().__init__()
++        self.data_dir = data_dir
++        self.batch_size = batch_size
++
++    def setup(self, stage=None):
++        eeg_all = EEGdataset(self.data_dir, 1, 11)
++        piece = eeg_all.__len__()//5
++        self.eeg_train, self.eeg_val, self.eeg_test = data.random_split(eeg_all, [3*piece, piece, eeg_all.__len__()-4*piece])  # use a 3/5;1/5;1/5 split
++
++    def train_dataloader(self):
++        return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True)
++
++    def val_dataloader(self):
++        return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=True)
++
++    def test_dataloader(self):
++        return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False)
+\ No newline at end of file
+Index: experiments/1D_CNN/trained_models/model01/lightning_logs/version_1/hparams.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/1D_CNN/trained_models/model01/lightning_logs/version_1/hparams.yaml b/experiments/1D_CNN/trained_models/model01/lightning_logs/version_1/hparams.yaml
+new file mode 100644
+--- /dev/null	
++++ b/experiments/1D_CNN/trained_models/model01/lightning_logs/version_1/hparams.yaml	
+@@ -0,0 +1,6 @@
++model_hparams: {}
++model_name: 1D_CNN
++optimizer_hparams:
++  lr: 0.001
++  weight_decay: 0.0001
++optimizer_name: Adam
+diff --git a/experiments/1D_CNN/config.json b/experiments/1D_CNN/config.json
+new file mode 100644
+diff --git a/models/conv_model.py b/models/conv_model.py
+new file mode 100644

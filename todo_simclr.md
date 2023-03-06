@@ -11,6 +11,7 @@
 - [ ] Implement other way to load dataset (use h5py fileformat) and compare its speed in a jupyter notebook to the other 
 - [ ] Connect to google cloud and try to train a simple network there with a simple setup
 - [ ] Hire better equipment from google cloud and train SimCLR on whole dataset
+- [ ] Load different dataset every epoch
 
 -------------------
 ### More complicated:

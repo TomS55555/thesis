@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="augmentations don't work">
+      <change afterPath="$PROJECT_DIR$/datasets/testing/datamodule_test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/thesis02.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/thesis02.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo_simclr.md" beforeDir="false" afterPath="$PROJECT_DIR$/todo_simclr.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainers/train_simclr.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="Jupyter Notebook" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2GTtTWZtEVfJDZZ8FBoXuSTrrLa" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis02&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\trained_models\cnn_model" />
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\checkpoints\cnn_model01" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\datasets\testing" />
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\results\simclr_graph" />
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\results" />
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\trained_models\cnn_model" />
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\trained_models" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.train">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\tomsm\PycharmProjects\thesis02\experiments\1D_CNN\main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="simclr_graph" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/results" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\tomsm\PycharmProjects\thesis02\results\simclr_graph\simclr_graph.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/trained_models/cnn_model_1000pat/train.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train_arg" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/1D_CNN" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/1D_CNN/train_arg.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train_main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/trainers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/trainers/train_main.py" />
+      <option name="PARAMETERS" value="--load_json experiments/cnn_model_supervised.json" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.train_main" />
+      <item itemvalue="Python.train" />
+      <item itemvalue="Python.simclr_graph" />
+      <item itemvalue="Python.train_arg" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.train" />
+        <item itemvalue="Python.simclr_graph" />
+        <item itemvalue="Python.train_arg" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager">
+    <option name="remove_strategy" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="" />
+      <created>1666424410032</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1666424410032</updated>
+      <workItem from="1666424411663" duration="28833000" />
+      <workItem from="1666517863655" duration="15515000" />
+      <workItem from="1667034050536" duration="1031000" />
+      <workItem from="1667062308836" duration="6672000" />
+      <workItem from="1667149136048" duration="2431000" />
+      <workItem from="1667850891813" duration="160000" />
+      <workItem from="1668349469953" duration="9939000" />
+      <workItem from="1670067258950" duration="769000" />
+      <workItem from="1670078972450" duration="263000" />
+      <workItem from="1670167729296" duration="1136000" />
+      <workItem from="1670169015030" duration="2847000" />
+      <workItem from="1670171898378" duration="3020000" />
+      <workItem from="1670181289905" duration="5069000" />
+      <workItem from="1670239618490" duration="3388000" />
+      <workItem from="1670244812647" duration="1012000" />
+      <workItem from="1670255190749" duration="661000" />
+      <workItem from="1670267592863" duration="2298000" />
+      <workItem from="1670787753194" duration="3167000" />
+      <workItem from="1671220408801" duration="6198000" />
+      <workItem from="1671399028310" duration="4703000" />
+      <workItem from="1671445871204" duration="666000" />
+      <workItem from="1671458811983" duration="27000" />
+      <workItem from="1674994078833" duration="779000" />
+      <workItem from="1677493914413" duration="1682000" />
+      <workItem from="1678022062712" duration="1222000" />
+      <workItem from="1678023380061" duration="6584000" />
+    </task>
+    <task id="LOCAL-00001" summary="First commit">
+      <created>1666424468977</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666424468977</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Old software architecture">
+      <created>1666426687106</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666426687106</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Old software architecture">
+      <created>1666426776135</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1666426776135</updated>
+    </task>
+    <task id="LOCAL-00004" summary="New software architecture with config file">
+      <created>1666446032842</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1666446032842</updated>
+    </task>
+    <task id="LOCAL-00005" summary="New software architecture with config file">
+      <created>1666446149184</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1666446149184</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Supervised accuracy of 79% on test-set of 30 patients, trained on 500 patients">
+      <created>1666465736587</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1666465736587</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Supervised accuracy of 79% on test-set of 30 patients, trained on 500 patients">
+      <created>1666468364073</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1666468364073</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Some comments about the code">
+      <created>1666469229400</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1666469229400</updated>
+    </task>
+    <task id="LOCAL-00009" summary="First augmentations are implemented, still have to be tested">
+      <created>1666523327431</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1666523327431</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added constants.py">
+      <created>1666524343700</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1666524343700</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Started implementing more efficient and sophisticated way of data-fetching">
+      <created>1666549393415</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1666549393415</updated>
+    </task>
+    <task id="LOCAL-00012" summary="More SimCLR implementation">
+      <created>1667850932445</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1667850932445</updated>
+    </task>
+    <task id="LOCAL-00013" summary="More SimCLR implementation">
+      <created>1667851036283</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1667851036283</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Software restructuring">
+      <created>1668355346090</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1668355346090</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Software restructuring">
+      <created>1668355620694</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1668355620694</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Software restructuring">
+      <created>1668356882562</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1668356882562</updated>
+    </task>
+    <task id="LOCAL-00017" summary="local changes">
+      <created>1668358543199</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1668358543199</updated>
+    </task>
+    <task id="LOCAL-00018" summary="local changes">
+      <created>1668366731771</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1668366731771</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fixed a bug">
+      <created>1670067495704</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1670067495704</updated>
+    </task>
+    <task id="LOCAL-00020" summary="fixed a bug: use squeeze(dim=-1) for labels!!">
+      <created>1670185794972</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1670185794972</updated>
+    </task>
+    <task id="LOCAL-00021" summary="fixed a bug: use squeeze(dim=-1) for labels!!">
+      <created>1670267654773</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1670267654773</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Adding code for better testing">
+      <created>1670790969475</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1670790969475</updated>
+    </task>
+    <task id="LOCAL-00023" summary="better structure">
+      <created>1671229891758</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1671229891758</updated>
+    </task>
+    <task id="LOCAL-00024" summary="better structure">
+      <created>1671458821700</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1671458821700</updated>
+    </task>
+    <task id="LOCAL-00025" summary="augmentations don't work">
+      <created>1677497095429</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1677497095429</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="First commit" />
+    <MESSAGE value="Old software architecture" />
+    <MESSAGE value="New software architecture with config file" />
+    <MESSAGE value="Supervised accuracy of 79% on test-set of 30 patients, trained on 500 patients" />
+    <MESSAGE value="Some comments about the code" />
+    <MESSAGE value="First augmentations are implemented, still have to be tested" />
+    <MESSAGE value="Added constants.py" />
+    <MESSAGE value="Started implementing more efficient and sophisticated way of data-fetching" />
+    <MESSAGE value="More SimCLR implementation" />
+    <MESSAGE value="Software restructuring" />
+    <MESSAGE value="local changes" />
+    <MESSAGE value="fixed a bug" />
+    <MESSAGE value="fixed a bug: use squeeze(dim=-1) for labels!!" />
+    <MESSAGE value="Adding code for better testing" />
+    <MESSAGE value="better structure" />
+    <MESSAGE value="augmentations don't work" />
+    <option name="LAST_COMMIT_MESSAGE" value="augmentations don't work" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/thesis02$train.coverage" NAME="train Coverage Results" MODIFIED="1677519813138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
+    <SUITE FILE_PATH="coverage/thesis02$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670185038195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
+    <SUITE FILE_PATH="coverage/thesis02$main.coverage" NAME="main Coverage Results" MODIFIED="1666424423225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/thesis02$train_arg.coverage" NAME="train_arg Coverage Results" MODIFIED="1666436211007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/1D_CNN" />
+  </component>
+</project>
