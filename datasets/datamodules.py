@@ -4,6 +4,7 @@ import pytorch_lightning as pl
 import torch.utils.data as data
 import numpy as np
 from datasets.datasets import SHHSdataset, SHHS_dataset_2
+from utils.helper_functions import memReport, cpuStats
 
 
 class EEGdataModule(pl.LightningDataModule):
@@ -33,9 +34,8 @@ class EEGdataModule(pl.LightningDataModule):
         self.data_split = data_split
 
         self.num_patients_per_ds = num_patients // self.num_ds
-        self.eeg_train = None
-        self.eeg_val = None
-        self.epoch = 1
+
+        self.load_dataset(0)
 
     def load_dataset(self, idx):
         first_patient = self.first_patient + idx * self.num_patients_per_ds  # ! Make sure idx starts at 0
@@ -46,22 +46,28 @@ class EEGdataModule(pl.LightningDataModule):
         num = np.array(self.data_split).sum()
         piece = eeg_trainval.__len__() // num
         split = [self.data_split[0] * piece, eeg_trainval.__len__() - self.data_split[0] * piece]
-        #self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)
-        self.eeg_train = eeg_trainval
-        self.epoch += 1
+        # print("BEFORE loading reassigning")
+        # memReport()
+        # cpuStats()
+        self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)
+        # self.eeg_train = eeg_trainval
+        # print("AFTER loading reassigning")
+        # memReport()
+        # cpuStats()
+        # print("------------------------")
 
     def train_dataloader(self):
-        idx = self.epoch % self.num_ds  # self.trainer.current_epoch % self.num_ds
-        self.load_dataset(idx)
+        print("CURRENT TRAINER EPOCH: ", self.trainer.current_epoch)
+        if self.num_ds > 1:
+            idx = self.trainer.current_epoch % self.num_ds  # self.trainer.current_epoch % self.num_ds
+            self.load_dataset(idx)
         # TODO: set shuffle to true!
-        return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers,
+        return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers,
                                drop_last=True, pin_memory=True)
 
     def val_dataloader(self):
-        idx = self.epoch % self.num_ds  # self.trainer.current_epoch % self.num_ds
-        self.load_dataset(idx)
-        # TODO: set shuffle to true!
-        return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers,
+        # TODO: change eeg_train beneath back into eeg_val!
+        return data.DataLoader(self.eeg_val, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers,
                                drop_last=True, pin_memory=True)
 
     def test_dataloader(self):

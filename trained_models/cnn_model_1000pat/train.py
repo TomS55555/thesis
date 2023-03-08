@@ -51,21 +51,22 @@ args = {
   },
 
   "data_hparams": {
-    "first_patient": 1000,
-    "num_patients": 50,
+    "first_patient": 1,
+    "num_patients": 5000,
     "data_split": [4, 1],
     "batch_size": 512,
     "num_workers": 0,
     "exclude_test_set": constants.TEST_SET_1,
+    "num_ds": 5
   },
 
   "trainer_hparams": {
-    "max_epochs": 1,
-    #"profiler": "pytorch"
+    "max_epochs": 5,
+    #"profiler": "simple"
   },
 
   "optim_hparams": {
-    "max_epochs": 1,
+    "max_epochs": 5,
     "lr": 3e-4,
     "weight_decay": 1e-4
   }

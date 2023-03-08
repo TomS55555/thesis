@@ -7,7 +7,25 @@ from copy import deepcopy
 import torch.nn as nn
 import torch.utils.data as data
 from tqdm.notebook import tqdm
+import gc
+import sys
+import psutil
 
+
+def memReport():
+    for obj in gc.get_objects():
+        if torch.is_tensor(obj):
+            if len(obj.size()) == 3:
+                print("TENSOR: ", type(obj), obj.size())
+
+def cpuStats():
+    print(sys.version)
+    print(psutil.cpu_percent())
+    print(psutil.virtual_memory())  # physical memory usage
+    pid = os.getpid()
+    py = psutil.Process(pid)
+    memoryUse = py.memory_info()[0] / 2. ** 30  # memory use in GB...I think
+    print('memory GB:', memoryUse)
 
 @torch.no_grad()
 def prepare_data_features(model, data_loader, device):
