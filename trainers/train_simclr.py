@@ -33,12 +33,12 @@ def train_simclr(args, device):
         data_path=args.DATA_PATH,
    #     transform=contrast_transforms,
         **data_hparams)
-
+    assert data_hparams['num_ds'] > 1
     trainer = Trainer(
         default_root_dir=os.path.join(args.CHECKPOINT_PATH, args.save_name),
         accelerator="gpu" if str(device).startswith("cuda") else "cpu",
         devices=1,  # How many GPUs/CPUs to use
-        reload_dataloaders_every_n_epochs=1,  # Reload dataloaders to get different part of the big dataset
+        reload_dataloaders_every_n_epochs=1 if data_hparams['num_ds'] > 1 else 0,  # Reload dataloaders to get different part of the big dataset
         callbacks=[
             ModelCheckpoint(save_weights_only=True, mode="max", monitor="val_acc_top5",
                             save_last=True),
@@ -59,7 +59,8 @@ def train_simclr(args, device):
                    temperature=args.temperature,
                    aug_module=aug_module)
 
-    trainer.fit(model, data_module.train_dataloader(), data_module.val_dataloader())
+    trainer.fit(model=model,
+                datamodule=data_module)
 
     #model = SimCLR.load_from_checkpoint(
      #   trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training

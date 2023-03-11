@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="I think big dataset should work now">
+    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="Ready to train on google cloud">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/testing/batched_augmentations_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/testing/batched_augmentations_test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/testing/datamodule_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/testing/datamodule_test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/supervised_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/supervised_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainers/train_simclr.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/helper_functions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,9 +150,6 @@
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -253,8 +260,10 @@
       <workItem from="1674994078833" duration="779000" />
       <workItem from="1677493914413" duration="1682000" />
       <workItem from="1678022062712" duration="1222000" />
-      <workItem from="1678023380061" duration="6873000" />
-      <workItem from="1678536113864" duration="748000" />
+      <workItem from="1678023380061" duration="6584000" />
+      <workItem from="1678102382167" duration="19000" />
+      <workItem from="1678102575377" duration="6050000" />
+      <workItem from="1678271528343" duration="4806000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -431,14 +440,7 @@
       <option name="project" value="LOCAL" />
       <updated>1677497095429</updated>
     </task>
-    <task id="LOCAL-00026" summary="I think big dataset should work now">
-      <created>1678040482341</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1678040482341</updated>
-    </task>
-    <option name="localTasksCounter" value="27" />
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -484,8 +486,8 @@
     <MESSAGE value="Adding code for better testing" />
     <MESSAGE value="better structure" />
     <MESSAGE value="augmentations don't work" />
-    <MESSAGE value="I think big dataset should work now" />
-    <option name="LAST_COMMIT_MESSAGE" value="I think big dataset should work now" />
+    <MESSAGE value="Ready to train on google cloud" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ready to train on google cloud" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -499,9 +501,13 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/thesis$train_eval.coverage" NAME="train_main Coverage Results" MODIFIED="1667944214747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/thesis02$train.coverage" NAME="train Coverage Results" MODIFIED="1677519813138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
+    <SUITE FILE_PATH="coverage/thesis$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670839301941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670185038195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
+    <SUITE FILE_PATH="coverage/thesis$train.coverage" NAME="train Coverage Results" MODIFIED="1678104817701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
     <SUITE FILE_PATH="coverage/thesis02$main.coverage" NAME="main Coverage Results" MODIFIED="1666424423225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/thesis$train_main.coverage" NAME="train_main Coverage Results" MODIFIED="1671574040031" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/thesis02$train_arg.coverage" NAME="train_arg Coverage Results" MODIFIED="1666436211007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/1D_CNN" />
   </component>
 </project>

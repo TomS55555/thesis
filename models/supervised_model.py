@@ -38,7 +38,7 @@ class SupervisedModel(pl.LightningModule):
 
     def common_step(self, batch, calculate_loss=False):
         inputs, labels = batch
-        preds = self.net(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
+        preds = self.net(inputs)  # Remove the epoch dimension of size 1
         acc = (preds.argmax(dim=-1) == labels.squeeze()).float().mean()
 
         loss = self.loss_module(preds, labels.squeeze(dim=-1).long()) if calculate_loss else None
@@ -46,6 +46,8 @@ class SupervisedModel(pl.LightningModule):
         return acc, loss
 
     def training_step(self, batch, batch_idx):
+        print("Batch idx: ", batch_idx, "-----------")
+        print("Labels: ", batch[1])
         acc, loss = self.common_step(batch, calculate_loss=True)
 
         # Logs the accuracy per epoch to tensorboard (weighted average over batches)
