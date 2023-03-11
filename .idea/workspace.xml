@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="augmentations don't work">
-      <change afterPath="$PROJECT_DIR$/datasets/testing/datamodule_test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/thesis02.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/thesis02.iml" afterDir="false" />
+    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="I think big dataset should work now">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo_simclr.md" beforeDir="false" afterPath="$PROJECT_DIR$/todo_simclr.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainers/train_simclr.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,7 +253,8 @@
       <workItem from="1674994078833" duration="779000" />
       <workItem from="1677493914413" duration="1682000" />
       <workItem from="1678022062712" duration="1222000" />
-      <workItem from="1678023380061" duration="6584000" />
+      <workItem from="1678023380061" duration="6873000" />
+      <workItem from="1678536113864" duration="748000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -435,7 +431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677497095429</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="I think big dataset should work now">
+      <created>1678040482341</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1678040482341</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -481,7 +484,8 @@
     <MESSAGE value="Adding code for better testing" />
     <MESSAGE value="better structure" />
     <MESSAGE value="augmentations don't work" />
-    <option name="LAST_COMMIT_MESSAGE" value="augmentations don't work" />
+    <MESSAGE value="I think big dataset should work now" />
+    <option name="LAST_COMMIT_MESSAGE" value="I think big dataset should work now" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
