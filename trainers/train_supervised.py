@@ -9,16 +9,17 @@ from datasets.datamodules import EEGdataModule
 from models.supervised_model import SupervisedModel
 
 
-def train_supervised(args, device, pretrained_encoder=None, pretrained_classifier=None, dm=None):
-    if dm is None:
-        data_module = EEGdataModule(data_path=args.data_path, **args.data_hparams)
-        data_module.setup()
-    else:
-        data_module = dm
-
+def train_supervised(args,
+                     device,
+                     dm: pl.LightningDataModule,
+                     pretrained_encoder=None,
+                     pretrained_classifier=None,
+                     backbone=None):
     trainer = Trainer(
         default_root_dir=os.path.join(args.CHECKPOINT_PATH, args.save_name),
         accelerator="gpu" if str(device).startswith("cuda") else "cpu",
+        reload_dataloaders_every_n_epochs=1 if dm.num_ds > 1 else 0,
+        # Reload dataloaders to get different part of the big dataset
         devices=1,  # How many GPUs/CPUs to use
         callbacks=[
             ModelCheckpoint(save_weights_only=True, mode="min", monitor="val_loss", save_last=True),
@@ -37,8 +38,8 @@ def train_supervised(args, device, pretrained_encoder=None, pretrained_classifie
     classifier = constants.CLASSIFIERS[args.classifier](
         **args.classifier_hparams) if pretrained_classifier is None else pretrained_classifier
 
-    model = SupervisedModel(encoder, classifier, args.optim_hparams)
-    trainer.fit(model, data_module.train_dataloader(), data_module.val_dataloader())
+    model = SupervisedModel(encoder, classifier, args.optim_hparams, backbone)
+    trainer.fit(model, datamodule=dm)
 
     model = SupervisedModel.load_from_checkpoint(
         trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training
