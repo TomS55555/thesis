@@ -19,7 +19,7 @@ train_path = "training"
 args = {
   "MODEL_TYPE": "CNN_model_simclr",
   "save_name": result_file_name,
-  "DATA_PATH": constants.SHHS_PATH_DEKSTOP,
+  "DATA_PATH": constants.SHHS_PATH_GOOGLE,
   "CHECKPOINT_PATH": "checkpoints",
   "temperature": 0.05,
 
@@ -55,18 +55,18 @@ args = {
     "num_patients": 5000,
     "data_split": [4, 1],
     "batch_size": 512,
-    "num_workers": 0,
+    "num_workers": 2,
     "exclude_test_set": constants.TEST_SET_1,
-    "num_ds": 5
+    "num_ds": 20
   },
 
   "trainer_hparams": {
-    "max_epochs": 5,
+    "max_epochs": 150,
     #"profiler": "simple"
   },
 
   "optim_hparams": {
-    "max_epochs": 5,
+    "max_epochs": 150,
     "lr": 3e-4,
     "weight_decay": 1e-4
   }
