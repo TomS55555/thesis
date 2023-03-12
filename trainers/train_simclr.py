@@ -33,7 +33,7 @@ def train_simclr(args, device):
         data_path=args.DATA_PATH,
    #     transform=contrast_transforms,
         **data_hparams)
-    assert data_hparams['num_ds'] > 1
+    
     trainer = Trainer(
         default_root_dir=os.path.join(args.CHECKPOINT_PATH, args.save_name),
         accelerator="gpu" if str(device).startswith("cuda") else "cpu",
