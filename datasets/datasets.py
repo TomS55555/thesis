@@ -21,7 +21,8 @@ class SHHSdataset(torch.utils.data.Dataset):
                  num_patients: int,
                  window_size: int = 1,
                  exclude_test_set: tuple = (),
-                 transform: ContrastiveTransformations = None):
+                 transform: ContrastiveTransformations = None,
+                 test_set=False):
         super().__init__()
         if window_size != 1 and window_size != 4:
             raise NotImplementedError("Only window size 1 and 4 are supported")
@@ -30,9 +31,8 @@ class SHHSdataset(torch.utils.data.Dataset):
         self.window_size = window_size
         X1_list = []
         labels_list = []
-        for patient in range(first_patient, first_patient + num_patients):
-            if patient in exclude_test_set:
-                continue
+        patients = set(range(first_patient, first_patient + num_patients)) - set(exclude_test_set) if test_set is False else exclude_test_set
+        for patient in patients:
             datapoint = data_path + "n" + f"{patient:0=4}" + "_eeg.mat"
             try:
                 f = h5py.File(datapoint, 'r')

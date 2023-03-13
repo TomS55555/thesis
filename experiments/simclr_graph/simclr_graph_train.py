@@ -7,6 +7,8 @@ from models.simclr_model import SimCLR
 from utils.helper_functions import load_model
 from trainers.train_simclr_classifiers import train_networks, test_networks
 from datasets.datasets import SHHSdataset
+from models.mymodules import CNN_head
+import torch.nn as nn
 
 encoder_path = "../../trained_models/cnn_model_5000pat/last.ckpt"
 pretrained_model = load_model(SimCLR, encoder_path)  # Load pretrained simclr model
@@ -40,29 +42,26 @@ def train(device, version):
 
 
 def test(device, version):
-    first_patients_test = [1, 100, 200, 400]  # implicitly defines the test-set
-    num_patients_test = 60
     results = dict()
-    for first_patient_test in first_patients_test:
-        results_current_test_set = dict()
-        test_ds = SHHSdataset(
-            data_path=constants.SHHS_PATH_ESAT,
-            first_patient=first_patient_test,
-            num_patients=num_patients_test,
-        )
 
-        for n_patients in patients_list:
-            test_results = test_networks(
-                test_ds=test_ds,
-                pretrained_model=pretrained_model,
-                train_path=train_path+str(version),
-                logistic_save_name=logistic_save_name+"_"+str(n_patients)+"pat",
-                supervised_save_name=supervised_save_name+"_"+str(n_patients)+"pat",
-                finetune_save_name=finetune_save_name+"_"+str(n_patients)+"pat",
-                device=device
-            )
-            results_current_test_set[str(n_patients)+"_pat"] = test_results
-        results["first_patient_test="+str(first_patient_test)] = results_current_test_set
+    for n_patients in patients_list:
+        test_results = test_networks(
+            encoder=CNN_head(
+                conv_filters=[32, 64, 64],
+                representation_dim=100
+            ),
+            classifier=nn.Linear(
+                in_features=100,
+                out_features=constants.N_CLASSES
+            ),
+            test_ds_args=get_data_args(first_patient=1, num_patients=1000),
+            train_path=train_path+str(version),
+            logistic_save_name=logistic_save_name+"_"+str(n_patients)+"pat",
+            supervised_save_name=supervised_save_name+"_"+str(n_patients)+"pat",
+            finetune_save_name=finetune_save_name+"_"+str(n_patients)+"pat",
+            device=device
+        )
+        results[str(n_patients)+"_pat"] = test_results
 
     with open(result_file_name+str(version), 'w+') as f:
         json.dump(results, f)
@@ -70,14 +69,14 @@ def test(device, version):
 
 def get_data_args(first_patient, num_patients):
     return {
-        "data_path": constants.SHHS_PATH_LAPTOP,
+        "data_path": constants.SHHS_PATH_DEKSTOP,
         "data_split": [4, 1],
         "first_patient": first_patient,
         "num_patients": num_patients,
         "batch_size": 64,
         "num_workers": 2,
         "num_ds": (num_patients // PATIENTS_PER_DS)+1,
-        "exclude_test_set": constants.TEST_SET_1
+        "exclude_test_set": constants.TEST_SET_0
     }
 
 
@@ -87,16 +86,16 @@ def get_logistic_args(save_name, checkpoint_path):
         "save_name": save_name,
         "CHECKPOINT_PATH": checkpoint_path,
 
-        "encoder": "None",
-        "encoder_hparams": {},
+        "encoder": None,
 
-        "classifier": "logistic",
-        "classifier_hparams": {
-            "input_dim": 100
-        },
+        "classifier": nn.Linear(
+            in_features=100,
+            out_features=constants.N_CLASSES
+        ),
 
         "trainer_hparams": {
-            "max_epochs": 30
+            "max_epochs": 5, # 30,
+            'profiler': 'simple'
         },
         "optim_hparams": {
             "lr": 1e-3,
@@ -115,19 +114,18 @@ def get_supervised_args(save_name, checkpoint_path):
         "save_name": save_name,
         "CHECKPOINT_PATH": checkpoint_path,
 
-        "encoder": "CNN_head",
-        "encoder_hparams": {
-            "conv_filters": [32, 64, 64],
-            "representation_dim": 100
-        },
-
-        "classifier": "logistic",
-        "classifier_hparams": {
-            "input_dim": 100
-        },
+        "encoder": CNN_head(
+            conv_filters=[32, 64, 64],
+            representation_dim=100
+        ),
+        "classifier": nn.Linear(
+            in_features=100,
+            out_features=constants.N_CLASSES
+        ),
 
         "trainer_hparams": {
-            "max_epochs": 40
+            "max_epochs": 5#40
+            # "profiler": "simple"
         },
         "optim_hparams": {
             "lr": 1e-5,
@@ -143,19 +141,17 @@ def get_finetune_args(save_name, checkpoint_path):
         "save_name": save_name,
         "CHECKPOINT_PATH": checkpoint_path,
 
-        "encoder": "CNN_head",
-        "encoder_hparams": {
-            "conv_filters": [32, 64, 64],
-            "representation_dim": 100
-        },
-
-        "classifier": "logistic",
-        "classifier_hparams": {
-            "input_dim": 100
-        },
+        "encoder": CNN_head(
+            conv_filters=[32, 64, 64],
+            representation_dim=100
+        ),
+        "classifier": nn.Linear(
+            in_features=100,
+            out_features=constants.N_CLASSES
+        ),
 
         "trainer_hparams": {
-            "max_epochs": 60
+            "max_epochs": 5#60
         },
         "optim_hparams": {
             "lr": 2e-6,
