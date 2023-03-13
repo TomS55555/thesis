@@ -6,6 +6,8 @@ import constants
 from utils.helper_functions import load_model, get_checkpoint_path, prepare_data_features
 import pytorch_lightning as pl
 import torch.utils.data as data
+from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
+from copy import deepcopy
 import os
 
 
@@ -16,13 +18,17 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
     dm = EEGdataModule(**data_args)  # Load datamodule
 
     # Run dm through pretrained encoder
-    simclr_dm = SimCLRdataModule(pretrained_model, dm, data_args['batch_size'], data_args['num_workers'], device)
+    # simclr_dm = SimCLRdataModule(pretrained_model, dm, data_args['batch_size'], data_args['num_workers'], device)
 
     # Train supervised model
     train_supervised(Namespace(**supervised_args), device, dm=dm)
 
     # Train logistic classifier on top of simclr backbone
-    logistic_model = train_supervised(Namespace(**logistic_args), device=device, dm=simclr_dm)
+    backbone = deepcopy(pretrained_model.f)
+    logistic_model = train_supervised(Namespace(**logistic_args),
+                                      device=device,
+                                      dm=dm,
+                                      backbone=backbone)
 
     # Recover encoder from pretrained model for finetuning
     pretrained_encoder = type(pretrained_model.f)(**finetune_args['encoder_hparams'])

@@ -8,10 +8,12 @@ from utils.helper_functions import load_model
 from trainers.train_simclr_classifiers import train_networks, test_networks
 from datasets.datasets import SHHSdataset
 
-encoder_path = "trained_models/cnn_simclr_500pat.ckpt"
+encoder_path = "../../trained_models/cnn_model_5000pat/last.ckpt"
 pretrained_model = load_model(SimCLR, encoder_path)  # Load pretrained simclr model
 
-patients_list = [3, 5, 10, 20, 50, 100, 250, 500]  # n_patients used for training
+# patients_list = [3, 5, 10, 20, 50, 100, 250, 500, 1000, 2000, 5000]  # n_patients used for training
+
+patients_list = [50]
 
 train_path = "simclr_trainings"  # path used for training the networks
 result_file_name = "test_results"
@@ -19,6 +21,8 @@ result_file_name = "test_results"
 logistic_save_name = "logistic_on_simclr"
 supervised_save_name = "fully_supervised"
 finetune_save_name = "fine_tuned_simclr"
+
+PATIENTS_PER_DS = 250  # seems to work for google cloud
 
 
 def train(device, version):
@@ -66,12 +70,14 @@ def test(device, version):
 
 def get_data_args(first_patient, num_patients):
     return {
-        "data_path": constants.SHHS_PATH_ESAT,
+        "data_path": constants.SHHS_PATH_LAPTOP,
         "data_split": [4, 1],
         "first_patient": first_patient,
         "num_patients": num_patients,
         "batch_size": 64,
-        "num_workers": 12
+        "num_workers": 2,
+        "num_ds": (num_patients // PATIENTS_PER_DS)+1,
+        "exclude_test_set": constants.TEST_SET_1
     }
 
 
@@ -168,12 +174,14 @@ if __name__ == "__main__":
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(dev)
 
+    version = int(args.version)
+
     if args.mode == "train":
-        train(dev, args.version)
+        train(dev, version)
     elif args.mode == "test":
-        test(dev, args.version)
+        test(dev, version)
     elif args.mode == 'both':
-        train(dev, args.version)
-        test(dev, args.version)
+        train(dev, version)
+        test(dev, version)
     else:
         exit("Mode not recognized!")
