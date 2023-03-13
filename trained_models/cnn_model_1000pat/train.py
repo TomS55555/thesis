@@ -51,13 +51,13 @@ args = {
   },
 
   "data_hparams": {
-    "first_patient": 1,
-    "num_patients": 5000,
+    "first_patient": 1000,
+    "num_patients": 1000,
     "data_split": [4, 1],
     "batch_size": 512,
     "num_workers": 0,
     "exclude_test_set": constants.TEST_SET_1,
-    "num_ds": 5
+    "num_ds": 10
   },
 
   "trainer_hparams": {
