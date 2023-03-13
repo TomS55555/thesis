@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="Ready to train on google cloud">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,6 +258,7 @@
       <workItem from="1678102575377" duration="6050000" />
       <workItem from="1678271528343" duration="6211000" />
       <workItem from="1678457895090" duration="3335000" />
+      <workItem from="1678706104530" duration="712000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -442,7 +442,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678278720377</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Ready to train on google cloud">
+      <created>1678706144972</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1678706144972</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
