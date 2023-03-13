@@ -32,6 +32,7 @@ class SHHSdataset(torch.utils.data.Dataset):
         X1_list = []
         labels_list = []
         patients = set(range(first_patient, first_patient + num_patients)) - set(exclude_test_set) if test_set is False else exclude_test_set
+        print("Size of patients:", len(patients))
         for patient in patients:
             datapoint = data_path + "n" + f"{patient:0=4}" + "_eeg.mat"
             try:

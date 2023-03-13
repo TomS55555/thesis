@@ -1,0 +1,1 @@
+{"50_pat": {"sup_res": [{"test_acc": 0.6750453114509583}], "logistic_res": [{"test_acc": 0.6559292078018188}], "fully_tuned_res": [{"test_acc": 0.6731204986572266}]}}

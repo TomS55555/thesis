@@ -109,6 +109,8 @@ def test_networks(encoder, classifier, test_ds_args, train_path, logistic_save_n
         device=device
     )
 
+    # print(list(iter(test_dm.test_dataloader()))[0][0].shape)
+
     sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
     sup_res = trainer.test(model=sup_model,
                            datamodule=test_dm)

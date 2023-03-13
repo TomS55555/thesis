@@ -1,3 +1,5 @@
+import sys, os
+sys.path.extend([os.getcwd()])
 from argparse import ArgumentParser
 import torch
 import constants
@@ -10,7 +12,7 @@ from datasets.datasets import SHHSdataset
 from models.mymodules import CNN_head
 import torch.nn as nn
 
-encoder_path = "../../trained_models/cnn_model_5000pat/last.ckpt"
+encoder_path = "trained_models/cnn_model_5000pat/last.ckpt"
 pretrained_model = load_model(SimCLR, encoder_path)  # Load pretrained simclr model
 
 # patients_list = [3, 5, 10, 20, 50, 100, 250, 500, 1000, 2000, 5000]  # n_patients used for training
@@ -62,14 +64,15 @@ def test(device, version):
             device=device
         )
         results[str(n_patients)+"_pat"] = test_results
-
+        print(test_results)
+    print(results)
     with open(result_file_name+str(version), 'w+') as f:
         json.dump(results, f)
 
 
 def get_data_args(first_patient, num_patients):
     return {
-        "data_path": constants.SHHS_PATH_DEKSTOP,
+        "data_path": constants.SHHS_PATH_GOOGLE,
         "data_split": [4, 1],
         "first_patient": first_patient,
         "num_patients": num_patients,
@@ -94,7 +97,7 @@ def get_logistic_args(save_name, checkpoint_path):
         ),
 
         "trainer_hparams": {
-            "max_epochs": 5, # 30,
+            "max_epochs": 5, #30,
             'profiler': 'simple'
         },
         "optim_hparams": {
@@ -124,7 +127,7 @@ def get_supervised_args(save_name, checkpoint_path):
         ),
 
         "trainer_hparams": {
-            "max_epochs": 5#40
+            "max_epochs": 5, #40
             # "profiler": "simple"
         },
         "optim_hparams": {
@@ -151,7 +154,7 @@ def get_finetune_args(save_name, checkpoint_path):
         ),
 
         "trainer_hparams": {
-            "max_epochs": 5#60
+            "max_epochs": 5, #60
         },
         "optim_hparams": {
             "lr": 2e-6,

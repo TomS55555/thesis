@@ -65,16 +65,10 @@ class SupervisedModel(pl.LightningModule):
         self.log('val_loss', loss)
 
     def test_step(self, batch, batch_idx):
-        inputs, labels = batch
-
-
-        preds = self.net(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
-        preds = preds.argmax(dim=-1)
-        labels = labels.squeeze(dim=-1).type(torch.int64)
-        acc = (preds == labels).float().mean()
+        acc, loss = self.common_step(batch, calculate_loss=True)
 
         self.log('test_acc', acc)
-        preds.cpu()
-        labels.cpu()
-        kappa = 1.0 if torch.equal(preds, labels) else cohen_kappa_score(preds, labels)
-        self.log('kappa', kappa)
+        #preds.cpu()
+        #labels.cpu()
+        #kappa = 1.0 if torch.equal(preds, labels) else cohen_kappa_score(preds, labels)
+        #self.log('kappa', kappa)
