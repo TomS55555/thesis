@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="Ready to train on google cloud">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/testing/batched_augmentations_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/testing/batched_augmentations_test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/testing/datamodule_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/testing/datamodule_test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/supervised_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/supervised_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainers/train_simclr.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/helper_functions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,6 +141,9 @@
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -263,7 +257,8 @@
       <workItem from="1678023380061" duration="6584000" />
       <workItem from="1678102382167" duration="19000" />
       <workItem from="1678102575377" duration="6050000" />
-      <workItem from="1678271528343" duration="4806000" />
+      <workItem from="1678271528343" duration="6211000" />
+      <workItem from="1678457895090" duration="3335000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -440,7 +435,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677497095429</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Ready to train on google cloud">
+      <created>1678278720377</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1678278720377</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
