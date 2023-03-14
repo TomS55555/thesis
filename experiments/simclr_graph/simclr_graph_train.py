@@ -17,7 +17,7 @@ encoder_path = "trained_models/cnn_model_5000pat/last.ckpt"
 pretrained_model = load_model(SimCLR, encoder_path)  # Load pretrained simclr model
 
 #patients_list = [3, 5, 10, 20, 50, 100, 250, 500, 1000, 2000, 5000]  # n_patients used for training
-patients_list = [500]
+patients_list = [3, 5, 10, 20, 50, 100]
 
 # patients_list = [50]
 

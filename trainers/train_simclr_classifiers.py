@@ -48,8 +48,8 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
                                      trainer_hparams=supervised_args['trainer_hparams'],
                                      device=device)
 
-    #supervised_trainer.fit(model=supervised_model,
-    #                       datamodule=dm)
+    supervised_trainer.fit(model=supervised_model,
+                           datamodule=dm)
 
     # Train logistic classifier on top of simclr backbone
     backbone = deepcopy(pretrained_model.f)
@@ -65,8 +65,8 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
                                    num_ds=dm.num_ds,
                                    trainer_hparams=logistic_args['trainer_hparams'],
                                    device=device)
-    #logistic_trainer.fit(model=logistic_model,
-    #                     datamodule=dm)
+    logistic_trainer.fit(model=logistic_model,
+                         datamodule=dm)
 
     # Recover encoder from pretrained model for finetuning
     # pretrained_encoder = type(pretrained_model.f)(**finetune_args['encoder_hparams'])
