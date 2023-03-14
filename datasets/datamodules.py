@@ -21,6 +21,7 @@ class EEGdataModule(pl.LightningDataModule):
                  num_workers: int,
                  first_patient: int = 1,
                  exclude_test_set: tuple = (),
+                 test_set=False,
                  num_ds: int = 1,  # This property can be used to load a different dataset every epoch
                  transform=None,
                  test_dl=None, **kwargs):
@@ -36,8 +37,8 @@ class EEGdataModule(pl.LightningDataModule):
         self.exclude_test_set = exclude_test_set
         self.num_patients_per_ds = num_patients // self.num_ds
 
-        self.load_dataset(0)
-        if len(exclude_test_set) > 0:
+        # self.load_dataset(0)
+        if test_set:
             self.eeg_test = SHHSdataset(
                 data_path=data_path,
                 first_patient=first_patient,
@@ -45,6 +46,8 @@ class EEGdataModule(pl.LightningDataModule):
                 exclude_test_set=exclude_test_set,
                 test_set=True
             )
+        else:
+            self.load_dataset(0)
 
     def load_dataset(self, idx):
         first_patient = self.first_patient + idx * self.num_patients_per_ds  # ! Make sure idx starts at 0
@@ -52,6 +55,7 @@ class EEGdataModule(pl.LightningDataModule):
                                    first_patient=first_patient,
                                    num_patients=self.num_patients_per_ds,
                                    exclude_test_set=self.exclude_test_set)
+        print("SIZE eeg_trainval:", eeg_trainval.__len__()) 
 
         num = np.array(self.data_split).sum()
         piece = eeg_trainval.__len__() // num

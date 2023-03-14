@@ -11,13 +11,15 @@ from trainers.train_simclr_classifiers import train_networks, test_networks
 from datasets.datasets import SHHSdataset
 from models.mymodules import CNN_head
 import torch.nn as nn
+import math
 
 encoder_path = "trained_models/cnn_model_5000pat/last.ckpt"
 pretrained_model = load_model(SimCLR, encoder_path)  # Load pretrained simclr model
 
-# patients_list = [3, 5, 10, 20, 50, 100, 250, 500, 1000, 2000, 5000]  # n_patients used for training
+#patients_list = [3, 5, 10, 20, 50, 100, 250, 500, 1000, 2000, 5000]  # n_patients used for training
+patients_list = [500]
 
-patients_list = [50]
+# patients_list = [50]
 
 train_path = "simclr_trainings"  # path used for training the networks
 result_file_name = "test_results"
@@ -33,12 +35,13 @@ def train(device, version):
     first_patients_train = 1
 
     for n_patients in patients_list:
+        num_ds = math.ceil(n_patients/PATIENTS_PER_DS)  
         train_networks(
             pretrained_model=pretrained_model,
-            data_args=get_data_args(first_patients_train, n_patients),
-            logistic_args=get_logistic_args(logistic_save_name+"_"+str(n_patients)+"pat", train_path+str(version)),
-            supervised_args=get_supervised_args(supervised_save_name+"_"+str(n_patients)+"pat", train_path+str(version)),
-            finetune_args=get_finetune_args(finetune_save_name+"_"+str(n_patients)+"pat", train_path+str(version)),
+            data_args=get_data_args(first_patients_train, n_patients, num_ds),
+            logistic_args=get_logistic_args(logistic_save_name+"_"+str(n_patients)+"pat", train_path+str(version), num_ds),
+            supervised_args=get_supervised_args(supervised_save_name+"_"+str(n_patients)+"pat", train_path+str(version), num_ds),
+            finetune_args=get_finetune_args(finetune_save_name+"_"+str(n_patients)+"pat", train_path+str(version), num_ds),
             device=device
         )
 
@@ -56,7 +59,7 @@ def test(device, version):
                 in_features=100,
                 out_features=constants.N_CLASSES
             ),
-            test_ds_args=get_data_args(first_patient=1, num_patients=1000),
+            test_ds_args=get_data_args(first_patient=1, num_patients=5),  #TODO: LOOK INTO THIS!!
             train_path=train_path+str(version),
             logistic_save_name=logistic_save_name+"_"+str(n_patients)+"pat",
             supervised_save_name=supervised_save_name+"_"+str(n_patients)+"pat",
@@ -70,7 +73,7 @@ def test(device, version):
         json.dump(results, f)
 
 
-def get_data_args(first_patient, num_patients):
+def get_data_args(first_patient, num_patients, num_ds):
     return {
         "data_path": constants.SHHS_PATH_GOOGLE,
         "data_split": [4, 1],
@@ -78,12 +81,12 @@ def get_data_args(first_patient, num_patients):
         "num_patients": num_patients,
         "batch_size": 64,
         "num_workers": 2,
-        "num_ds": (num_patients // PATIENTS_PER_DS)+1,
-        "exclude_test_set": constants.TEST_SET_0
+        "num_ds": num_ds,
+        "exclude_test_set": constants.TEST_SET_1
     }
 
 
-def get_logistic_args(save_name, checkpoint_path):
+def get_logistic_args(save_name, checkpoint_path, num_ds):
     return {
         "MODEL_TYPE": "SupervisedModel",
         "save_name": save_name,
@@ -97,8 +100,8 @@ def get_logistic_args(save_name, checkpoint_path):
         ),
 
         "trainer_hparams": {
-            "max_epochs": 5, #30,
-            'profiler': 'simple'
+            "max_epochs": 30 * num_ds,
+            #'profiler': 'simple'
         },
         "optim_hparams": {
             "lr": 1e-3,
@@ -111,7 +114,7 @@ def get_logistic_args(save_name, checkpoint_path):
     }
 
 
-def get_supervised_args(save_name, checkpoint_path):
+def get_supervised_args(save_name, checkpoint_path, num_ds):
     return {
         "MODEL_TYPE": "SupervisedModel",
         "save_name": save_name,
@@ -127,7 +130,7 @@ def get_supervised_args(save_name, checkpoint_path):
         ),
 
         "trainer_hparams": {
-            "max_epochs": 5, #40
+            "max_epochs": 40 * num_ds
             # "profiler": "simple"
         },
         "optim_hparams": {
@@ -138,7 +141,7 @@ def get_supervised_args(save_name, checkpoint_path):
     }
 
 
-def get_finetune_args(save_name, checkpoint_path):
+def get_finetune_args(save_name, checkpoint_path, num_ds):
     return {
         "MODEL_TYPE": "SupervisedModel",
         "save_name": save_name,
@@ -154,7 +157,7 @@ def get_finetune_args(save_name, checkpoint_path):
         ),
 
         "trainer_hparams": {
-            "max_epochs": 5, #60
+            "max_epochs": 60 * num_ds
         },
         "optim_hparams": {
             "lr": 2e-6,
