@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="workspace">
+    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="Working on training the simclr graph again">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/simclr_graph/simclr_graph_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/simclr_graph/simclr_graph_train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/supervised_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/supervised_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/epoch=52-step=19361.ckpt" beforeDir="false" afterPath="$PROJECT_DIR$/trained_models/cnn_model_5000pat/epoch=52-step=19361.ckpt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/last.ckpt" beforeDir="false" afterPath="$PROJECT_DIR$/trained_models/cnn_model_5000pat/last.ckpt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/trained_models/cnn_model_5000pat/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainers/train_simclr.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainers/train_supervised.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_supervised.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/helper_functions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,20 +43,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
-    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
-    "WebServerToolWindowPanel.toolwindow.show.date": "false",
-    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
-    "WebServerToolWindowPanel.toolwindow.show.size": "false",
-    "last_opened_file_path": "C:/Users/tomsm/PycharmProjects/thesis02/experiments/simclr_graph/simclr_graph_train.py",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis02/experiments/simclr_graph/simclr_graph_train.py&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\trained_models\cnn_model" />
@@ -149,6 +141,9 @@
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="C:\Users\tomsm\anaconda3\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/simclr_graph" />
       <option name="IS_MODULE_SDK" value="false" />
@@ -286,7 +281,8 @@
       <workItem from="1678102382167" duration="19000" />
       <workItem from="1678102575377" duration="6050000" />
       <workItem from="1678271528343" duration="4806000" />
-      <workItem from="1678555682462" duration="9883000" />
+      <workItem from="1678555682462" duration="10017000" />
+      <workItem from="1679138253070" duration="662000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -463,7 +459,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677497095429</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Working on training the simclr graph again">
+      <created>1678644840150</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1678644840150</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -510,7 +513,8 @@
     <MESSAGE value="better structure" />
     <MESSAGE value="augmentations don't work" />
     <MESSAGE value="Ready to train on google cloud" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ready to train on google cloud" />
+    <MESSAGE value="Working on training the simclr graph again" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working on training the simclr graph again" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

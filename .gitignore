@@ -13,3 +13,4 @@
 /condor_logs/
 /checkpoints_test/
 /.idea/
+./.idea/workspace.xml
