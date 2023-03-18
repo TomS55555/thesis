@@ -20,6 +20,8 @@ class EEGdataModule(pl.LightningDataModule):
                  num_patients: int,
                  num_workers: int,
                  first_patient: int = 1,
+                 exclude_test_set: tuple = (),
+                 test_set=False,
                  num_ds: int = 1,  # This property can be used to load a different dataset every epoch
                  transform=None,
                  test_dl=None, **kwargs):
@@ -32,16 +34,28 @@ class EEGdataModule(pl.LightningDataModule):
         self.test_dl = test_dl
         self.num_ds = num_ds
         self.data_split = data_split
-
+        self.exclude_test_set = exclude_test_set
         self.num_patients_per_ds = num_patients // self.num_ds
 
-        self.load_dataset(0)
+        # self.load_dataset(0)
+        if test_set:
+            self.eeg_test = SHHSdataset(
+                data_path=data_path,
+                first_patient=first_patient,
+                num_patients=num_patients,
+                exclude_test_set=exclude_test_set,
+                test_set=True
+            )
+        else:
+            self.load_dataset(0)
 
     def load_dataset(self, idx):
         first_patient = self.first_patient + idx * self.num_patients_per_ds  # ! Make sure idx starts at 0
         eeg_trainval = SHHSdataset(data_path=self.data_path,
                                    first_patient=first_patient,
-                                   num_patients=self.num_patients_per_ds)
+                                   num_patients=self.num_patients_per_ds,
+                                   exclude_test_set=self.exclude_test_set)
+        print("SIZE eeg_trainval:", eeg_trainval.__len__()) 
 
         num = np.array(self.data_split).sum()
         piece = eeg_trainval.__len__() // num
@@ -71,9 +85,10 @@ class EEGdataModule(pl.LightningDataModule):
                                drop_last=True, pin_memory=True)
 
     def test_dataloader(self):
-        if self.test_dl is None:
+        if self.eeg_test is None:
             raise NotImplementedError
-        return self.test_dl
+        return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers,
+                               drop_last=True)
 
 
 class SimCLRdataModule(pl.LightningDataModule):

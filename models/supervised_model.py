@@ -15,16 +15,15 @@ class SupervisedModel(pl.LightningModule):
     def __init__(self,
                  encoder: nn.Module,
                  classifier: nn.Module,
-                 optim_hparams,
-                 backbone: nn.Module):
+                 optim_hparams):
         super().__init__()
-        self.save_hyperparameters(ignore=['encoder', 'classifier'])  # encoder and classifier parameters are already saved because they are nn.Modules
+          # encoder and classifier parameters are already saved because they are nn.Modules
         self.optim_hparams = optim_hparams
         self.encoder = encoder
         self.classifier = classifier
         self.net = nn.Sequential(encoder, classifier)
         self.loss_module = nn.CrossEntropyLoss()
-        self.backbone = backbone
+        self.save_hyperparameters()
 
     def forward(self, x):
         return self.net(x)
@@ -43,12 +42,6 @@ class SupervisedModel(pl.LightningModule):
 
     def common_step(self, batch, calculate_loss=False):
         inputs, labels = batch
-
-        if self.backbone is not None:   # Make sure backbone is on gpu!
-            with torch.no_grad():
-                self.backbone.eval()
-                inputs = self.backbone(inputs)
-
         preds = self.net(inputs)  # Remove the epoch dimension of size 1
         acc = (preds.argmax(dim=-1) == labels.squeeze()).float().mean()
 
@@ -57,8 +50,8 @@ class SupervisedModel(pl.LightningModule):
         return acc, loss
 
     def training_step(self, batch, batch_idx):
-        print("Batch idx: ", batch_idx, "-----------")
-        print("Labels: ", batch[1])
+        # print("Batch idx: ", batch_idx, "-----------")
+        # print("Labels: ", batch[1])
         acc, loss = self.common_step(batch, calculate_loss=True)
 
         # Logs the accuracy per epoch to tensorboard (weighted average over batches)
@@ -72,19 +65,10 @@ class SupervisedModel(pl.LightningModule):
         self.log('val_loss', loss)
 
     def test_step(self, batch, batch_idx):
-        inputs, labels = batch
-
-        if self.backbone is not None:
-            with torch.no_grad():
-                inputs = self.backbone(inputs)
-
-        preds = self.net(torch.squeeze(inputs, dim=1))  # Remove the epoch dimension of size 1
-        preds = preds.argmax(dim=-1)
-        labels = labels.squeeze(dim=-1).type(torch.int64)
-        acc = (preds == labels).float().mean()
+        acc, loss = self.common_step(batch, calculate_loss=True)
 
         self.log('test_acc', acc)
-        preds.cpu()
-        labels.cpu()
-        kappa = 1.0 if torch.equal(preds, labels) else cohen_kappa_score(preds, labels)
-        self.log('kappa', kappa)
+        #preds.cpu()
+        #labels.cpu()
+        #kappa = 1.0 if torch.equal(preds, labels) else cohen_kappa_score(preds, labels)
+        #self.log('kappa', kappa)

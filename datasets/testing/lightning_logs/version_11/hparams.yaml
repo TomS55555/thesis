@@ -1,0 +1,4 @@
+optim_hparams:
+  lr: 0.001
+  lr_hparams: null
+  weight_decay: 0.0001

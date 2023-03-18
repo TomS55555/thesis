@@ -41,7 +41,7 @@ def train_supervised(args,
     model = SupervisedModel(encoder, classifier, args.optim_hparams, backbone)
     trainer.fit(model, datamodule=dm)
 
-    model = SupervisedModel.load_from_checkpoint(
-        trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training
+    # model = SupervisedModel.load_from_checkpoint(
+    #    trainer.checkpoint_callback.best_model_path)  # Load best checkpoint after training
 
     return model
