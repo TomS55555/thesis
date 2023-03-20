@@ -1,43 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="Ready to train on google cloud">
+    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="rt">
+      <change afterPath="$PROJECT_DIR$/experiments/transformer_simple/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/simclr_graph/simclr_graph_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/simclr_graph/simclr_graph_train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_files/cnn_model_supervised.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_files/cnn_simclr.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_files/cnn_simclr_results.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_files/cnn_simclr_results0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_files/cnn_simclr_results0_test.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_files/cnn_simclr_results1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_files/cnn_simclr_results1_test.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_files/cnn_simclr_results2_test.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_files/cnn_supervised.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/fine_tuned_simclr_50pat/lightning_logs/version_0/checkpoints/epoch=4-step=2965.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/fine_tuned_simclr_50pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/fine_tuned_simclr_50pat/lightning_logs/version_0/events.out.tfevents.1678726880.thesis-1-vm.24563.2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/fine_tuned_simclr_50pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/fully_supervised_50pat/lightning_logs/version_0/checkpoints/epoch=4-step=2965.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/fully_supervised_50pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/fully_supervised_50pat/lightning_logs/version_0/events.out.tfevents.1678726766.thesis-1-vm.24563.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/fully_supervised_50pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/logistic_on_simclr_50pat/lightning_logs/version_0/checkpoints/epoch=3-step=2372.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/logistic_on_simclr_50pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/logistic_on_simclr_50pat/lightning_logs/version_0/events.out.tfevents.1678726834.thesis-1-vm.24563.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/logistic_on_simclr_50pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_0/events.out.tfevents.1678727034.thesis-1-vm.25269.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_1/events.out.tfevents.1678727460.thesis-1-vm.25796.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_2/events.out.tfevents.1678728462.thesis-1-vm.27250.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_2/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_3/events.out.tfevents.1678728767.thesis-1-vm.27624.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_3/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_4/events.out.tfevents.1678728977.thesis-1-vm.27887.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_4/events.out.tfevents.1678729007.thesis-1-vm.27887.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_4/events.out.tfevents.1678729010.thesis-1-vm.27887.2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simclr_trainings3/testing/lightning_logs/version_4/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="Jupyter Notebook" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -561,8 +527,8 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/thesis$train_eval.coverage" NAME="train_main Coverage Results" MODIFIED="1667944214747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/thesis02$train.coverage" NAME="train Coverage Results" MODIFIED="1677519813138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
+    <SUITE FILE_PATH="coverage/thesis$train_eval.coverage" NAME="train_main Coverage Results" MODIFIED="1667944214747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/thesis$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670839301941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670185038195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
     <SUITE FILE_PATH="coverage/thesis$train.coverage" NAME="train Coverage Results" MODIFIED="1678104817701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
