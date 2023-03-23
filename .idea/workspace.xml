@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="rt">
-      <change afterPath="$PROJECT_DIR$/experiments/transformer_simple/train.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/my_transformer.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/transformer_tutorial.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/transformer_simple/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/transformer_simple/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +15,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Jupyter Notebook" />
         <option value="Python Script" />
+        <option value="Jupyter Notebook" />
       </list>
     </option>
   </component>
@@ -70,7 +72,7 @@
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\trained_models" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.simclr_graph_train">
+  <component name="RunManager" selected="Python.train (1)">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -159,6 +161,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="train (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/transformer_simple" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/transformer_simple/train.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -229,12 +253,14 @@
       <item itemvalue="Python.simclr_graph_train" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.train_main" />
+      <item itemvalue="Python.train (1)" />
       <item itemvalue="Python.train" />
       <item itemvalue="Python.simclr_graph" />
       <item itemvalue="Python.train_arg" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.train (1)" />
         <item itemvalue="Python.train" />
         <item itemvalue="Python.simclr_graph" />
         <item itemvalue="Python.train_arg" />
@@ -283,6 +309,8 @@
       <workItem from="1678271528343" duration="4806000" />
       <workItem from="1678555682462" duration="9883000" />
       <workItem from="1678803738568" duration="4025000" />
+      <workItem from="1679410014701" duration="8258000" />
+      <workItem from="1679569117459" duration="4821000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -527,8 +555,8 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/thesis02$train.coverage" NAME="train Coverage Results" MODIFIED="1677519813138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
     <SUITE FILE_PATH="coverage/thesis$train_eval.coverage" NAME="train_main Coverage Results" MODIFIED="1667944214747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/thesis02$train.coverage" NAME="train Coverage Results" MODIFIED="1677519813138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
     <SUITE FILE_PATH="coverage/thesis$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670839301941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670185038195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
     <SUITE FILE_PATH="coverage/thesis$train.coverage" NAME="train Coverage Results" MODIFIED="1678104817701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
