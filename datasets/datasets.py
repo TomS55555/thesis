@@ -74,6 +74,58 @@ class SHHSdataset(torch.utils.data.Dataset):
             return self.transform(inputs, prev_inputs), label
 
 
+class SHHS_dataset_STFT(torch.utils.data.Dataset):
+    """
+        This class loads the dataset as defined in /esat/biomeddata/SHHS_dataset/no_backup
+        Only the *_eeg.mat files are used and the number of patients to use is specified in the initialization
+        Some patients are missing in the files, but this is ignored
+        Finally the data of the different patients are concatenated into one big tensor, which can then be indexed
+        directly with __get_item__()
+    """
+
+    def __init__(self, data_path: str,
+                 first_patient: int,
+                 num_patients: int,
+                 window_size: int = 1,
+                 exclude_test_set: tuple = (),
+                 test_set=False):
+        super().__init__()
+
+        self.data_path = data_path
+        self.window_size = window_size
+        X2_list = []
+        labels_list = []
+        patients = set(range(first_patient, first_patient + num_patients)) - set(exclude_test_set) if test_set is False else exclude_test_set
+        print("Size of patients:", len(patients))
+        for patient in patients:
+            datapoint = data_path + "n" + f"{patient:0=4}" + "_eeg.mat"
+            try:
+                f = h5py.File(datapoint, 'r')
+                x2 = torch.as_tensor(np.array(f.get("X2")))
+                X2_list.append(x2.permute(2, 1, 0))
+
+                label = torch.as_tensor(np.array(f.get("label"))[0])
+                labels_list.append(label)
+            except FileNotFoundError as e:
+                print("Couldn't find file at path: ", datapoint)  # No problem if some patients are missing
+
+        self.X2 = torch.cat(X2_list, 0)
+        self.X2 = self.X2[:, :, 1:]  #TODO: check this!!
+        self.labels = torch.cat(labels_list, 0)
+        self.labels = self.labels - torch.ones(self.labels.size(0))  # Change label range from 1->5 to 0->4s
+        self.length = self.labels.size(0) - self.window_size  # Avoid problems at end of dataset
+        if self.labels.size(0) == 0:
+            raise FileNotFoundError  # No data found at all, raise an error
+
+    def __len__(self):
+        return self.length
+
+    def __getitem__(self, item):
+        inputs = self.X2[item:item+self.window_size, :, :]
+        labels = self.labels[item:item+self.window_size]
+        return inputs, labels
+
+
 class SHHS_dataset_2(torch.utils.data.Dataset):
     """
         This class fetches data from the SHHS dataset by keeping a list of patients

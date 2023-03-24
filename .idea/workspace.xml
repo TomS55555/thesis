@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="Transformer architecture" />
+    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="Transformer architecture works I think">
+      <change afterPath="$PROJECT_DIR$/datasets/testing/stft_test.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/SleepTransformer/train.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/sleep_transformer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datasets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/my_transformer.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/my_transformer.ipynb" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,7 +75,7 @@
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\trained_models" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.train (1)">
+  <component name="RunManager" selected="Python.train (2)">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -178,6 +186,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="train (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/SleepTransformer" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/SleepTransformer/train.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -248,6 +275,7 @@
       <item itemvalue="Python.simclr_graph_train" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.train_main" />
+      <item itemvalue="Python.train (2)" />
       <item itemvalue="Python.train (1)" />
       <item itemvalue="Python.train" />
       <item itemvalue="Python.simclr_graph" />
@@ -255,6 +283,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.train (2)" />
         <item itemvalue="Python.train (1)" />
         <item itemvalue="Python.train" />
         <item itemvalue="Python.simclr_graph" />
@@ -305,7 +334,8 @@
       <workItem from="1678555682462" duration="9883000" />
       <workItem from="1678803738568" duration="4025000" />
       <workItem from="1679410014701" duration="8258000" />
-      <workItem from="1679569117459" duration="5446000" />
+      <workItem from="1679569117459" duration="5598000" />
+      <workItem from="1679652017922" duration="12340000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -496,7 +526,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679586541351</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Transformer architecture works I think">
+      <created>1679619425508</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1679619425508</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -544,7 +581,8 @@
     <MESSAGE value="augmentations don't work" />
     <MESSAGE value="Ready to train on google cloud" />
     <MESSAGE value="Transformer architecture" />
-    <option name="LAST_COMMIT_MESSAGE" value="Transformer architecture" />
+    <MESSAGE value="Transformer architecture works I think" />
+    <option name="LAST_COMMIT_MESSAGE" value="Transformer architecture works I think" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -562,6 +600,7 @@
     <SUITE FILE_PATH="coverage/thesis02$train.coverage" NAME="train Coverage Results" MODIFIED="1677519813138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
     <SUITE FILE_PATH="coverage/thesis$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670839301941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670185038195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
+    <SUITE FILE_PATH="coverage/thesis$train__2_.coverage" NAME="train (2) Coverage Results" MODIFIED="1679680548180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer" />
     <SUITE FILE_PATH="coverage/thesis$train.coverage" NAME="train Coverage Results" MODIFIED="1678104817701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
     <SUITE FILE_PATH="coverage/thesis02$main.coverage" NAME="main Coverage Results" MODIFIED="1666424423225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/thesis$train_main.coverage" NAME="train_main Coverage Results" MODIFIED="1671574040031" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

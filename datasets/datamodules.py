@@ -22,8 +22,9 @@ class EEGdataModule(pl.LightningDataModule):
                  first_patient: int = 1,
                  exclude_test_set: tuple = (),
                  test_set=False,
+                 dataset_type=SHHSdataset,
+                 window_size=1,
                  num_ds: int = 1,  # This property can be used to load a different dataset every epoch
-                 transform=None,
                  test_dl=None, **kwargs):
         super().__init__()
         self.data_path = data_path
@@ -36,26 +37,29 @@ class EEGdataModule(pl.LightningDataModule):
         self.data_split = data_split
         self.exclude_test_set = exclude_test_set
         self.num_patients_per_ds = num_patients // self.num_ds
-
+        self.dataset_type = dataset_type
+        self.window_size = window_size
         # self.load_dataset(0)
         if test_set:
-            self.eeg_test = SHHSdataset(
+            self.eeg_test = dataset_type(
                 data_path=data_path,
                 first_patient=first_patient,
                 num_patients=num_patients,
                 exclude_test_set=exclude_test_set,
-                test_set=True
+                test_set=True,
+                window_size=window_size
             )
         else:
             self.load_dataset(0)
 
     def load_dataset(self, idx):
         first_patient = self.first_patient + idx * self.num_patients_per_ds  # ! Make sure idx starts at 0
-        eeg_trainval = SHHSdataset(data_path=self.data_path,
-                                   first_patient=first_patient,
-                                   num_patients=self.num_patients_per_ds,
-                                   exclude_test_set=self.exclude_test_set)
-        print("SIZE eeg_trainval:", eeg_trainval.__len__()) 
+        eeg_trainval = self.dataset_type(data_path=self.data_path,
+                                         first_patient=first_patient,
+                                         num_patients=self.num_patients_per_ds,
+                                         exclude_test_set=self.exclude_test_set,
+                                         window_size=self.window_size)
+        print("SIZE eeg_trainval:", eeg_trainval.__len__())
 
         num = np.array(self.data_split).sum()
         piece = eeg_trainval.__len__() // num
