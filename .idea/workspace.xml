@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="rt">
-      <change afterPath="$PROJECT_DIR$/experiments/my_transformer.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/transformer_tutorial.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/transformer_simple/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/transformer_simple/train.py" afterDir="false" />
-    </list>
+    <list default="true" id="49de1d71-481a-4b4e-a7b6-a2bc3ff71671" name="Changes" comment="Transformer architecture" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -310,7 +305,7 @@
       <workItem from="1678555682462" duration="9883000" />
       <workItem from="1678803738568" duration="4025000" />
       <workItem from="1679410014701" duration="8258000" />
-      <workItem from="1679569117459" duration="4821000" />
+      <workItem from="1679569117459" duration="5446000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -494,7 +489,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678726014867</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Transformer architecture">
+      <created>1679586541351</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1679586541351</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -541,7 +543,8 @@
     <MESSAGE value="better structure" />
     <MESSAGE value="augmentations don't work" />
     <MESSAGE value="Ready to train on google cloud" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ready to train on google cloud" />
+    <MESSAGE value="Transformer architecture" />
+    <option name="LAST_COMMIT_MESSAGE" value="Transformer architecture" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
