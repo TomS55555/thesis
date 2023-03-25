@@ -48,8 +48,9 @@ def train(device, version):
 
 def test(device, version):
     results = dict()
-
+    
     for n_patients in patients_list:
+        num_ds = math.ceil(n_patients/PATIENTS_PER_DS)
         test_results = test_networks(
             encoder=CNN_head(
                 conv_filters=[32, 64, 64],
@@ -59,7 +60,7 @@ def test(device, version):
                 in_features=100,
                 out_features=constants.N_CLASSES
             ),
-            test_ds_args=get_data_args(first_patient=1, num_patients=5),  #TODO: LOOK INTO THIS!!
+            test_ds_args=get_data_args(first_patient=1, num_patients=5, num_ds=num_ds),  #TODO: LOOK INTO THIS!!
             train_path=train_path+str(version),
             logistic_save_name=logistic_save_name+"_"+str(n_patients)+"pat",
             supervised_save_name=supervised_save_name+"_"+str(n_patients)+"pat",
