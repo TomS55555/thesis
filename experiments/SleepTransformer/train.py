@@ -11,11 +11,12 @@ import constants
 
 import torch
 import torch.nn as nn
-from argparse import Namespace
+from argparse import Namespace, ArgumentParser
 from datasets.datamodules import EEGdataModule
 from datasets.datasets import SHHS_dataset_STFT
 import pytorch_lightning as pl
 from models.sleep_transformer import SleepTransformer
+from utils.helper_functions import load_model
 
 device = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
 print(device)
@@ -41,8 +42,7 @@ data_args = {
         "window_size": OUTER_DIM
     }
 
-
-if __name__ == "__main__":
+def train():
     start = time.time()
     dm = EEGdataModule(**data_args)
     model = SleepTransformer(
@@ -71,4 +71,38 @@ if __name__ == "__main__":
     trainer.fit(model, datamodule=dm)
     end = time.time()
 
-    print("Elapsed time: ", (end-start))
+def test(path: str):
+    dm = EEGdataModule(test_set=True, **data_args)
+
+    model = load_model(SleepTransformer, path)
+
+    trainer = pl.Trainer(
+        default_root_dir=os.path.join(checkpoint_path, 'testing'),
+        accelerator="gpu" if str(device).startswith("cuda") else "cpu",
+        devices=1,  # How many GPUs/CPUs to use
+        # Reload dataloaders to get different part of the big dataset
+        callbacks=[
+            ModelCheckpoint(save_weights_only=True, mode="min", monitor="val_loss",
+                            save_last=True),
+            # Save the best checkpoint based on the maximum val_acc recorded. Saves only weights and not optimizer
+            LearningRateMonitor("epoch")],  # Log learning rate every epoch
+        enable_progress_bar=True,
+        max_epochs=50
+    )
+    trainer.test(model, datamodule=dm)
+
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("--mode", required=True)
+    parser.add_argument("--path")
+    args = parser.parse_args()
+
+    version = int(args.version)
+
+    if args.mode == "train":
+        train()
+    elif args.mode == "test":
+        test(args.path)
+    else:
+        exit("Mode not recognized!")

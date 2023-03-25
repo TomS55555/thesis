@@ -100,7 +100,7 @@ def test_networks(encoder, classifier, test_ds_args, train_path, logistic_save_n
     """
         Checkpoint path is the path for the testing
     """
-    test_dm = EEGdataModule(test_set=True,**test_ds_args)
+    test_dm = EEGdataModule(test_set=True, **test_ds_args)
     trainer = get_trainer(
         checkpoint_path=train_path,
         save_name="testing",
