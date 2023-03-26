@@ -8,7 +8,7 @@ sys.path.extend([os.getcwd()])
 import time
 
 import constants
-
+import math
 import torch
 import torch.nn as nn
 from argparse import Namespace, ArgumentParser
@@ -29,16 +29,20 @@ OUTER_DIM = 5
 INNER_DIM = 29
 FEAT_DIM = 128
 
-MAX_EPOCHS = 100
+NUM_PATIENTS = 5000
+PATIENTS_PER_DS = 250
+NUM_DS = math.floor(NUM_PATIENTS/PATIENTS_PER_DS)
+MAX_EPOCHS = 20
+TOTAL_EPOCHS = MAX_EPOCHS * NUM_DS
 
 data_args = {
         "data_path": constants.SHHS_PATH_GOOGLE,
         "data_split": [4, 1],
         "first_patient": 1,
-        "num_patients": 1000,
+        "num_patients": NUM_PATIENTS,
         "batch_size": 32,
         "num_workers": 4,
-        "num_ds": 4,
+        "num_ds": NUM_DS,
         "exclude_test_set": constants.TEST_SET_1,
         "dataset_type": SHHS_dataset_STFT,
         "window_size": OUTER_DIM
@@ -68,7 +72,7 @@ def train():
             # Save the best checkpoint based on the maximum val_acc recorded. Saves only weights and not optimizer
             LearningRateMonitor("epoch")],  # Log learning rate every epoch
         enable_progress_bar=True,
-        max_epochs=MAX_EPOCHS
+        max_epochs=TOTAL_EPOCHS
     )
     trainer.fit(model, datamodule=dm)
     end = time.time()

@@ -68,7 +68,7 @@ class SleepTransformer(pl.LightningModule):
         self.log('val_loss', loss)
 
     def test_step(self, batch, batch_idx):
-        acc, loss = self.common_step(batch, calculate_loss=True)
+        acc, _ = self.common_step(batch, calculate_loss=False)
 
         self.log('test_acc', acc)
 
