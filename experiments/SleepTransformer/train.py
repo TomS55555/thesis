@@ -29,14 +29,16 @@ OUTER_DIM = 5
 INNER_DIM = 29
 FEAT_DIM = 128
 
+MAX_EPOCHS = 100
+
 data_args = {
         "data_path": constants.SHHS_PATH_GOOGLE,
         "data_split": [4, 1],
         "first_patient": 1,
-        "num_patients": 500,
+        "num_patients": 1000,
         "batch_size": 32,
-        "num_workers": 2,
-        "num_ds": 2,
+        "num_workers": 4,
+        "num_ds": 4,
         "exclude_test_set": constants.TEST_SET_1,
         "dataset_type": SHHS_dataset_STFT,
         "window_size": OUTER_DIM
@@ -66,7 +68,7 @@ def train():
             # Save the best checkpoint based on the maximum val_acc recorded. Saves only weights and not optimizer
             LearningRateMonitor("epoch")],  # Log learning rate every epoch
         enable_progress_bar=True,
-        max_epochs=50
+        max_epochs=MAX_EPOCHS
     )
     trainer.fit(model, datamodule=dm)
     end = time.time()
@@ -98,7 +100,6 @@ if __name__ == "__main__":
     parser.add_argument("--path")
     args = parser.parse_args()
 
-    version = int(args.version)
 
     if args.mode == "train":
         train()
