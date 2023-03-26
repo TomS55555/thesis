@@ -1,3 +1,5 @@
+import torch
+
 from datasets.augmentations import *
 from utils.helper_functions import prepare_data_features
 import pytorch_lightning as pl
@@ -5,6 +7,7 @@ import torch.utils.data as data
 import numpy as np
 from datasets.datasets import SHHSdataset, SHHS_dataset_2
 from utils.helper_functions import memReport, cpuStats
+import random
 
 
 class EEGdataModule(pl.LightningDataModule):
@@ -39,6 +42,8 @@ class EEGdataModule(pl.LightningDataModule):
         self.num_patients_per_ds = num_patients // self.num_ds
         self.dataset_type = dataset_type
         self.window_size = window_size
+
+        self.my_seed = random.randint(0, 2**32 - 1)  # random seed for splitting dataset
         # self.load_dataset(0)
         if test_set:
             self.eeg_test = dataset_type(
@@ -67,7 +72,7 @@ class EEGdataModule(pl.LightningDataModule):
         # print("BEFORE loading reassigning")
         # memReport()
         # cpuStats()
-        self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split)
+        self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split, generator=torch.Generator().manual_seed(self.my_seed))
         # self.eeg_train = eeg_trainval
         # print("AFTER loading reassigning")
         # memReport()

@@ -8,7 +8,9 @@ import torch.optim as optim
 
 class SleepTransformer(pl.LightningModule):
     """
-        The SleepTransformer takes as input batches of time series of the form [batch x window x time] and outputs labels for each epoch: [batch x window x label]
+        The SleepTransformer takes as input batches of a sequence of 'outer' time-frequency images of the form [batch x outer x inner x feat] where 
+        'inner x feat' is one time-frequency image. The output are logits over the labels as follows: [batch x outer x label]
+        
     """
 
     def __init__(self, outer_dim, inner_dim, feat_dim, dim_feedforward, num_heads, num_layers):
