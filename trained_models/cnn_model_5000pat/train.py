@@ -19,7 +19,7 @@ train_path = "training"
 args = {
   "MODEL_TYPE": "CNN_model_simclr",
   "save_name": result_file_name,
-  "DATA_PATH": constants.SHHS_PATH_GOOGLE,
+  "DATA_PATH": constants.SHHS_PATH_DEKSTOP,
   "CHECKPOINT_PATH": "checkpoints",
   "temperature": 0.05,
 
