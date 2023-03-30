@@ -33,18 +33,18 @@ FEAT_DIM = 128
 HIDDEN_DIM = 256
 Z_DIM = 128
 
-NUM_PATIENTS = 100
+NUM_PATIENTS = 2000
 PATIENTS_PER_DS = 250
 NUM_DS = math.ceil(NUM_PATIENTS/PATIENTS_PER_DS)
-MAX_EPOCHS = 2
+MAX_EPOCHS = 20
 TOTAL_EPOCHS = MAX_EPOCHS * NUM_DS
 
 data_args = {
-        "data_path": constants.SHHS_PATH_DEKSTOP,
+        "data_path": constants.SHHS_PATH_GOOGLE,
         "data_split": [4, 1],
         "first_patient": 1,
         "num_patients": NUM_PATIENTS,
-        "batch_size": 128,
+        "batch_size": 512,
         "num_workers": 4,
         "num_ds": NUM_DS,
         "exclude_test_set": constants.TEST_SET_1,
@@ -76,8 +76,8 @@ def train(version: str):
 
     aug_module = AugmentationModuleSTFT(
         batch_size=data_args['batch_size'],
-        time_mask_window=3,
-        freq_mask_window=6
+        time_mask_window=5,
+        freq_mask_window=20
     )
 
     model = SimCLR(
