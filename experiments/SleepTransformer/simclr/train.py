@@ -40,11 +40,11 @@ MAX_EPOCHS = 2
 TOTAL_EPOCHS = MAX_EPOCHS * NUM_DS
 
 data_args = {
-        "data_path": constants.SHHS_PATH_DEKSTOP,
+        "data_path": constants.SHHS_PATH_GOOGLE,
         "data_split": [4, 1],
         "first_patient": 1,
         "num_patients": NUM_PATIENTS,
-        "batch_size": 128,
+        "batch_size": 256,
         "num_workers": 4,
         "num_ds": NUM_DS,
         "exclude_test_set": constants.TEST_SET_1,

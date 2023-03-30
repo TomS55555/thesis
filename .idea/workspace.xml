@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="Ready to test sleeptransformer">
-      <change afterPath="$PROJECT_DIR$/datasets/testing/batched_augmentations_stft.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/train.py" afterDir="false" />
+    <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="Ready to try to train simclr on google cloud">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/augmentations.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/augmentations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datasets.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/simclr_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/simclr_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_5000pat/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/trained_models/cnn_model_5000pat/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/helper_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,20 +44,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
-    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
-    "WebServerToolWindowPanel.toolwindow.show.date": "false",
-    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
-    "WebServerToolWindowPanel.toolwindow.show.size": "false",
-    "last_opened_file_path": "C:/Users/tomsm/PycharmProjects/thesis/experiments/SleepTransformer/simclr/train.py",
-    "settings.editor.selected.configurable": "debugger.dataViews.python.type.renderers"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis/experiments/SleepTransformer/simclr/train.py&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;debugger.dataViews.python.type.renderers&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\trained_models\cnn_model" />
@@ -170,6 +164,9 @@
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/trained_models/cnn_model_5000pat" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -252,6 +249,9 @@
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -349,7 +349,7 @@
       <workItem from="1679652017922" duration="12340000" />
       <workItem from="1679825570596" duration="575000" />
       <workItem from="1680010464945" duration="5956000" />
-      <workItem from="1680095050283" duration="10668000" />
+      <workItem from="1680095050283" duration="12516000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -554,7 +554,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679782401412</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Ready to try to train simclr on google cloud">
+      <created>1680123051863</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1680123051863</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -609,7 +616,8 @@
     <MESSAGE value="Transformer architecture" />
     <MESSAGE value="Transformer architecture works I think" />
     <MESSAGE value="Ready to test sleeptransformer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ready to test sleeptransformer" />
+    <MESSAGE value="Ready to try to train simclr on google cloud" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ready to try to train simclr on google cloud" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
