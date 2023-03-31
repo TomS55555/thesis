@@ -6,7 +6,7 @@ import torch.nn as nn
 import pytorch_lightning as pl
 
 
-class AugmentationModule(pl.LightningModule):
+class AugmentationModule(nn.Module):
     def __init__(self,
                  batch_size: int,
                  amplitude_min: int = 0.9,
@@ -86,7 +86,7 @@ class AugmentationModule(pl.LightningModule):
         return x
 
 
-class AugmentationModuleSTFT(pl.LightningModule):
+class AugmentationModuleSTFT(nn.Module):
     """
         This module does augmentations on tensors of the form [batch x time x feat] where time x feat is a time-frequency image
     """
@@ -113,7 +113,7 @@ class AugmentationModuleSTFT(pl.LightningModule):
         # Must work for a batch!!
 
         # Amplitude scale
-        rand_am = self.amplitude_min + torch.rand(self.batch_size).to(x) * (self.amplitude_max-self.amplitude_min)
+        rand_am = self.amplitude_min + torch.rand(self.batch_size).to(x.device) * (self.amplitude_max-self.amplitude_min)
         x = self.amplitude_scale(x, rand_am)
 
         # Zero mask time
@@ -125,36 +125,32 @@ class AugmentationModuleSTFT(pl.LightningModule):
 
     def amplitude_scale(self, x, rand_am):
         batch_dim, time_dim, feat_dim = x.shape
-        x = torch.bmm(x, rand_am.reshape(-1, 1, 1).to(x) * torch.eye(feat_dim, feat_dim).repeat(batch_dim, 1, 1).to(x))
+        x = torch.bmm(x, rand_am.reshape(-1, 1, 1).to(x.device) * torch.eye(feat_dim, feat_dim).repeat(batch_dim, 1, 1).to(x.device))
         return x
 
     def zero_mask_time(self, x):
         batch_dim, time_dim, freq_dim = x.shape
-        rows_to_zero = torch.randint(low=0, high=time_dim - self.time_mask_window, size=(batch_dim,)).to(x)
-        mask = torch.ones((batch_dim, time_dim, freq_dim), device=self.device)
-        index1 = rows_to_zero.unsqueeze(1) + torch.arange(self.time_mask_window, device=self.device)
-        mask[torch.arange(batch_dim, device=self.device).unsqueeze(1).long(), index1.long(), :] = 0
+        rows_to_zero = torch.randint(low=0, high=time_dim - self.time_mask_window, size=(batch_dim,)).to(x.device)
+        mask = torch.ones((batch_dim, time_dim, freq_dim), device=x.device)
+        index1 = rows_to_zero.unsqueeze(1) + torch.arange(self.time_mask_window, device=x.device)
+        mask[torch.arange(batch_dim, device=x.device).unsqueeze(1).long(), index1.long(), :] = 0
         return mask * x
 
     def zero_mask_freq(self, x):
         batch_dim, time_dim, freq_dim = x.shape
-        cols_to_zero = torch.randint(low=0, high=freq_dim - self.freq_mask_window, size=(batch_dim,)).to(x)
-        mask = torch.ones((batch_dim, time_dim, freq_dim)).to(x)
-        index2 = cols_to_zero.unsqueeze(1) + torch.arange(self.freq_mask_window, device=self.device)
-        mask[torch.arange(batch_dim, device=self.device).unsqueeze(1).long(), :, index2.long()] = 0
+        cols_to_zero = torch.randint(low=0, high=freq_dim - self.freq_mask_window, size=(batch_dim,)).to(x.device)
+        mask = torch.ones((batch_dim, time_dim, freq_dim)).to(x.device)
+        index2 = cols_to_zero.unsqueeze(1) + torch.arange(self.freq_mask_window, device=x.device)
+        mask[torch.arange(batch_dim, device=x.device).unsqueeze(1).long(), :, index2.long()] = 0
         return mask * x
 
     def gaussian_noise(self, x, rand_stdevs):
-        zs = torch.randn_like(x).to(x)
+        zs = torch.randn_like(x).to(x.device)
         noise = torch.matmul(torch.diag(rand_stdevs), zs)
         x = x + noise
         return x
 
     def time_shift(self, x, shifts: tuple):
-        # TODO: make this more efficient by only using part of prev and next inputs that is necessary
-        prev_inputs = torch.roll(x, shifts=1, dims=0)
-        next_inputs = torch.roll(x, shifts=-1, dims=0)
-        inputs = torch.cat((prev_inputs, x, next_inputs), dim=1)
-        time_shifted = torch.stack([torch.roll(inputs[i], shifts[i], dims=0) for i in range(inputs.shape[0])])
-        x = time_shifted[:, x.shape[-1]:2*x.shape[-1]]
-        return x
+        # TODO: make this more resilient because of the rolling
+        time_shifted = torch.stack([torch.roll(x[i], shifts[i], dims=1) for i in range(x.shape[0])])  # Roll along time axis
+        return time_shifted

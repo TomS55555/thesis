@@ -9,9 +9,9 @@ class SimCLR(pl.LightningModule):
     """
         This class implements the SimCLR model for any encoder and projection head
     """
-    def __init__(self, aug_module, encoder, projector, optim_hparams, temperature, **kwargs):
+    def __init__(self, aug_module, encoder, projector, optim_hparams, temperature):
         super().__init__()
-        # self.save_hyperparameters()
+        self.save_hyperparameters("aug_module", "encoder", "projector", "optim_hparams", "temperature")
         self.temperature = temperature
         assert self.temperature > 0.0, 'The temperature must be a positive float!'
         self.optim_hparams = optim_hparams

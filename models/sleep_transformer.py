@@ -15,6 +15,7 @@ class SleepTransformer(pl.LightningModule):
 
     def __init__(self, outer_dim, inner_dim, feat_dim, dim_feedforward, num_heads, num_layers):
         super().__init__()
+        self.save_hyperparameters()
 
         inner_transformer = InnerTransformer(feat_dim=feat_dim,
                                              inner_dim=inner_dim,
@@ -82,7 +83,7 @@ class SleepTransformer(pl.LightningModule):
         return optimizer
 
 
-class OuterTransformer(pl.LightningModule):
+class OuterTransformer(nn.Module):
     """
         This module takes as input tensors of the form [batch x outer x feat] and outputs a tensors of
         the form [batch x outer x feat] that can be used as input to a classifier
@@ -108,7 +109,7 @@ class OuterTransformer(pl.LightningModule):
         return self.transformer(self.outer_position_encoding(x))
 
 
-class InnerTransformer(pl.LightningModule):
+class InnerTransformer(nn.Module):
     """
         This module takes as input tensors of the form [batch x outer x inner x feat] and outputs tensors of the form [batch x outer x feat]
         For the SleepTransformer, inner x feat is a time frequency image of a 1D EEG time-series (inner is time, feat is freq dimension)
@@ -140,7 +141,7 @@ class InnerTransformer(pl.LightningModule):
         return aggregrated_plus.view(batch_dim, outer_dim, feat_dim)
 
 
-class Aggregator(pl.LightningModule):
+class Aggregator(nn.Module):
     """
         This class performs the final attention to reduce the dimensionality after the transformer encoder layer from [b+ x inner x feat] to [b+ x feat]
         It does this by using attention which results in a weighted sum
@@ -163,7 +164,7 @@ class Aggregator(pl.LightningModule):
         self.softmax = nn.Softmax(dim=-1)
 
     def forward(self, x):
-        b, l, f = x.shape
+        # b, l, f = x.shape
         # ats = self.tanh(x @ self.Wa.T + self.ba.repeat(l,1).unsqueeze(0).repeat(b,1,1))  # maybe this can faster
         ats = self.tanh(self.linear(x))
         alphas = self.softmax(ats @ self.ae)
@@ -171,7 +172,7 @@ class Aggregator(pl.LightningModule):
         return result
 
 
-class Classifier(pl.LightningModule):
+class Classifier(nn.Module):
     """
         This module takes as input tensors of the form [batch x outer x feat] and outputs tensors of
         the form
@@ -194,15 +195,14 @@ class Classifier(pl.LightningModule):
         return self.net(x)
 
 
-class PositionalEncoding(pl.LightningModule):
+class PositionalEncoding(nn.Module):
     def __init__(self, sequence_length, hidden_size):
         super().__init__()
         self.encoding = get_positional_encoding(sequence_length, hidden_size)
         self.encoding.requires_grad = False
-        self.encoding = self.encoding.to(self.device)
 
     def forward(self, x):
-        self.encoding = self.encoding.to(self.device)
+        self.encoding = self.encoding.to(x.device)
         x = x + self.encoding
         return x
 
