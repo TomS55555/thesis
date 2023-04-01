@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d8a2f4c3-207d-4a78-89a2-c16ceac21a45" name="Changes" comment="Ready to test sleeptransformer">
+    <list default="true" id="d8a2f4c3-207d-4a78-89a2-c16ceac21a45" name="Changes" comment="Fixed validation set issue">
+      <change afterPath="$PROJECT_DIR$/experiments/SleepTransformer/todo.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -334,7 +335,7 @@
       <workItem from="1679410014701" duration="8258000" />
       <workItem from="1679569117459" duration="5598000" />
       <workItem from="1679652017922" duration="12340000" />
-      <workItem from="1679825570596" duration="575000" />
+      <workItem from="1679825570596" duration="3901000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -539,7 +540,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679782401412</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Fixed validation set issue">
+      <created>1679826173081</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1679826173081</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -589,7 +597,8 @@
     <MESSAGE value="Transformer architecture" />
     <MESSAGE value="Transformer architecture works I think" />
     <MESSAGE value="Ready to test sleeptransformer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ready to test sleeptransformer" />
+    <MESSAGE value="Fixed validation set issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed validation set issue" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -25,7 +25,7 @@ train_path = "training"
 save_name = result_file_name
 checkpoint_path = "checkpoints"
 
-OUTER_DIM = 5
+OUTER_DIM = 21
 INNER_DIM = 29
 FEAT_DIM = 128
 
