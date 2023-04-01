@@ -17,13 +17,14 @@ class SupervisedModel(pl.LightningModule):
                  classifier: nn.Module,
                  optim_hparams):
         super().__init__()
+        self.save_hyperparameters()
           # encoder and classifier parameters are already saved because they are nn.Modules
         self.optim_hparams = optim_hparams
         self.encoder = encoder
         self.classifier = classifier
         self.net = nn.Sequential(encoder, classifier)
         self.loss_module = nn.CrossEntropyLoss()
-        self.save_hyperparameters()
+
 
     def forward(self, x):
         return self.net(x)

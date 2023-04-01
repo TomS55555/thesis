@@ -4,7 +4,6 @@ import torch.utils.data as data
 import h5py
 import torch
 import numpy as np
-from datasets.augmentations import ContrastiveTransformations
 
 
 class SHHSdataset(torch.utils.data.Dataset):
@@ -21,13 +20,11 @@ class SHHSdataset(torch.utils.data.Dataset):
                  num_patients: int,
                  window_size: int = 1,
                  exclude_test_set: tuple = (),
-                 transform: ContrastiveTransformations = None,
                  test_set=False):
         super().__init__()
         if window_size != 1 and window_size != 4:
             raise NotImplementedError("Only window size 1 and 4 are supported")
         self.data_path = data_path
-        self.transform = transform
         self.window_size = window_size
         X1_list = []
         labels_list = []
@@ -68,10 +65,7 @@ class SHHSdataset(torch.utils.data.Dataset):
             prev_inputs = self.X1[item-1] if item > 0 else inputs
             label = self.labels[item]
 
-        if self.transform is None:
-            return inputs, label
-        else:
-            return self.transform(inputs, prev_inputs), label
+        return inputs, label
 
 
 class SHHS_dataset_STFT(torch.utils.data.Dataset):
@@ -140,8 +134,7 @@ class SHHS_dataset_2(torch.utils.data.Dataset):
                  first_patient: int,
                  num_patients: int,
                  window_size: int = 1,
-                 exclude_test_set: tuple = (),
-                 transform: ContrastiveTransformations = None):
+                 exclude_test_set: tuple = ()):
         super().__init__()
         self.first_patient = first_patient
         if self.first_patient < 1 or self.first_patient > 5793:

@@ -81,7 +81,7 @@ class EEGdataModule(pl.LightningDataModule):
 
     def train_dataloader(self):
         print("CURRENT TRAINER EPOCH: ", self.trainer.current_epoch)
-        if self.num_ds > 1:
+        if self.num_ds > 1 and self.trainer.current_epoch > 0:
             idx = self.trainer.current_epoch % self.num_ds  # self.trainer.current_epoch % self.num_ds
             self.load_dataset(idx)
         # TODO: set shuffle to true!

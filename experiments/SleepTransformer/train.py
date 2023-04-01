@@ -31,7 +31,7 @@ FEAT_DIM = 128
 
 NUM_PATIENTS = 5000
 PATIENTS_PER_DS = 250
-NUM_DS = math.floor(NUM_PATIENTS/PATIENTS_PER_DS)
+NUM_DS = math.ceil(NUM_PATIENTS/PATIENTS_PER_DS)
 MAX_EPOCHS = 20
 TOTAL_EPOCHS = MAX_EPOCHS * NUM_DS
 
@@ -47,6 +47,7 @@ data_args = {
         "dataset_type": SHHS_dataset_STFT,
         "window_size": OUTER_DIM
     }
+
 
 def train():
     start = time.time()
@@ -76,6 +77,7 @@ def train():
     )
     trainer.fit(model, datamodule=dm)
     end = time.time()
+
 
 def test(path: str):
     dm = EEGdataModule(test_set=True, **data_args)
