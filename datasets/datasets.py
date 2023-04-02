@@ -96,12 +96,12 @@ class SHHS_dataset_STFT(torch.utils.data.Dataset):
             try:
                 f = h5py.File(datapoint, 'r')
                 x2 = torch.as_tensor(np.array(f.get("X2"))).permute(2, 1, 0)
-                b, t, f = x2.shape
-                x2_plus = x2.reshape(b, t * f)
+                b, t, fr = x2.shape
+                x2_plus = x2.reshape(b, t * fr)
                 DATA_MEANS = x2_plus.mean(dim=1, keepdim=True)
                 DATA_STD = x2_plus.std(dim=1, keepdim=True)
                 x2_plus = (x2_plus - DATA_MEANS) / DATA_STD
-                X2_list.append(x2_plus.reshape(b, t, f))
+                X2_list.append(x2_plus.reshape(b, t, fr))
 
                 label = torch.as_tensor(np.array(f.get("label"))[0])
                 labels_list.append(label)
