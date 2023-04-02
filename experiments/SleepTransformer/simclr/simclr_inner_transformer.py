@@ -72,7 +72,7 @@ def get_aug_module():
     return AugmentationModuleSTFT(
         batch_size=128,
         time_mask_window=10,
-        freq_mask_window=50
+        freq_mask_window=40
     )
 
 
@@ -154,7 +154,8 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 
 def pretrain(device, version):
-    num_patients = 10
+    num_patients = 5000
+    max_epochs = 100
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=512))
     model = SimCLR(
@@ -163,7 +164,7 @@ def pretrain(device, version):
         projector=get_projection_head(),
         temperature=0.05,
         optim_hparams={
-            "max_epochs": 10,
+            "max_epochs": max_epochs,
             "lr": 3e-4,
             "weight_decay": 1e-4
         }
@@ -184,7 +185,7 @@ def pretrain(device, version):
             # Save the best checkpoint based on the maximum val_acc recorded. Saves only weights and not optimizer
             LearningRateMonitor("epoch")],  # Log learning rate every epoch
         enable_progress_bar=True,
-        max_epochs=2
+        max_epochs=max_epochs
     )
     trainer.logger._log_graph = True  # If True, we plot the computation graph in tensorboard
     trainer.logger._default_hp_metric = None
