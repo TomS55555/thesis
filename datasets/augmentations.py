@@ -121,6 +121,9 @@ class AugmentationModuleSTFT(nn.Module):
         # Zero mask freq
         x = self.zero_mask_freq(x)
 
+        # Gaussian noise
+        x = self.gaussian_noise(x, 0.1)  #TODO: Look at MIT paper for good noise value
+
         return x
 
     def amplitude_scale(self, x, rand_am):
@@ -144,11 +147,10 @@ class AugmentationModuleSTFT(nn.Module):
         mask[torch.arange(batch_dim, device=x.device).unsqueeze(1).long(), :, index2.long()] = 0
         return mask * x
 
-    def gaussian_noise(self, x, rand_stdevs):
+    def gaussian_noise(self, x, stdev):
+        # Maybe look at pytorch for images for better noise
         zs = torch.randn_like(x).to(x.device)
-        noise = torch.matmul(torch.diag(rand_stdevs), zs)
-        x = x + noise
-        return x
+        return x + zs*stdev
 
     def time_shift(self, x, shifts: tuple):
         # TODO: make this more resilient because of the rolling

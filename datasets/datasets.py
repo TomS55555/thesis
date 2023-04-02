@@ -104,6 +104,10 @@ class SHHS_dataset_STFT(torch.utils.data.Dataset):
                 print("Couldn't find file at path: ", datapoint)  # No problem if some patients are missing
 
         self.X2 = torch.cat(X2_list, 0)
+        # Normalize dataset: across time and frequency => average the average 'energy' in a time-frequency image across all images
+        # Maybe use the same normalization that is used in real images?
+
+
         self.X2 = self.X2[:, :, 1:]  #TODO: check this!!
         self.labels = torch.cat(labels_list, 0)
         self.labels = self.labels - torch.ones(self.labels.size(0))  # Change label range from 1->5 to 0->4s

@@ -55,7 +55,7 @@ def get_encoder():
 
 def get_projection_head():
     return nn.Sequential(
-        nn.Linear(constants.INNER_DIM_STFT, HIDDEN_DIM),
+        nn.Linear(constants.FEAT_DIM_STFT, HIDDEN_DIM),
         nn.ReLU(),
         nn.Linear(HIDDEN_DIM, Z_DIM)
     )
@@ -68,17 +68,9 @@ def get_classifier():
     )
 
 
-def get_aug_module():
-    return AugmentationModuleSTFT(
-        batch_size=128,
-        time_mask_window=10,
-        freq_mask_window=50
-    )
-
-
 def get_data_args(num_patients, batch_size):
     return {
-        "data_path": constants.SHHS_PATH_DEKSTOP,
+        "data_path": constants.SHHS_PATH_LAPTOP,
         "data_split": [4, 1],
         "first_patient": 1,
         "num_patients": num_patients,
@@ -154,11 +146,17 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 
 def pretrain(device, version):
+    #TODO: fix normalization of STFT images!
     num_patients = 10
+    batch_size = 512
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=512))
     model = SimCLR(
-        aug_module=get_aug_module(),
+        aug_module=AugmentationModuleSTFT(
+            batch_size=batch_size,
+            time_mask_window=10,
+            freq_mask_window=50
+        ),
         encoder=get_encoder(),
         projector=get_projection_head(),
         temperature=0.05,
@@ -235,7 +233,8 @@ def test(device, version):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--mode", required=True)
-    parser.add_argument("--version", required=True)
+    parser.add_argument("--version", required=False, default="")
+    parser.add_argument("--pretrained_path", required=False, default=None)
     args = parser.parse_args()
 
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
@@ -246,10 +245,15 @@ if __name__ == "__main__":
     if args.mode == "pretrain":
         pretrain(dev, version)
     elif args.mode == "train":
+        if args.pretrained_model is None:
+            print("A pretrained encoder is required, specify it with the --pretrained_path")
+            sys.exit(1)
+        pretrained_model = load_model(SimCLR, args.pretrained_path)
         train('', dev, version)
     elif args.mode == "test":
         test(dev, version)
     elif args.mode == 'both':
+        pretrained_model = load_model(SimCLR, args.pretrained_path) if args.pretrained_path is not None else pretrain(dev, version)
         train('', dev, version)
         test(dev, version)
     else:

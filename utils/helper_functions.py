@@ -49,10 +49,10 @@ def prepare_data_features(model, data_loader, device):
     return data.TensorDataset(feats, labels)
 
 
-def load_model(model_type, checkpoint_path, **checkpoing_kwargs):
+def load_model(model_type, checkpoint_path, **checkpoint_kwargs):
     if os.path.isfile(checkpoint_path):
         model = model_type.load_from_checkpoint(
-            checkpoint_path, **checkpoing_kwargs)  # Automatically loads the model with the saved hyperparameters
+            checkpoint_path, **checkpoint_kwargs)  # Automatically loads the model with the saved hyperparameters
     else:
         print("Model at location ", checkpoint_path, " not found!")
         sys.exit(1)
