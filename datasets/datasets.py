@@ -106,9 +106,16 @@ class SHHS_dataset_STFT(torch.utils.data.Dataset):
         self.X2 = torch.cat(X2_list, 0)
         # Normalize dataset: across time and frequency => average the average 'energy' in a time-frequency image across all images
         # Maybe use the same normalization that is used in real images?
-
-
         self.X2 = self.X2[:, :, 1:]  #TODO: check this!!
+
+        b, t, f = self.X2.shape
+        x2_plus = self.X2.reshape(b, t*f)
+        DATA_MEANS = x2_plus.mean(dim=1, keepdim=True)
+        DATA_STD = x2_plus.std(dim=1, keepdim=True)
+
+        x2_plus = (x2_plus-DATA_MEANS) / DATA_STD
+        self.X2 = x2_plus.reshape(b, t, f)
+
         self.labels = torch.cat(labels_list, 0)
         self.labels = self.labels - torch.ones(self.labels.size(0))  # Change label range from 1->5 to 0->4s
         self.length = self.labels.size(0) - self.window_size  # Avoid problems at end of dataset

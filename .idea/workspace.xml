@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="small changes">
+    <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="Fixed issues">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/augmentations.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/augmentations.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/datasets/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datasets.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_inner_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_inner_transformer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/helper_functions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,9 +142,6 @@
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -360,7 +355,7 @@
       <workItem from="1680095050283" duration="12516000" />
       <workItem from="1680171821428" duration="11841000" />
       <workItem from="1680354850917" duration="2781000" />
-      <workItem from="1680427620213" duration="619000" />
+      <workItem from="1680427620213" duration="2131000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -579,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680171922030</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Fixed issues">
+      <created>1680428295208</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1680428295208</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -636,10 +638,18 @@
     <MESSAGE value="Ready to test sleeptransformer" />
     <MESSAGE value="Ready to try to train simclr on google cloud" />
     <MESSAGE value="small changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="small changes" />
+    <MESSAGE value="Fixed issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed issues" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/datasets/datasets.py</url>
+          <line>110</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -658,7 +668,7 @@
     <SUITE FILE_PATH="coverage/thesis02$train_arg.coverage" NAME="train_arg Coverage Results" MODIFIED="1666436211007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/1D_CNN" />
     <SUITE FILE_PATH="coverage/thesis$simclr_graph_train.coverage" NAME="simclr_graph_train Coverage Results" MODIFIED="1678710795262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/simclr_graph" />
     <SUITE FILE_PATH="coverage/thesis02$.coverage" NAME=" Coverage Results" MODIFIED="1678632695110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/simclr_graph" />
-    <SUITE FILE_PATH="coverage/thesis02$simclr_inner_transformer.coverage" NAME="simclr_inner_transformer Coverage Results" MODIFIED="1680355393446" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
+    <SUITE FILE_PATH="coverage/thesis02$simclr_inner_transformer.coverage" NAME="simclr_inner_transformer Coverage Results" MODIFIED="1680429637582" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
     <SUITE FILE_PATH="coverage/thesis02$train.coverage" NAME="train Coverage Results" MODIFIED="1677519813138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
     <SUITE FILE_PATH="coverage/thesis$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670839301941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
     <SUITE FILE_PATH="coverage/thesis02$main.coverage" NAME="main Coverage Results" MODIFIED="1666424423225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
