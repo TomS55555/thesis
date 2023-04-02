@@ -70,7 +70,7 @@ def get_classifier():
 
 def get_data_args(num_patients, batch_size):
     return {
-        "data_path": constants.SHHS_PATH_LAPTOP,
+        "data_path": constants.SHHS_PATH_GOOGLE,
         "data_split": [4, 1],
         "first_patient": 1,
         "num_patients": num_patients,
@@ -147,7 +147,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     #TODO: fix normalization of STFT images!
-    num_patients = 10
+    num_patients = 5000
     batch_size = 512
     max_epochs = 100
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
@@ -155,8 +155,8 @@ def pretrain(device, version):
     model = SimCLR(
         aug_module=AugmentationModuleSTFT(
             batch_size=batch_size,
-            time_mask_window=10,
-            freq_mask_window=40
+            time_mask_window=15,
+            freq_mask_window=60
         ),
         encoder=get_encoder(),
         projector=get_projection_head(),
