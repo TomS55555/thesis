@@ -16,7 +16,7 @@ import pytorch_lightning as pl
 from models.sleep_transformer import InnerTransformer
 from models.supervised_model import SupervisedModel
 from models.simclr_model import SimCLR
-from utils.helper_functions import load_model
+from utils.helper_functions import load_model, get_data_path
 from datasets.augmentations import AugmentationModuleSTFT
 from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
@@ -38,6 +38,8 @@ finetune_save_name = "fine_tuned_simclr_IT"
 # parameters for SimCLR projection head
 HIDDEN_DIM = 256
 Z_DIM = 128
+
+MAX_EPOCHS = 100  # max epochs independent of number of datasets
 
 
 def get_encoder():
@@ -70,7 +72,7 @@ def get_classifier():
 
 def get_data_args(num_patients, batch_size):
     return {
-        "data_path": constants.SHHS_PATH_GOOGLE,
+        "data_path": get_data_path(),
         "data_split": [4, 1],
         "first_patient": 1,
         "num_patients": num_patients,
@@ -93,7 +95,7 @@ def get_logistic_args(save_name, checkpoint_path, num_ds):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": 30 * num_ds,
+            "max_epochs": min(MAX_EPOCHS, 30 * num_ds),
         },
         "optim_hparams": {
             "lr": 1e-3,
@@ -115,7 +117,7 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": 40 * num_ds
+            "max_epochs": min(40 * num_ds, MAX_EPOCHS)
             # "profiler": "simple"
         },
         "optim_hparams": {
@@ -135,7 +137,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": 60 * num_ds
+            "max_epochs": min(60 * num_ds, MAX_EPOCHS)
         },
         "optim_hparams": {
             "lr": 2e-6,
@@ -234,7 +236,7 @@ def test(device, version):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--mode", required=True)
-    parser.add_argument("--version", required=False, default="")
+    parser.add_argument("--version", required=False, default="0")
     parser.add_argument("--pretrained_path", required=False, default=None)
     args = parser.parse_args()
 
@@ -246,7 +248,7 @@ if __name__ == "__main__":
     if args.mode == "pretrain":
         pretrain(dev, version)
     elif args.mode == "train":
-        if args.pretrained_model is None:
+        if args.pretrained_path is None:
             print("A pretrained encoder is required, specify it with the --pretrained_path")
             sys.exit(1)
         pretrained_model = load_model(SimCLR, args.pretrained_path)

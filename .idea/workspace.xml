@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="Added normalization">
+      <change afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/pretrained_5000pat.ckpt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/pretrained_2000pat.ckpt" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/bakcup/pretrained_2000pat.ckpt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_inner_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_inner_transformer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/helper_functions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,31 +46,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis/experiments/SleepTransformer/simclr/simclr_inner_transformer.py&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;debugger.dataViews.python.type.renderers&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
+    "WebServerToolWindowPanel.toolwindow.show.date": "false",
+    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
+    "WebServerToolWindowPanel.toolwindow.show.size": "false",
+    "last_opened_file_path": "C:/Users/tomsm/PycharmProjects/thesis02/experiments/SleepTransformer/simclr",
+    "settings.editor.selected.configurable": "debugger.dataViews.python.type.renderers"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\experiments\SleepTransformer\simclr" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\trained_models\cnn_model" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\checkpoints\cnn_model01" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\experiments\SleepTransformer\simclr\bakcup" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\datasets\testing" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\results\simclr_graph" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\results" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\trained_models\cnn_model" />
-      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\trained_models" />
     </key>
   </component>
   <component name="RunManager" selected="Python.simclr_inner_transformer">
@@ -148,7 +152,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_inner_transformer.py" />
-      <option name="PARAMETERS" value="--mode pretrain --version 0" />
+      <option name="PARAMETERS" value="--mode train --pretrained_path pretrained_5000pat.ckpt" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -354,7 +358,7 @@
       <workItem from="1680095050283" duration="12516000" />
       <workItem from="1680171821428" duration="11841000" />
       <workItem from="1680354850917" duration="2781000" />
-      <workItem from="1680427620213" duration="6590000" />
+      <workItem from="1680427620213" duration="8191000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -601,7 +605,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680430809499</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Added normalization">
+      <created>1680459711389</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1680459711389</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
