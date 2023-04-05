@@ -21,7 +21,7 @@ from datasets.augmentations import AugmentationModuleSTFT
 from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 
-patients_list = [5, 10, 20, 50, 100]
+patients_list = [5, 10, 20, 50]
 
 OUTER_DIM_STFT = 1  # Only pretraining inner transformer
 
