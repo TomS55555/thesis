@@ -122,7 +122,7 @@ class AugmentationModuleSTFT(nn.Module):
         x = self.zero_mask_freq(x)
 
         # Gaussian noise
-        x = self.gaussian_noise(x, 0.1)  #TODO: Look at MIT paper for good noise value
+        # x = self.gaussian_noise(x, 0.1)  #TODO: Look at MIT paper for good noise value
 
         return x
 

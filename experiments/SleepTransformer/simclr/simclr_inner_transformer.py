@@ -149,9 +149,9 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     #TODO: fix normalization of STFT images!
-    num_patients = 5000
-    batch_size = 512
-    max_epochs = 100
+    num_patients = 10
+    batch_size = 256
+    max_epochs = 3
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = SimCLR(
@@ -252,7 +252,7 @@ if __name__ == "__main__":
             print("A pretrained encoder is required, specify it with the --pretrained_path")
             sys.exit(1)
         pretrained_model = load_model(SimCLR, args.pretrained_path)
-        train('', dev, version)
+        train(pretrained_model, dev, version)
     elif args.mode == "test":
         test(dev, version)
     elif args.mode == 'both':
