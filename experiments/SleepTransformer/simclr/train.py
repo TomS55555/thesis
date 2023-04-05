@@ -14,8 +14,7 @@ from datasets.datamodules import EEGdataModule
 from datasets.datasets import SHHS_dataset_STFT
 import pytorch_lightning as pl
 from models.sleep_transformer import InnerTransformer
-from models.supervised_model import SupervisedModel
-from models.simclr_model import SimCLR
+from models.simclr_transformer import SimCLR_Transformer
 from utils.helper_functions import load_model, get_data_path
 from datasets.augmentations import AugmentationModuleSTFT
 from trainers.train_simclr_classifiers import train_networks, test_networks
@@ -55,11 +54,20 @@ def get_encoder():
     )
 
 
-def get_projection_head():
+def get_contrastive_projection_head():
     return nn.Sequential(
         nn.Linear(constants.FEAT_DIM_STFT, HIDDEN_DIM),
-        nn.ReLU(),
+        nn.GELU(),
         nn.Linear(HIDDEN_DIM, Z_DIM)
+    )
+
+
+def get_reconstruction_head():
+    return nn.Sequential(
+        nn.Linear(constants.FEAT_DIM_STFT, HIDDEN_DIM),
+        nn.GELU(),
+        nn.Linear(HIDDEN_DIM, 29*128),
+        nn.Unflatten(-1, (29, 128))
     )
 
 
@@ -144,25 +152,27 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
             "weight_decay": 0,
             "lr_hparams": None
         }
-        }
+    }
 
 
 def pretrain(device, version):
-    #TODO: fix normalization of STFT images!
-    num_patients = 10
-    batch_size = 256
-    max_epochs = 3
+    # TODO: fix normalization of STFT images!
+    num_patients = 5000
+    batch_size = 512
+    max_epochs = 100
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
-    model = SimCLR(
+    model = SimCLR_Transformer(
         aug_module=AugmentationModuleSTFT(
             batch_size=batch_size,
-            time_mask_window=15,
-            freq_mask_window=60
+            time_mask_window=8,
+            freq_mask_window=30
         ),
         encoder=get_encoder(),
-        projector=get_projection_head(),
+        cont_projector=get_contrastive_projection_head(),
+        recon_projector=get_reconstruction_head(),
         temperature=0.05,
+        alpha=1,
         optim_hparams={
             "max_epochs": max_epochs,
             "lr": 3e-4,
@@ -251,12 +261,13 @@ if __name__ == "__main__":
         if args.pretrained_path is None:
             print("A pretrained encoder is required, specify it with the --pretrained_path")
             sys.exit(1)
-        pretrained_model = load_model(SimCLR, args.pretrained_path)
+        pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
         train(pretrained_model, dev, version)
     elif args.mode == "test":
         test(dev, version)
     elif args.mode == 'both':
-        pretrained_model = load_model(SimCLR, args.pretrained_path) if args.pretrained_path is not None else pretrain(dev, version)
+        pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
+            dev, version)
         train('', dev, version)
         test(dev, version)
     else:
