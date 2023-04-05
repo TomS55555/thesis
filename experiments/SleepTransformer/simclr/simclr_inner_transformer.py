@@ -21,7 +21,7 @@ from datasets.augmentations import AugmentationModuleSTFT
 from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 
-patients_list = [5, 10, 20, 50, 100]
+patients_list = [5, 10, 20, 50]
 
 OUTER_DIM_STFT = 1  # Only pretraining inner transformer
 
@@ -252,7 +252,7 @@ if __name__ == "__main__":
             print("A pretrained encoder is required, specify it with the --pretrained_path")
             sys.exit(1)
         pretrained_model = load_model(SimCLR, args.pretrained_path)
-        train('', dev, version)
+        train(pretrained_model, dev, version)
     elif args.mode == "test":
         test(dev, version)
     elif args.mode == 'both':
