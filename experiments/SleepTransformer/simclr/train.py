@@ -24,7 +24,7 @@ patients_list = [20]
 
 OUTER_DIM_STFT = 1  # Only pretraining inner transformer
 
-PATIENTS_PER_DS = 100  # Depends on RAM size of PC
+PATIENTS_PER_DS = 500  # Depends on RAM size of PC
 
 train_path = "simclr_trainings"  # path used for training the networks
 result_file_name = "test_results"
@@ -159,9 +159,9 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     # TODO: fix normalization of STFT images!
-    num_patients = 5
-    batch_size = 64
-    max_epochs = 3
+    num_patients = 5000
+    batch_size = 512
+    max_epochs = 200
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = SimCLR_Transformer(
@@ -173,7 +173,7 @@ def pretrain(device, version):
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
         recon_projector=get_reconstruction_head(),
-        temperature=0.05,
+        temperature=1e-4,
         alpha=1,
         optim_hparams={
             "max_epochs": max_epochs,
