@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="Ready to train simclr transformer">
-      <change afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" afterDir="false" />
+    <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="tsne plot ready">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/default_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/my_transformer.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/transformer_simple/train.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/transformer_tutorial.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/simclr_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/simclr_transformer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -362,7 +357,7 @@
       <workItem from="1680354850917" duration="2781000" />
       <workItem from="1680427620213" duration="11985000" />
       <workItem from="1680608254815" duration="10300000" />
-      <workItem from="1680716732295" duration="4217000" />
+      <workItem from="1680716732295" duration="5008000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -644,7 +639,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680717190954</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="tsne plot ready">
+      <created>1680772741179</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1680772741179</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -679,7 +681,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="New software architecture with config file" />
     <MESSAGE value="Supervised accuracy of 79% on test-set of 30 patients, trained on 500 patients" />
     <MESSAGE value="Some comments about the code" />
     <MESSAGE value="First augmentations are implemented, still have to be tested" />
@@ -704,7 +705,8 @@
     <MESSAGE value="Ready to train small graph" />
     <MESSAGE value="Some small changes" />
     <MESSAGE value="Ready to train simclr transformer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ready to train simclr transformer" />
+    <MESSAGE value="tsne plot ready" />
+    <option name="LAST_COMMIT_MESSAGE" value="tsne plot ready" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
