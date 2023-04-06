@@ -24,7 +24,7 @@ patients_list = [5, 10, 20, 50]
 
 OUTER_DIM_STFT = 1  # Only pretraining inner transformer
 
-PATIENTS_PER_DS = 250  # Depends on RAM size of PC
+PATIENTS_PER_DS = 100  # Depends on RAM size of PC
 
 train_path = "simclr_trainings"  # path used for training the networks
 result_file_name = "test_results"
@@ -65,6 +65,8 @@ def get_contrastive_projection_head():
 def get_reconstruction_head():
     return nn.Sequential(
         nn.Linear(constants.FEAT_DIM_STFT, HIDDEN_DIM),
+        nn.GELU(),
+        nn.Linear(HIDDEN_DIM, HIDDEN_DIM),
         nn.GELU(),
         nn.Linear(HIDDEN_DIM, 29*128),
         nn.Unflatten(-1, (29, 128))
@@ -157,8 +159,8 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     # TODO: fix normalization of STFT images!
-    num_patients = 5000
-    batch_size = 512
+    num_patients = 100
+    batch_size = 64
     max_epochs = 100
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))

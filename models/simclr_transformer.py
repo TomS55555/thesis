@@ -78,8 +78,8 @@ class SimCLR_Transformer(pl.LightningModule):
         reconstruction_loss = self.recon_loss(augmented_inputs.squeeze(dim=1), reconstructed_outputs)
 
         loss = self.alpha * reconstruction_loss + contrastive_loss
-        self.log(mode + "_recon_loss" + reconstruction_loss)
-        self.log(mode + "_contrastive_loss" + contrastive_loss)
+        self.log(mode + "_recon_loss", reconstruction_loss)
+        self.log(mode + "_contrastive_loss", contrastive_loss)
         return loss
 
     def training_step(self, batch, batch_idx):
