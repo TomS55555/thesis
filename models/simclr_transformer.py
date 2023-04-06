@@ -44,8 +44,6 @@ class SimCLR_Transformer(pl.LightningModule):
         cos_sim = cos_sim / self.temperature
         nll = -cos_sim[pos_mask] + torch.logsumexp(cos_sim, dim=-1)
         nll = nll.mean()
-        # Logging loss
-        self.log(mode + '_loss', nll)
         # Get ranking position of positive example
         comb_sim = torch.cat([cos_sim[pos_mask][:, None],  # First position positive example
                               cos_sim.masked_fill(pos_mask, -9e15)],
@@ -81,6 +79,7 @@ class SimCLR_Transformer(pl.LightningModule):
         loss = self.alpha * reconstruction_loss + contrastive_loss
         self.log(mode + "_recon_loss", reconstruction_loss)
         self.log(mode + "_contrastive_loss", contrastive_loss)
+        self.log(mode + "_loss", loss)
         return loss
 
     def training_step(self, batch, batch_idx):
