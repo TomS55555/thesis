@@ -53,6 +53,7 @@ class SimCLR_Transformer(pl.LightningModule):
         sim_argsort = comb_sim.argsort(dim=-1, descending=True).argmin(dim=-1)
         # Logging ranking metrics
         self.log(mode + '_acc_top1', (sim_argsort == 0).float().mean())
+        print("Accuracy: ", (sim_argsort == 0).float().mean())
         self.log(mode + '_acc_top5', (sim_argsort < 5).float().mean())
         self.log(mode + '_acc_mean_pos', 1 + sim_argsort.float().mean())
 
