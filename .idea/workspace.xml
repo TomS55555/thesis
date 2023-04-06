@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="Ready to train simclr transformer">
+      <change afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/default_params.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/my_transformer.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/transformer_simple/train.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/transformer_tutorial.ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/models/simclr_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/simclr_transformer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -12,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Jupyter Notebook" />
         <option value="Python Script" />
+        <option value="Jupyter Notebook" />
       </list>
     </option>
   </component>
@@ -141,9 +147,6 @@
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -359,7 +362,7 @@
       <workItem from="1680354850917" duration="2781000" />
       <workItem from="1680427620213" duration="11985000" />
       <workItem from="1680608254815" duration="10300000" />
-      <workItem from="1680716732295" duration="450000" />
+      <workItem from="1680716732295" duration="4217000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -634,7 +637,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680716988157</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Ready to train simclr transformer">
+      <created>1680717190954</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1680717190954</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -698,6 +708,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/datasets/datasets.py</url>
+          <line>102</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">

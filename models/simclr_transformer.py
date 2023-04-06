@@ -75,7 +75,7 @@ class SimCLR_Transformer(pl.LightningModule):
         reconstructed_outputs = self.recon_projector(encoded_augmented_inputs)
 
         contrastive_loss = self.info_nce_loss(contrastive_outputs, mode)
-        reconstruction_loss = self.recon_loss(augmented_inputs, reconstructed_outputs)
+        reconstruction_loss = self.recon_loss(augmented_inputs.squeeze(dim=1), reconstructed_outputs)
 
         loss = self.alpha * reconstruction_loss + contrastive_loss
         self.log(mode + "_recon_loss" + reconstruction_loss)
