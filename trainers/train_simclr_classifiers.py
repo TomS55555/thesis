@@ -95,7 +95,7 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
     #                  pretrained_classifier=pretrained_classifier)
 
 
-def test_networks(encoder, classifier, test_ds_args, train_path, logistic_save_name, supervised_save_name, finetune_save_name,
+def test_networks(test_ds_args, train_path, logistic_save_name, supervised_save_name, finetune_save_name,
                   device):
     """
         Checkpoint path is the path for the testing

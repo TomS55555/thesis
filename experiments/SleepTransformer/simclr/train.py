@@ -20,7 +20,7 @@ from datasets.augmentations import AugmentationModuleSTFT
 from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 
-patients_list = [5, 10, 20, 50]
+patients_list = [20]
 
 OUTER_DIM_STFT = 1  # Only pretraining inner transformer
 
@@ -147,7 +147,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": min(60 * num_ds, MAX_EPOCHS)
+            "max_epochs": min(40 * num_ds, MAX_EPOCHS)  # TODO: change back to 60
         },
         "optim_hparams": {
             "lr": 2e-6,
@@ -228,8 +228,6 @@ def test(device, version):
 
     for n_patients in patients_list:
         test_results = test_networks(
-            encoder=get_encoder(),
-            classifier=get_classifier(),
             test_ds_args=get_data_args(num_patients=5,
                                        batch_size=64),  # TODO: LOOK INTO THIS!!
             train_path=train_path + str(version),
@@ -270,7 +268,7 @@ if __name__ == "__main__":
     elif args.mode == 'both':
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
             dev, version)
-        train('', dev, version)
+        train(pretrained_model, dev, version)
         test(dev, version)
     else:
         exit("Mode not recognized!")
