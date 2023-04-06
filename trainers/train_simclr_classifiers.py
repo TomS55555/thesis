@@ -111,10 +111,10 @@ def test_networks(test_ds_args, train_path, logistic_save_name, supervised_save_
 
     # print(list(iter(test_dm.test_dataloader()))[0][0].shape)
 
-    sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
-    sup_res = trainer.test(model=sup_model,
-                           datamodule=test_dm)
-
+    #sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
+    #sup_res = trainer.test(model=sup_model,
+    #                       datamodule=test_dm)
+    sup_res = 0
     logistic_model = load_model(SupervisedModel, get_checkpoint_path(train_path, logistic_save_name))
     logistic_res = trainer.test(model=logistic_model,
                                 datamodule=test_dm)
