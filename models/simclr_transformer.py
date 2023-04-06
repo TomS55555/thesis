@@ -44,6 +44,8 @@ class SimCLR_Transformer(pl.LightningModule):
         cos_sim = cos_sim / self.temperature
         nll = -cos_sim[pos_mask] + torch.logsumexp(cos_sim, dim=-1)
         nll = nll.mean()
+        # Logging loss
+        #self.log(mode + '_loss', nll)
         # Get ranking position of positive example
         comb_sim = torch.cat([cos_sim[pos_mask][:, None],  # First position positive example
                               cos_sim.masked_fill(pos_mask, -9e15)],
@@ -51,7 +53,7 @@ class SimCLR_Transformer(pl.LightningModule):
         sim_argsort = comb_sim.argsort(dim=-1, descending=True).argmin(dim=-1)
         # Logging ranking metrics
         self.log(mode + '_acc_top1', (sim_argsort == 0).float().mean())
-        print("Accuracy: ", (sim_argsort == 0).float().mean())
+        #print("Accuracy: ", (sim_argsort == 0).float().mean())
         self.log(mode + '_acc_top5', (sim_argsort < 5).float().mean())
         self.log(mode + '_acc_mean_pos', 1 + sim_argsort.float().mean())
 
