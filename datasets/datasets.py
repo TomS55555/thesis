@@ -96,9 +96,6 @@ class SHHS_dataset_STFT(torch.utils.data.Dataset):
             try:
                 f = h5py.File(datapoint, 'r')
                 x2 = torch.as_tensor(np.array(f.get("X2"))).permute(2, 1, 0)
-                data_means = torch.mean(x2, dim=1)
-                data_stds = torch.std(x2, dim=1)
-                x2 = (x2-data_means.unsqueeze(1)) / data_stds.unsqueeze(1)
                 X2_list.append(x2)
 
                 label = torch.as_tensor(np.array(f.get("label"))[0])
@@ -107,6 +104,9 @@ class SHHS_dataset_STFT(torch.utils.data.Dataset):
                 print("Couldn't find file at path: ", datapoint)  # No problem if some patients are missing
 
         self.X2 = torch.cat(X2_list, 0)
+        data_means = torch.mean(self.X2, dim=1)
+        data_stds = torch.std(self.X2, dim=1)
+        self.X2 = (self.X2 - data_means.unsqueeze(1)) / data_stds.unsqueeze(1)
         # Normalize dataset: across time and frequency => average the average 'energy' in a time-frequency image across all images
         # Maybe use the same normalization that is used in real images?
         self.X2 = self.X2[:, :, 1:]  #TODO: check this!!
