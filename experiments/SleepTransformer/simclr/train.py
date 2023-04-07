@@ -108,12 +108,9 @@ def get_logistic_args(save_name, checkpoint_path, num_ds):
             "max_epochs": min(MAX_EPOCHS, 30 * num_ds),
         },
         "optim_hparams": {
-            "lr": 1e-3,
-            "weight_decay": 1e-4,
-            "lr_hparams": {
-                "gamma": 0.1,
-                "milestones": [10]
-            }
+            "lr": 1e-4,
+            "weight_decay": 1e-6,
+            "lr_hparams": None
         }
     }
 
