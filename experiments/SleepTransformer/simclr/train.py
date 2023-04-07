@@ -205,7 +205,7 @@ def pretrain(device, version):
     return model
 
 
-def train(pretrained_model, device, version):
+def train(pretrained_model, device, version, train_supervised=False):
     for n_patients in patients_list:
         num_ds = math.ceil(n_patients / PATIENTS_PER_DS)
         train_networks(
@@ -217,6 +217,7 @@ def train(pretrained_model, device, version):
                                                 train_path + str(version), num_ds),
             finetune_args=get_finetune_args(finetune_save_name + "_" + str(n_patients) + "pat",
                                             train_path + str(version), num_ds),
+            train_supervised=train_supervised,
             device=device
         )
 

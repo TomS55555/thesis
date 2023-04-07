@@ -30,7 +30,7 @@ def get_trainer(checkpoint_path, save_name, num_ds, trainer_hparams, device):
     return trainer
 
 
-def train_networks(pretrained_model, data_args, logistic_args, supervised_args, finetune_args, device):
+def train_networks(pretrained_model, data_args, logistic_args, supervised_args, finetune_args, train_supervised, device):
     """
         This function can be used to train a sequence of a models: logistic, supervised and fine-tuned with a given pretrained encoder
     """
@@ -38,18 +38,19 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
 
     # Train supervised model
     # train_supervised(Namespace(**supervised_args), device, dm=dm)
-    supervised_model = SupervisedModel(encoder=supervised_args['encoder'],
-                                       classifier=supervised_args['classifier'],
-                                       optim_hparams=supervised_args['optim_hparams'])
+    if train_supervised:
+        supervised_model = SupervisedModel(encoder=supervised_args['encoder'],
+                                           classifier=supervised_args['classifier'],
+                                           optim_hparams=supervised_args['optim_hparams'])
 
-    supervised_trainer = get_trainer(checkpoint_path=supervised_args['CHECKPOINT_PATH'],
-                                     save_name=supervised_args['save_name'],
-                                     num_ds=dm.num_ds,
-                                     trainer_hparams=supervised_args['trainer_hparams'],
-                                     device=device)
+        supervised_trainer = get_trainer(checkpoint_path=supervised_args['CHECKPOINT_PATH'],
+                                         save_name=supervised_args['save_name'],
+                                         num_ds=dm.num_ds,
+                                         trainer_hparams=supervised_args['trainer_hparams'],
+                                         device=device)
 
-    supervised_trainer.fit(model=supervised_model,
-                           datamodule=dm)
+        supervised_trainer.fit(model=supervised_model,
+                               datamodule=dm)
 
     # Train logistic classifier on top of simclr backbone
     backbone = deepcopy(pretrained_model.f)

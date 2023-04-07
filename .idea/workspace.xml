@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="looking for simclr accuracy issue">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Old_software_architecture1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/datasets/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datasets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -364,7 +364,7 @@
       <workItem from="1680427620213" duration="11985000" />
       <workItem from="1680608254815" duration="10300000" />
       <workItem from="1680716732295" duration="13878000" />
-      <workItem from="1680803037963" duration="574000" />
+      <workItem from="1680803037963" duration="2419000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -674,7 +674,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680780697024</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="looking for simclr accuracy issue">
+      <created>1680803636259</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1680803636259</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
