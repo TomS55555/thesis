@@ -221,11 +221,12 @@ def train(pretrained_model, device, version, train_supervised=False):
     # Then train logistic classifier on top of pretrained transformer
 
 
-def test(device, version):
+def test(pretrained_model, device, version):
     results = dict()
 
     for n_patients in patients_list:
         test_results = test_networks(
+            pretrained_model=pretrained_model,
             test_ds_args=get_data_args(num_patients=5,
                                        batch_size=64),  # TODO: LOOK INTO THIS!!
             train_path=train_path + str(version),
@@ -262,11 +263,12 @@ if __name__ == "__main__":
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
         train(pretrained_model, dev, version)
     elif args.mode == "test":
-        test(dev, version)
+        pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
+        test(pretrained_model, dev, version)
     elif args.mode == 'both':
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
             dev, version)
         train(pretrained_model, dev, version)
-        test(dev, version)
+        test(pretrained_model, dev, version)
     else:
         exit("Mode not recognized!")
