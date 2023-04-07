@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="Ready to train small graph">
+    <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="changed logistic training formula">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" afterDir="false" />
     </list>
@@ -360,7 +359,7 @@
       <workItem from="1680427620213" duration="11985000" />
       <workItem from="1680608254815" duration="10300000" />
       <workItem from="1680716732295" duration="13878000" />
-      <workItem from="1680803037963" duration="5703000" />
+      <workItem from="1680803037963" duration="10532000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1666424468977</created>
@@ -684,7 +683,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680861732986</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="changed logistic training formula">
+      <created>1680865091443</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1680865091443</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -719,7 +725,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added constants.py" />
     <MESSAGE value="Started implementing more efficient and sophisticated way of data-fetching" />
     <MESSAGE value="More SimCLR implementation" />
     <MESSAGE value="Software restructuring" />
@@ -744,7 +749,8 @@
     <MESSAGE value="ready to train graph" />
     <MESSAGE value="looking for simclr accuracy issue" />
     <MESSAGE value="Ready to train small graph" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ready to train small graph" />
+    <MESSAGE value="changed logistic training formula" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed logistic training formula" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
