@@ -1,14 +1,17 @@
+import torch
+
 from datasets.datamodules import EEGdataModule, SimCLRdataModule
 from models.supervised_model import SupervisedModel
 from trainers.train_supervised import train_supervised
 from argparse import Namespace
 import constants
+import torch.nn as nn
 from utils.helper_functions import load_model, get_checkpoint_path, prepare_data_features
 import pytorch_lightning as pl
-import torch.utils.data as data
 from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
 from copy import deepcopy
 import os
+import torch.utils.data as data
 
 
 def get_trainer(checkpoint_path, save_name, num_ds, trainer_hparams, device):
@@ -57,7 +60,23 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
     for param in backbone.parameters():
         param.requires_grad = False
 
-    logistic_model = SupervisedModel(encoder=backbone,
+    encoded_inputs_train = list()
+    labels_train = list()
+
+    encoded_inputs_val = list()
+    labels_val = list()
+    with torch.no_grad():
+        for batch in dm.train_dataloader():
+            encoded_inputs_train.append(backbone(batch[0]))
+            labels_train.append(batch[1])
+        for batch in dm.val_dataloader():
+            encoded_inputs_val.append(backbone(batch[0]))
+            labels_val.append(batch[1])
+
+    encoded_ds_train = data.TensorDataset(torch.cat(encoded_inputs_train, 0), torch.cat(labels_train, 0))
+    encoded_ds_val = data.TensorDataset(torch.cat(encoded_inputs_val, 0), torch.cat(labels_val, 0))
+
+    logistic_model = SupervisedModel(encoder=nn.Identity(),
                                      classifier=logistic_args['classifier'],
                                      optim_hparams=logistic_args['optim_hparams'])
 
@@ -67,7 +86,14 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
                                    trainer_hparams=logistic_args['trainer_hparams'],
                                    device=device)
     logistic_trainer.fit(model=logistic_model,
-                         datamodule=dm)
+                         train_dataloaders=data.DataLoader(dataset=encoded_ds_train,
+                                                           batch_size=dm.batch_size,
+                                                           num_workers=dm.num_workers,
+                                                           shuffle=True,),
+                         val_dataloaders=data.DataLoader(dataset=encoded_ds_val,
+                                                         batch_size=dm.batch_size,
+                                                         num_workers=dm.num_workers,
+                                                         shuffle=False))
 
     # Recover encoder from pretrained model for finetuning
     # pretrained_encoder = type(pretrained_model.f)(**finetune_args['encoder_hparams'])

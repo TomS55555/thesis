@@ -80,10 +80,11 @@ class EEGdataModule(pl.LightningDataModule):
         # print("------------------------")
 
     def train_dataloader(self):
-        print("CURRENT TRAINER EPOCH: ", self.trainer.current_epoch)
-        if self.num_ds > 1 and self.trainer.current_epoch > 0:
-            idx = self.trainer.current_epoch % self.num_ds  # self.trainer.current_epoch % self.num_ds
-            self.load_dataset(idx)
+        if self.trainer is not None:
+            print("CURRENT TRAINER EPOCH: ", self.trainer.current_epoch)
+            if self.num_ds > 1 and self.trainer.current_epoch > 0:
+                idx = self.trainer.current_epoch % self.num_ds  # self.trainer.current_epoch % self.num_ds
+                self.load_dataset(idx)
         # TODO: set shuffle to true!
         return data.DataLoader(self.eeg_train, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers,
                                drop_last=True, pin_memory=True)
