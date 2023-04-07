@@ -105,11 +105,11 @@ def get_logistic_args(save_name, checkpoint_path, num_ds):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": min(MAX_EPOCHS, 30 * num_ds),
+            "max_epochs": min(MAX_EPOCHS, 40 * num_ds),
         },
         "optim_hparams": {
-            "lr": 1e-4,
-            "weight_decay": 1e-6,
+            "lr": 2e-5,
+            "weight_decay": 0,
             "lr_hparams": None
         }
     }
@@ -147,7 +147,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
             "max_epochs": min(40 * num_ds, MAX_EPOCHS)  # TODO: change back to 60
         },
         "optim_hparams": {
-            "lr": 2e-6,
+            "lr": 4e-7,
             "weight_decay": 0,
             "lr_hparams": None
         }
