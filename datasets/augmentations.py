@@ -124,7 +124,7 @@ class AugmentationModuleSTFT(nn.Module):
         x = self.zero_mask_freq(x)
 
         # Gaussian noise
-        x = self.gaussian_noise(x, noise)  #TODO: Look at MIT paper for good noise value
+        x = self.gaussian_noise(x, self.noise)  #TODO: Look at MIT paper for good noise value
 
         # Time shift
         # x = self.time_shift(x, tuple(torch.randint(self.timeshift_min, self.timeshift_max, (self.batch_size, ))))
