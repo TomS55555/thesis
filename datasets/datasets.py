@@ -97,12 +97,12 @@ class SHHS_dataset_STFT(torch.utils.data.Dataset):
                 f = h5py.File(datapoint, 'r')
                 x2 = torch.as_tensor(np.array(f.get("X2"))).permute(2, 1, 0)
                 X2_list.append(x2)
-                # b, t, fr = x2.shape
-                # x2_plus = x2.reshape(b, t * fr)
-                # DATA_MEANS = x2_plus.mean(dim=1, keepdim=True)
-                # DATA_STD = x2_plus.std(dim=1, keepdim=True)
-                # x2_plus = (x2_plus - DATA_MEANS) / DATA_STD
-                # X2_list.append(x2_plus.reshape(b, t, fr))
+                b, t, fr = x2.shape
+                x2_plus = x2.reshape(b, t * fr)
+                DATA_MEANS = x2_plus.mean(dim=1, keepdim=True)
+                DATA_STD = x2_plus.std(dim=1, keepdim=True)
+                x2_plus = (x2_plus - DATA_MEANS) / DATA_STD
+                X2_list.append(x2_plus.reshape(b, t, fr))
 
                 label = torch.as_tensor(np.array(f.get("label"))[0])
                 labels_list.append(label)
@@ -113,9 +113,9 @@ class SHHS_dataset_STFT(torch.utils.data.Dataset):
         # Normalize dataset: across time and frequency => average the average 'energy' in a time-frequency image across all images
         # Maybe use the same normalization that is used in real images?
 
-        data_means = torch.mean(self.X2, dim=1, keepdim=True)
-        data_stds = torch.std(self.X2, dim=1, keepdim=True)
-        self.X2 = (self.X2-data_means) / data_stds
+        # data_means = torch.mean(self.X2, dim=1, keepdim=True)
+        # data_stds = torch.std(self.X2, dim=1, keepdim=True)
+        # self.X2 = (self.X2-data_means) / data_stds
 
         self.X2 = self.X2[:, :, 1:]  #TODO: check this!!
 

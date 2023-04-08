@@ -124,6 +124,9 @@ class AugmentationModuleSTFT(nn.Module):
         # Gaussian noise
         # x = self.gaussian_noise(x, 0.1)  #TODO: Look at MIT paper for good noise value
 
+        # Time shift
+        # x = self.time_shift(x, tuple(torch.randint(self.timeshift_min, self.timeshift_max, (self.batch_size, ))))
+
         return x
 
     def amplitude_scale(self, x, rand_am):
