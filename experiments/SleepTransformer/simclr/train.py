@@ -156,9 +156,9 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     # TODO: fix normalization of STFT images!
-    num_patients = 5000
+    num_patients = 500
     batch_size = 512
-    max_epochs = 200
+    max_epochs = 50
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = SimCLR_Transformer(
@@ -169,7 +169,7 @@ def pretrain(device, version):
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
-        recon_projector=get_reconstruction_head(),
+        recon_projector=None,
         temperature=0.05,
         alpha=1,
         optim_hparams={

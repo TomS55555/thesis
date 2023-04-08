@@ -10,7 +10,7 @@ class SimCLR_Transformer(pl.LightningModule):
         This class implements the SimCLR model for any encoder and projection head
     """
 
-    def __init__(self, aug_module, encoder, cont_projector, recon_projector, optim_hparams, alpha, temperature):
+    def __init__(self, aug_module, encoder, cont_projector, optim_hparams, temperature, recon_projector=None, alpha=1.0):
         super().__init__()
         self.save_hyperparameters()
         self.temperature = temperature
@@ -73,10 +73,13 @@ class SimCLR_Transformer(pl.LightningModule):
         encoded_augmented_inputs = self.f(augmented_inputs)
 
         contrastive_outputs = self.cont_projector(encoded_augmented_inputs)
-        reconstructed_outputs = self.recon_projector(encoded_augmented_inputs)
-
         contrastive_loss = self.info_nce_loss(contrastive_outputs, mode)
-        reconstruction_loss = self.recon_loss(augmented_inputs.squeeze(dim=1), reconstructed_outputs)
+
+        if self.recon_projector is not None:
+            reconstructed_outputs = self.recon_projector(encoded_augmented_inputs)
+            reconstruction_loss = self.recon_loss(augmented_inputs.squeeze(dim=1), reconstructed_outputs)
+        else:
+            reconstruction_loss = 0
 
         loss = self.alpha * reconstruction_loss + contrastive_loss
         self.log(mode + "_recon_loss", reconstruction_loss)
