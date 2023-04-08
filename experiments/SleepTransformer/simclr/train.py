@@ -165,12 +165,13 @@ def pretrain(device, version):
         aug_module=AugmentationModuleSTFT(
             batch_size=batch_size,
             time_mask_window=8,
-            freq_mask_window=30
+            freq_mask_window=30,
+            noise=0.05
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
         recon_projector=None,
-        temperature=0.05,
+        temperature=0.01,
         alpha=1,
         optim_hparams={
             "max_epochs": max_epochs,

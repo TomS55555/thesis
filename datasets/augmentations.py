@@ -97,7 +97,8 @@ class AugmentationModuleSTFT(nn.Module):
                  timeshift_min: int = -100,
                  timeshift_max: int = 100,
                  time_mask_window: int = 3,
-                 freq_mask_window: int = 3):
+                 freq_mask_window: int = 3,
+                 noise: float = 0.01):
         super().__init__()
         self.amplitude_min = amplitude_min
         self.amplitude_max = amplitude_max
@@ -108,6 +109,7 @@ class AugmentationModuleSTFT(nn.Module):
         self.freq_mask_window = freq_mask_window
 
         self.batch_size = batch_size
+        self.noise = noise
 
     def forward(self, x):
         # Must work for a batch!!
@@ -122,7 +124,7 @@ class AugmentationModuleSTFT(nn.Module):
         x = self.zero_mask_freq(x)
 
         # Gaussian noise
-        # x = self.gaussian_noise(x, 0.1)  #TODO: Look at MIT paper for good noise value
+        x = self.gaussian_noise(x, noise)  #TODO: Look at MIT paper for good noise value
 
         # Time shift
         # x = self.time_shift(x, tuple(torch.randint(self.timeshift_min, self.timeshift_max, (self.batch_size, ))))

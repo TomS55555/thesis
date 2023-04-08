@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="Ready to pretrain without reconsturction head">
+    <list default="true" id="79ca5c83-278b-40fd-8b28-22a91f77e2c9" name="Changes" comment="Ready to do new test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/datasets/augmentations.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/augmentations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datasets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -364,14 +364,7 @@
       <workItem from="1680608254815" duration="10300000" />
       <workItem from="1680716732295" duration="13878000" />
       <workItem from="1680803037963" duration="12163000" />
-      <workItem from="1680947663549" duration="2186000" />
-    </task>
-    <task id="LOCAL-00002" summary="Old software architecture">
-      <created>1666426687106</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1666426687106</updated>
+      <workItem from="1680947663549" duration="3260000" />
     </task>
     <task id="LOCAL-00003" summary="Old software architecture">
       <created>1666426776135</created>
@@ -709,7 +702,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680948999313</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Ready to do new test">
+      <created>1680949974372</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1680949974372</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -744,7 +744,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="More SimCLR implementation" />
     <MESSAGE value="Software restructuring" />
     <MESSAGE value="local changes" />
     <MESSAGE value="fixed a bug" />
@@ -769,7 +768,8 @@
     <MESSAGE value="Ready to train small graph" />
     <MESSAGE value="changed logistic training formula" />
     <MESSAGE value="Ready to pretrain without reconsturction head" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ready to pretrain without reconsturction head" />
+    <MESSAGE value="Ready to do new test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ready to do new test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
