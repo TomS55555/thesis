@@ -80,14 +80,14 @@ def get_classifier():
     )
 
 
-def get_data_args(num_patients, batch_size):
+def get_data_args(num_patients, batch_size, num_workers=4):
     return {
         "data_path": get_data_path(),
         "data_split": [4, 1],
         "first_patient": 1,
         "num_patients": num_patients,
         "batch_size": batch_size,
-        "num_workers": 4,
+        "num_workers": num_workers,
         "num_ds": math.ceil(num_patients / PATIENTS_PER_DS),
         "exclude_test_set": constants.TEST_SET_1,
         "dataset_type": SHHS_dataset_STFT,
@@ -164,14 +164,14 @@ def pretrain(device, version):
     model = SimCLR_Transformer(
         aug_module=AugmentationModuleSTFT(
             batch_size=batch_size,
-            time_mask_window=9,
-            freq_mask_window=40,
-            noise=0.05
+            time_mask_window=10,
+            freq_mask_window=50,
+            noise=0.1
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
-        recon_projector=get_reconstruction_head(),
-        temperature=0.01,
+        recon_projector=None,
+        temperature=0.0001,
         alpha=1,
         optim_hparams={
             "max_epochs": max_epochs,
@@ -229,7 +229,8 @@ def test(pretrained_model, device, version):
         test_results = test_networks(
             pretrained_model=pretrained_model,
             test_ds_args=get_data_args(num_patients=5,
-                                       batch_size=64),  # TODO: LOOK INTO THIS!!
+                                       batch_size=64,
+                                       num_workers=0),  # TODO: LOOK INTO THIS!!
             train_path=train_path + str(version),
             logistic_save_name=logistic_save_name + "_" + str(n_patients) + "pat",
             supervised_save_name=supervised_save_name + "_" + str(n_patients) + "pat",
