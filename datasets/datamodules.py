@@ -1,5 +1,5 @@
 import torch
-
+import gc
 from datasets.augmentations import *
 from utils.helper_functions import prepare_data_features
 import pytorch_lightning as pl
@@ -59,6 +59,9 @@ class EEGdataModule(pl.LightningDataModule):
 
     def load_dataset(self, idx):
         first_patient = self.first_patient + idx * self.num_patients_per_ds  # ! Make sure idx starts at 0
+        if idx != 0:
+            del self.eeg_train
+            del self.eeg_val
         eeg_trainval = self.dataset_type(data_path=self.data_path,
                                          first_patient=first_patient,
                                          num_patients=self.num_patients_per_ds,
@@ -73,6 +76,7 @@ class EEGdataModule(pl.LightningDataModule):
         # memReport()
         # cpuStats()
         self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split, generator=torch.Generator().manual_seed(self.my_seed))
+        gc.collect()
         # self.eeg_train = eeg_trainval
         # print("AFTER loading reassigning")
         # memReport()
