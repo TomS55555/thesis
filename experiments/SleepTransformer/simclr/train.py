@@ -20,7 +20,7 @@ from datasets.augmentations import AugmentationModuleSTFT
 from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 
-patients_list = [20]
+patients_list = [5, 10, 20, 50, 100, 250, 500, 1000, 3000, 5000]
 
 OUTER_DIM_STFT = 1  # Only pretraining inner transformer
 
@@ -48,7 +48,7 @@ def get_encoder():
             feat_dim=constants.FEAT_DIM_STFT,
             dim_feedforward=1024,
             num_heads=8,
-            num_layers=4
+            num_layers=8
         ),
         nn.Flatten()  # this should result in a final layer of size outer x feat = feat bc outer=1 for pretraining
     )
@@ -62,7 +62,29 @@ def get_contrastive_projection_head():
     )
 
 
+class Squeeze(nn.Module):
+    def __init__(self, dim):
+        super().__init__()
+        self.dim = dim
+    def forward(self, x):
+        return x.squeeze(self.dim)
+
+class Unsqueeze(nn.Module):
+    def __init__(self, dim):
+        super().__init__()
+        self.dim = dim
+    def forward(self, x):
+        return x.unsqueeze(self.dim)
+
+
 def get_reconstruction_head():
+    return nn.Sequential(
+            nn.Linear(constants.FEAT_DIM_STFT, constants.FEAT_DIM_STFT),
+            nn.Conv2d(1,32,kernel_size=3,padding=1),
+            nn.Conv2d(32,64,kernel_size=3,padding=1),
+            nn.Conv2d(64,1,kernel_size=3,padding=1))
+
+def get_reconstruction_head2():
     return nn.Sequential(
         nn.Linear(constants.FEAT_DIM_STFT, HIDDEN_DIM),
         nn.GELU(),
@@ -158,20 +180,20 @@ def pretrain(device, version):
     # TODO: fix normalization of STFT images!
     num_patients = 5000
     batch_size = 512
-    max_epochs = 250
+    max_epochs = 500
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = SimCLR_Transformer(
         aug_module=AugmentationModuleSTFT(
             batch_size=batch_size,
-            time_mask_window=10,
-            freq_mask_window=50,
-            noise=0.1
+            time_mask_window=9,
+            freq_mask_window=40,
+            noise=0.05
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
-        recon_projector=None,
-        temperature=0.0001,
+        recon_projector=get_reconstruction_head(),
+        temperature=1e-5,
         alpha=1,
         optim_hparams={
             "max_epochs": max_epochs,
