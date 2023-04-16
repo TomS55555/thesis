@@ -25,7 +25,7 @@ patients_list = [5, 10, 20, 50, 100, 250, 500, 1000, 3000, 5000]
 
 OUTER_DIM_STFT = 1  # Only pretraining inner transformer
 
-PATIENTS_PER_DS = 250  # Depends on RAM size of PC
+PATIENTS_PER_DS = 200  # Depends on RAM size of PC
 
 train_path = "simclr_trainings"  # path used for training the networks
 result_file_name = "test_results"
