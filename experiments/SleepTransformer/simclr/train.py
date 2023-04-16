@@ -49,7 +49,7 @@ def get_encoder():
             feat_dim=constants.FEAT_DIM_STFT,
             dim_feedforward=1024,
             num_heads=8,
-            num_layers=8,
+            num_layers=4,
             include_aggregrator=False
         ),
         # nn.Flatten()  # this should result in a final layer of size outer x feat = feat bc outer=1 for pretraining
@@ -83,8 +83,14 @@ class Unsqueeze(nn.Module):
 def get_reconstruction_head():
     return nn.Sequential(
             nn.Linear(constants.FEAT_DIM_STFT, constants.FEAT_DIM_STFT),
+            nn.GELU(),
             nn.Conv2d(1, 32, kernel_size=3, padding=1),
+            nn.GELU(),
             nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.GELU(),
+            nn.Conv2d(64, 64, kernel_size=3, padding=1),
+            nn.GELU(),
+            nn.Conv2d(64, 64, kernel_size=3, padding=1),
             nn.Conv2d(64, 1, kernel_size=3, padding=1))
 
 def get_reconstruction_head2():
@@ -181,7 +187,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     # TODO: fix normalization of STFT images!
-    num_patients = 5000
+    num_patients = 1000
     batch_size = 512
     max_epochs = 500
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
@@ -189,14 +195,14 @@ def pretrain(device, version):
     model = SimCLR_Transformer(
         aug_module=AugmentationModuleSTFT(
             batch_size=batch_size,
-            time_mask_window=9,
-            freq_mask_window=40,
-            noise=0.05
+            time_mask_window=5,
+            freq_mask_window=20,
+            noise=0.01
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
         recon_projector=get_reconstruction_head(),
-        temperature=1e-5,
+        temperature=1e-4,
         alpha=1,
         optim_hparams={
             "max_epochs": max_epochs,
