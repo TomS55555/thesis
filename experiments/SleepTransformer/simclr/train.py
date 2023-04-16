@@ -19,6 +19,7 @@ from utils.helper_functions import load_model, get_data_path
 from datasets.augmentations import AugmentationModuleSTFT
 from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
+from models.sleep_transformer import Aggregator
 
 patients_list = [5, 10, 20, 50, 100, 250, 500, 1000, 3000, 5000]
 
@@ -48,14 +49,16 @@ def get_encoder():
             feat_dim=constants.FEAT_DIM_STFT,
             dim_feedforward=1024,
             num_heads=8,
-            num_layers=8
+            num_layers=8,
+            include_aggregrator=False
         ),
-        nn.Flatten()  # this should result in a final layer of size outer x feat = feat bc outer=1 for pretraining
+        # nn.Flatten()  # this should result in a final layer of size outer x feat = feat bc outer=1 for pretraining
     )
 
 
 def get_contrastive_projection_head():
     return nn.Sequential(
+        Aggregator(feat_dim=constants.FEAT_DIM_STFT),
         nn.Linear(constants.FEAT_DIM_STFT, HIDDEN_DIM),
         nn.GELU(),
         nn.Linear(HIDDEN_DIM, Z_DIM)
@@ -80,9 +83,9 @@ class Unsqueeze(nn.Module):
 def get_reconstruction_head():
     return nn.Sequential(
             nn.Linear(constants.FEAT_DIM_STFT, constants.FEAT_DIM_STFT),
-            nn.Conv2d(1,32,kernel_size=3,padding=1),
-            nn.Conv2d(32,64,kernel_size=3,padding=1),
-            nn.Conv2d(64,1,kernel_size=3,padding=1))
+            nn.Conv2d(1, 32, kernel_size=3, padding=1),
+            nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.Conv2d(64, 1, kernel_size=3, padding=1))
 
 def get_reconstruction_head2():
     return nn.Sequential(

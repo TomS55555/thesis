@@ -115,7 +115,7 @@ class InnerTransformer(nn.Module):
         For the SleepTransformer, inner x feat is a time frequency image of a 1D EEG time-series (inner is time, feat is freq dimension)
     """
 
-    def __init__(self, inner_dim, feat_dim, dim_feedforward, num_heads, num_layers):
+    def __init__(self, inner_dim, feat_dim, dim_feedforward, num_heads, num_layers, include_aggregrator=True):
         super().__init__()
         self.dim_feedforward = dim_feedforward  # Size of hidden dimension used in MLP within transformerencoder layer
         self.transformer = nn.TransformerEncoder(
@@ -131,14 +131,18 @@ class InnerTransformer(nn.Module):
             sequence_length=inner_dim,
             hidden_size=feat_dim
         )
+        self.include_aggregrator = include_aggregrator
 
     def forward(self, x):
         batch_dim, outer_dim, inner_dim, feat_dim = x.shape
         batch_plus = x.view(batch_dim * outer_dim, inner_dim, feat_dim)  # reshape before putting through transformer
         batch_plus = self.inner_position_encoding(batch_plus)  # Add positional encoding
         transformed_plus = self.transformer(batch_plus)
-        aggregrated_plus = self.aggregator(transformed_plus)
-        return aggregrated_plus.view(batch_dim, outer_dim, feat_dim)
+        if self.include_aggregrator:
+            aggregrated_plus = self.aggregator(transformed_plus)
+            return aggregrated_plus.view(batch_dim, outer_dim, feat_dim)
+        else:
+            return transformed_plus.view(batch_dim, outer_dim, inner_dim, feat_dim)
 
 
 class Aggregator(nn.Module):
