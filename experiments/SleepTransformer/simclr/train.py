@@ -65,21 +65,6 @@ def get_contrastive_projection_head():
     )
 
 
-class Squeeze(nn.Module):
-    def __init__(self, dim):
-        super().__init__()
-        self.dim = dim
-    def forward(self, x):
-        return x.squeeze(self.dim)
-
-class Unsqueeze(nn.Module):
-    def __init__(self, dim):
-        super().__init__()
-        self.dim = dim
-    def forward(self, x):
-        return x.unsqueeze(self.dim)
-
-
 def get_reconstruction_head():
     return nn.Sequential(
             nn.Linear(constants.FEAT_DIM_STFT, constants.FEAT_DIM_STFT),
