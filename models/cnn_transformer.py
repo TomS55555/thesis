@@ -77,47 +77,53 @@ class CnnEncoder(nn.Module):
         super().__init__()
         self.net = nn.Sequential(
             nn.Conv1d(in_channels=1,
-                      out_channels=128,
+                      out_channels=64,
                       kernel_size=7,
                       stride=2,
                       padding=3,
                       bias=False),  # Output: 6000
-            nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv1d(in_channels=128,
-                      out_channels=128,
+            nn.GELU(),
+            nn.BatchNorm1d(64),
+            nn.Conv1d(in_channels=64,
+                      out_channels=64,
                       kernel_size=7,
                       stride=2,
                       padding=3,
                       bias=False),  # Output: 3000
-            nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv1d(in_channels=128,
-                      out_channels=128,
+            nn.GELU(),
+            nn.BatchNorm1d(64),
+            nn.Conv1d(in_channels=64,
+                      out_channels=64,
                       kernel_size=7,
                       stride=2,
                       padding=3,
                       bias=False),  # Output: 1500
-            nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv1d(in_channels=128,
-                      out_channels=128,
+            nn.GELU(),
+            nn.BatchNorm1d(64),
+            nn.Conv1d(in_channels=64,
+                      out_channels=64,
                       kernel_size=7,
                       stride=2,
                       padding=3,
                       bias=False),  # Output: 750
-            nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv1d(in_channels=128,
-                      out_channels=128,
+            nn.GELU(),
+            nn.BatchNorm1d(64),
+            nn.Conv1d(in_channels=64,
+                      out_channels=64,
                       kernel_size=7,
                       stride=2,
                       padding=3,
                       bias=False),  # Output: 375
-            nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv1d(in_channels=128,
+            nn.GELU(),
+            nn.BatchNorm1d(64),
+            nn.Conv1d(in_channels=64,
                       out_channels=32,
                       kernel_size=5,
                       stride=2,
                       padding=0,
                       dilation=2,
                       bias=False),  # Output: 184
+            nn.BatchNorm1d(32)
         )
 
     def forward(self, x):

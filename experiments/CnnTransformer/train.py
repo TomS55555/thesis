@@ -24,7 +24,7 @@ PATIENTS_PER_DS = 200  # Depends on RAM size of PC
 
 
 def train_fully_supervised(device):
-    num_patients = 3
+    num_patients = 1000
     max_epochs = 50
 
     dm = EEGdataModule(
