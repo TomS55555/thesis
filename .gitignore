@@ -13,4 +13,5 @@
 /condor_logs/
 /checkpoints_test/
 /.idea/
+/simclr_trainings*
 ./.idea/workspace.xml

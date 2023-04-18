@@ -6,7 +6,10 @@ import torch.utils.data as data
 from tqdm.notebook import tqdm
 import gc
 import sys
+import socket
 import psutil
+
+import constants
 
 
 def memReport():
@@ -49,15 +52,25 @@ def prepare_data_features(model, data_loader, device):
     return data.TensorDataset(feats, labels)
 
 
-def load_model(model_type, checkpoint_path, **checkpoing_kwargs):
+def load_model(model_type, checkpoint_path, **checkpoint_kwargs):
     if os.path.isfile(checkpoint_path):
         model = model_type.load_from_checkpoint(
-            checkpoint_path, **checkpoing_kwargs)  # Automatically loads the model with the saved hyperparameters
+            checkpoint_path, **checkpoint_kwargs)  # Automatically loads the model with the saved hyperparameters
     else:
         print("Model at location ", checkpoint_path, " not found!")
         sys.exit(1)
     return model
 
+
+def get_data_path():
+    hostname = socket.gethostname()
+    if hostname == "DelVanTom":
+        return constants.SHHS_PATH_LAPTOP
+    elif hostname == "thesis-1-vm":
+        return constants.SHHS_PATH_GOOGLE
+    else:
+        print("Don't know where the data is on this pc, exiting ...")
+        exit(0)
 
 def get_checkpoint_path(train_path, save_name):
     """

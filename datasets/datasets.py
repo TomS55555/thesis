@@ -57,12 +57,12 @@ class SHHSdataset(torch.utils.data.Dataset):
 
     def __getitem__(self, item):
         if self.window_size == 4:
-            inputs = self.X1[item:item + self.window_size].view(1, 1, self.window_size*constants.SLEEP_EPOCH_SIZE)
-            prev_inputs = self.X1[item-1: item-1 + self.window_size].view(1, 1, self.window_size*constants.SLEEP_EPOCH_SIZE) if item > 0 else inputs
+            inputs = self.X1[item:item + self.window_size].view(1, self.window_size*constants.SLEEP_EPOCH_SIZE)
+            # prev_inputs = self.X1[item-1: item-1 + self.window_size].view(1, 1, self.window_size*constants.SLEEP_EPOCH_SIZE) if item > 0 else inputs
             label = self.labels[item+2]
         else:
             inputs = self.X1[item]
-            prev_inputs = self.X1[item-1] if item > 0 else inputs
+            # prev_inputs = self.X1[item-1] if item > 0 else inputs
             label = self.labels[item]
 
         return inputs, label
@@ -95,8 +95,13 @@ class SHHS_dataset_STFT(torch.utils.data.Dataset):
             datapoint = data_path + "n" + f"{patient:0=4}" + "_eeg.mat"
             try:
                 f = h5py.File(datapoint, 'r')
-                x2 = torch.as_tensor(np.array(f.get("X2")))
-                X2_list.append(x2.permute(2, 1, 0))
+                x2 = torch.as_tensor(np.array(f.get("X2"))).permute(2, 1, 0)
+                b, t, fr = x2.shape
+                x2_plus = x2.reshape(b, t * fr)
+                DATA_MEANS = x2_plus.mean(dim=1, keepdim=True)
+                DATA_STD = x2_plus.std(dim=1, keepdim=True)
+                x2_plus = (x2_plus - DATA_MEANS) / DATA_STD
+                X2_list.append(x2_plus.reshape(b, t, fr))
 
                 label = torch.as_tensor(np.array(f.get("label"))[0])
                 labels_list.append(label)
@@ -104,7 +109,15 @@ class SHHS_dataset_STFT(torch.utils.data.Dataset):
                 print("Couldn't find file at path: ", datapoint)  # No problem if some patients are missing
 
         self.X2 = torch.cat(X2_list, 0)
+        # Normalize dataset: across time and frequency => average the average 'energy' in a time-frequency image across all images
+        # Maybe use the same normalization that is used in real images?
+
+        # data_means = torch.mean(self.X2, dim=1, keepdim=True)
+        # data_stds = torch.std(self.X2, dim=1, keepdim=True)
+        # self.X2 = (self.X2-data_means) / data_stds
+
         self.X2 = self.X2[:, :, 1:]  #TODO: check this!!
+
         self.labels = torch.cat(labels_list, 0)
         self.labels = self.labels - torch.ones(self.labels.size(0))  # Change label range from 1->5 to 0->4s
         self.length = self.labels.size(0) - self.window_size  # Avoid problems at end of dataset
