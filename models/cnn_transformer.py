@@ -8,6 +8,7 @@ import pytorch_lightning as pl
 
 FEAT_DIM = 184
 
+
 class CnnTransformer(pl.LightningModule):
     def __init__(self):
         super().__init__()
@@ -29,15 +30,11 @@ class CnnTransformer(pl.LightningModule):
 
     def common_step(self, batch, calculate_loss=False):
         inputs, labels = batch
-        batch_dim, outer_dim, feat_dim = inputs.shape
         preds = self.net(inputs)
 
-        labels_plus = labels.view(batch_dim*outer_dim,)
+        loss = self.loss_module(preds, labels.long()) if calculate_loss else None
 
-        preds_plus = preds.view(batch_dim*outer_dim, constants.N_CLASSES)
-        loss = self.loss_module(preds_plus, labels_plus.long()) if calculate_loss else None
-
-        acc = (preds_plus.argmax(dim=-1) == labels_plus).float().mean()
+        acc = (preds.argmax(dim=-1) == labels).float().mean()
 
         return acc, loss
 
