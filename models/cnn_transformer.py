@@ -68,28 +68,39 @@ class CnnTransformer(pl.LightningModule):
 
 class CnnEncoder(nn.Module):
     """
-        This cnn encoder takes as input vectors of size [batch x 1 x 12000] and outputs [batch x 32 x 188]
+        This cnn encoder takes as input vectors of size [batch x 1 x input_size] and outputs [batch x 32 x 188]
+        If input_size == 12000: apply 6 convolutional filters
+        else: apply 4
     """
-    def __init__(self):
+    def __init__(self, input_size):
         super().__init__()
+        if input_size == 4 * constants.SLEEP_EPOCH_SIZE:
+            first_enc = nn.Sequential(
+                nn.Conv1d(in_channels=1,
+                          out_channels=64,
+                          kernel_size=7,
+                          stride=2,
+                          padding=3,
+                          bias=False),  # Output: 6000
+                nn.GELU(),
+                nn.BatchNorm1d(64),
+                nn.Conv1d(in_channels=64,
+                          out_channels=64,
+                          kernel_size=7,
+                          stride=2,
+                          padding=3,
+                          bias=False),  # Output: 3000
+                nn.GELU(),
+                nn.BatchNorm1d(64)
+            )
+        elif input_size == constants.SLEEP_EPOCH_SIZE:
+            first_enc = nn.Identity()
+        else:
+            print("No encoder supported for this epoch size, exiting...")
+            exit(1)
         self.net = nn.Sequential(
-            nn.Conv1d(in_channels=1,
-                      out_channels=64,
-                      kernel_size=7,
-                      stride=2,
-                      padding=3,
-                      bias=False),  # Output: 6000
-            nn.GELU(),
-            nn.BatchNorm1d(64),
-            nn.Conv1d(in_channels=64,
-                      out_channels=64,
-                      kernel_size=7,
-                      stride=2,
-                      padding=3,
-                      bias=False),  # Output: 3000
-            nn.GELU(),
-            nn.BatchNorm1d(64),
-            nn.Conv1d(in_channels=64,
+            first_enc,
+            nn.Conv1d(in_channels=64 if input_size != constants.SLEEP_EPOCH_SIZE else 1,
                       out_channels=64,
                       kernel_size=7,
                       stride=2,

@@ -6,7 +6,7 @@ import constants
 import json
 
 from models.simclr_model import SimCLR
-from utils.helper_functions import load_model
+from utils.helper_functions import load_model, get_data_path
 from trainers.train_simclr_classifiers import train_networks, test_networks
 from datasets.datasets import SHHSdataset
 from models.mymodules import CNN_head
@@ -76,7 +76,7 @@ def test(device, version):
 
 def get_data_args(first_patient, num_patients, num_ds):
     return {
-        "data_path": constants.SHHS_PATH_GOOGLE,
+        "data_path": get_data_path(),
         "data_split": [4, 1],
         "first_patient": first_patient,
         "num_patients": num_patients,

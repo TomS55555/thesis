@@ -77,6 +77,7 @@ class Inverse_CNN_block(nn.Module):
     def forward(self, x):
         return self.net(x)
 
+
 class CNN_block(nn.Module):
     """
         One CNN block consists of a 1D (3) convolution, a Max pooling and a Batch normalization
