@@ -22,7 +22,7 @@ from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 from models.sleep_transformer import Aggregator
 
-patients_list = [5, 10, 20, 50, 100, 250, 500, 1000, 3000, 5000]
+patients_list = [3, 5, 10, 20, 50, 100, 250, 500]
 
 OUTER_DIM = 1
 
@@ -169,18 +169,22 @@ def pretrain(device, version):
         aug_module=AugmentationModule(
             batch_size=batch_size,
             noise_max=0.3,
-            zeromask_min=200,
-            zeromask_max=400
+            zeromask_min=300,
+            zeromask_max=500,
+            amplitude_min=0.75,
+            amplitude_max=1.5,
+            timeshift_min=-100,
+            timeshift_max=100
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
         recon_projector=None,
-        temperature=1e-4,
+        temperature=1e-3,
         alpha=1,
         optim_hparams={
             "max_epochs": max_epochs,
-            "lr": 1e-4,
-            "weight_decay": 1e-5
+            "lr": 3e-4,
+            "weight_decay": 1e-4
         }
     )
 
@@ -212,7 +216,7 @@ def train(pretrained_model, device, version, train_supervised=False):
         num_ds = math.ceil(n_patients / PATIENTS_PER_DS)
         train_networks(
             pretrained_model=pretrained_model,
-            data_args=get_data_args(n_patients, num_ds),
+            data_args=get_data_args(n_patients, batch_size=64),
             logistic_args=get_logistic_args(logistic_save_name + "_" + str(n_patients) + "pat",
                                             train_path + str(version), num_ds),
             supervised_args=get_supervised_args(supervised_save_name + "_" + str(n_patients) + "pat",
@@ -226,7 +230,7 @@ def train(pretrained_model, device, version, train_supervised=False):
     # Then train logistic classifier on top of pretrained transformer
 
 
-def test(pretrained_model, device, version):
+def test(pretrained_model, device, version, test_supervised=False):
     results = dict()
 
     for n_patients in patients_list:
@@ -239,7 +243,8 @@ def test(pretrained_model, device, version):
             logistic_save_name=logistic_save_name + "_" + str(n_patients) + "pat",
             supervised_save_name=supervised_save_name + "_" + str(n_patients) + "pat",
             finetune_save_name=finetune_save_name + "_" + str(n_patients) + "pat",
-            device=device
+            device=device,
+            test_supervised=test_supervised
         )
         results[str(n_patients) + "_pat"] = test_results
         print(test_results)
@@ -267,14 +272,14 @@ if __name__ == "__main__":
             print("A pretrained encoder is required, specify it with the --pretrained_path")
             sys.exit(1)
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
-        train(pretrained_model, dev, version)
+        train(pretrained_model, dev, version, True)
     elif args.mode == "test":
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
-        test(pretrained_model, dev, version)
+        test(pretrained_model, dev, version, True)
     elif args.mode == 'both':
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
             dev, version)
-        train(pretrained_model, dev, version)
-        test(pretrained_model, dev, version)
+        train(pretrained_model, dev, version, True)
+        test(pretrained_model, dev, version, True)
     else:
         exit("Mode not recognized!")
