@@ -32,7 +32,6 @@ def get_trainer(checkpoint_path, save_name, num_ds, trainer_hparams, device):
     trainer.logger._default_hp_metric = None  # Optional logging argument that we don't need
     return trainer
 
-
 def pass_through_encoder(encoder, dm, mode="train"):
     encoded_inputs_train = list()
     labels_train = list()
@@ -43,7 +42,7 @@ def pass_through_encoder(encoder, dm, mode="train"):
     encoded_inputs_test = list()
     labels_test = list()
     with torch.no_grad():
-        if mode == "train":
+        if mode=="train":
             for batch in dm.train_dataloader():
                 encoded_inputs_train.append(encoder(batch[0]))
                 labels_train.append(batch[1])
@@ -60,7 +59,6 @@ def pass_through_encoder(encoder, dm, mode="train"):
         return encoded_ds_train, encoded_ds_val
     elif mode == "test":
         return data.TensorDataset(torch.cat(encoded_inputs_test, 0), torch.cat(labels_test, 0))
-
 
 def train_networks(pretrained_model, data_args, logistic_args, supervised_args, finetune_args, train_supervised, device):
     """
@@ -160,14 +158,13 @@ def test_networks(pretrained_model, test_ds_args, train_path, logistic_save_name
         sup_res = 0
     logistic_model = load_model(SupervisedModel, get_checkpoint_path(train_path, logistic_save_name))
     backbone = deepcopy(pretrained_model.f)
-    encoded_ds_test = pass_through_encoder(backbone, test_dm, mode="test")
-
-    logistic_res = trainer.test(model=logistic_model,
-                                dataloaders=data.DataLoader(
-                                    dataset=encoded_ds_test,
-                                    batch_size=64,
-                                    shuffle=False
-                                ))
+    classifier = deepcopy(logistic_model.classifier)
+    #encoded_ds_test = pass_through_encoder(backbone, test_dm, mode="test")
+    logistic_test_model = SupervisedModel(encoder=backbone,
+                                        classifier=classifier,
+                                        optim_hparams=None)
+    logistic_res = trainer.test(model=logistic_test_model,
+                                datamodule=test_dm)
 
     fully_tuned_model = load_model(SupervisedModel, get_checkpoint_path(train_path, finetune_save_name))
     fully_tuned_res = trainer.test(model=fully_tuned_model,
