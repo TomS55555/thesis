@@ -22,7 +22,8 @@ from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 from models.sleep_transformer import Aggregator
 
-patients_list = [3, 5, 10, 20, 50, 100, 250, 500]
+#patients_list = [3, 5, 10, 20, 50, 100, 250, 500]
+patients_list = [3, 5, 10, 20, 50, 100, 250]
 
 OUTER_DIM = 1
 
