@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to pretrain cnn transformer">
-      <change afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" afterDir="false" />
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to pretrain cnn encoder">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/simclr_graph/simclr_graph_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/simclr_graph/simclr_graph_train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/cnn_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/cnn_transformer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/mymodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/mymodules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/CnnTransformer/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnTransformer/simclr/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,14 +32,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "last_opened_file_path": "C:/Users/tomsm/PycharmProjects/thesis/experiments/CnnEncoder/simclr/train.py"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis/experiments/CnnEncoder/simclr/train.py&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\CnnEncoder\simclr" />
@@ -159,7 +156,9 @@
       <workItem from="1681895600464" duration="5586000" />
       <workItem from="1682344197887" duration="1193000" />
       <workItem from="1682354437020" duration="616000" />
-      <workItem from="1682410522617" duration="3259000" />
+      <workItem from="1682410522617" duration="8264000" />
+      <workItem from="1682521180977" duration="1415000" />
+      <workItem from="1682596268458" duration="1809000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -182,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681898833406</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ready to pretrain cnn encoder">
+      <created>1682413988830</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1682413988830</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,7 +209,8 @@
     <MESSAGE value="test" />
     <MESSAGE value="ready to train MAEEG" />
     <MESSAGE value="ready to pretrain cnn transformer" />
-    <option name="LAST_COMMIT_MESSAGE" value="ready to pretrain cnn transformer" />
+    <MESSAGE value="ready to pretrain cnn encoder" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to pretrain cnn encoder" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1682413830709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />

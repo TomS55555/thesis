@@ -217,7 +217,7 @@ def train(pretrained_model, device, version, train_supervised=False):
         num_ds = math.ceil(n_patients / PATIENTS_PER_DS)
         train_networks(
             pretrained_model=pretrained_model,
-            data_args=get_data_args(n_patients, num_ds),
+            data_args=get_data_args(n_patients, batch_size=64),
             logistic_args=get_logistic_args(logistic_save_name + "_" + str(n_patients) + "pat",
                                             train_path + str(version), num_ds),
             supervised_args=get_supervised_args(supervised_save_name + "_" + str(n_patients) + "pat",
