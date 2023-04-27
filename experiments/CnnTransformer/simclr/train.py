@@ -22,14 +22,14 @@ from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 from models.sleep_transformer import Aggregator
 
-patients_list = [5, 10, 20, 50, 100, 250, 500, 1000, 3000, 5000]
+patients_list = [3, 5, 10, 20, 50, 100, 250]
 
-OUTER_DIM = 4  # Only 4 is supported at the moment
+OUTER_DIM = 1  # Only 1 and 4 are supported at the moment
 
-PATIENTS_PER_DS = 200  # Depends on RAM size of PC
+PATIENTS_PER_DS = 250  # Depends on RAM size of PC
 
 train_path = "simclr_cnn_transformer_trainings"  # path used for training the networks
-result_file_name = "test_results"
+result_file_name = "test_results_cnn_transformer"
 
 pretrained_save_name = "pretrained_IT"
 logistic_save_name = "logistic_on_simclr_IT"
@@ -40,7 +40,7 @@ finetune_save_name = "fine_tuned_simclr_IT"
 HIDDEN_DIM = 256
 Z_DIM = 128
 
-MAX_EPOCHS = 200  # max epochs independent of number of datasets
+MAX_EPOCHS = 100  # max epochs independent of number of datasets
 
 
 def get_encoder():
@@ -48,7 +48,7 @@ def get_encoder():
         Input: batches of size [batch x outer x eeg-time]
     """
     return nn.Sequential(
-        CnnEncoder(),
+        CnnEncoder(constants.SLEEP_EPOCH_SIZE),
         OuterTransformer(
             outer_dim=32,
             feat_dim=FEAT_DIM,
@@ -165,8 +165,8 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     # TODO: fix normalization of STFT images!
-    num_patients = 1000
-    batch_size = 256
+    num_patients = 500
+    batch_size = 512
     max_epochs = 100
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
@@ -174,13 +174,17 @@ def pretrain(device, version):
         aug_module=AugmentationModule(
             batch_size=batch_size,
             noise_max=0.3,
-            zeromask_min=1000,
-            zeromask_max=2900
+            zeromask_min=300,
+            zeromask_max=500,
+            amplitude_min=0.75,
+            amplitude_max=1.5,
+            timeshift_min=-100,
+            timeshift_max=100
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
         recon_projector=None,
-        temperature=1e-4,
+        temperature=1e-3,
         alpha=1,
         optim_hparams={
             "max_epochs": max_epochs,
@@ -231,7 +235,7 @@ def train(pretrained_model, device, version, train_supervised=False):
     # Then train logistic classifier on top of pretrained transformer
 
 
-def test(pretrained_model, device, version):
+def test(pretrained_model, device, version, test_supervised=False):
     results = dict()
 
     for n_patients in patients_list:
@@ -244,7 +248,8 @@ def test(pretrained_model, device, version):
             logistic_save_name=logistic_save_name + "_" + str(n_patients) + "pat",
             supervised_save_name=supervised_save_name + "_" + str(n_patients) + "pat",
             finetune_save_name=finetune_save_name + "_" + str(n_patients) + "pat",
-            device=device
+            device=device,
+            test_supervised=test_supervised
         )
         results[str(n_patients) + "_pat"] = test_results
         print(test_results)
@@ -272,14 +277,14 @@ if __name__ == "__main__":
             print("A pretrained encoder is required, specify it with the --pretrained_path")
             sys.exit(1)
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
-        train(pretrained_model, dev, version)
+        train(pretrained_model, dev, version, True)
     elif args.mode == "test":
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
-        test(pretrained_model, dev, version)
+        test(pretrained_model, dev, version, True)
     elif args.mode == 'both':
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
             dev, version)
-        train(pretrained_model, dev, version)
-        test(pretrained_model, dev, version)
+        train(pretrained_model, dev, version, True)
+        test(pretrained_model, dev, version, True)
     else:
         exit("Mode not recognized!")

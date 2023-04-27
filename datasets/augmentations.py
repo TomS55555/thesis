@@ -9,8 +9,8 @@ import pytorch_lightning as pl
 class AugmentationModule(nn.Module):
     def __init__(self,
                  batch_size: int,
-                 amplitude_min: int = 0.9,
-                 amplitude_max: int = 1.1,
+                 amplitude_min: float = 0.9,
+                 amplitude_max: float = 1.1,
                  timeshift_min: int = -100,
                  timeshift_max: int = 100,
                  zeromask_min: int = 300,
