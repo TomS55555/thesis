@@ -68,6 +68,8 @@ def get_data_path():
         return constants.SHHS_PATH_LAPTOP
     elif hostname == "thesis-1-vm":
         return constants.SHHS_PATH_GOOGLE
+    elif hostname == "DESKTOPTOM":
+        return constants.SHHS_PATH_DEKSTOP
     else:
         print("Don't know where the data is on this pc, exiting ...")
         exit(0)

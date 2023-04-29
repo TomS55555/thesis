@@ -8,6 +8,7 @@ import pytorch_lightning as pl
 
 FEAT_DIM = 184
 
+
 class CnnTransformer(pl.LightningModule):
     def __init__(self):
         super().__init__()
@@ -29,15 +30,11 @@ class CnnTransformer(pl.LightningModule):
 
     def common_step(self, batch, calculate_loss=False):
         inputs, labels = batch
-        batch_dim, outer_dim, feat_dim = inputs.shape
         preds = self.net(inputs)
 
-        labels_plus = labels.view(batch_dim*outer_dim,)
+        loss = self.loss_module(preds, labels.long()) if calculate_loss else None
 
-        preds_plus = preds.view(batch_dim*outer_dim, constants.N_CLASSES)
-        loss = self.loss_module(preds_plus, labels_plus.long()) if calculate_loss else None
-
-        acc = (preds_plus.argmax(dim=-1) == labels_plus).float().mean()
+        acc = (preds.argmax(dim=-1) == labels).float().mean()
 
         return acc, loss
 
@@ -71,53 +68,70 @@ class CnnTransformer(pl.LightningModule):
 
 class CnnEncoder(nn.Module):
     """
-        This cnn encoder takes as input vectors of size [batch x 1 x 12000] and outputs [batch x 32 x 188]
+        This cnn encoder takes as input vectors of size [batch x 1 x input_size] and outputs [batch x 32 x 188]
+        If input_size == 12000: apply 6 convolutional filters
+        else: apply 4
     """
-    def __init__(self):
+    def __init__(self, input_size):
         super().__init__()
+        if input_size == 4 * constants.SLEEP_EPOCH_SIZE:
+            first_enc = nn.Sequential(
+                nn.Conv1d(in_channels=1,
+                          out_channels=64,
+                          kernel_size=7,
+                          stride=2,
+                          padding=3,
+                          bias=False),  # Output: 6000
+                nn.GELU(),
+                nn.BatchNorm1d(64),
+                nn.Conv1d(in_channels=64,
+                          out_channels=64,
+                          kernel_size=7,
+                          stride=2,
+                          padding=3,
+                          bias=False),  # Output: 3000
+                nn.GELU(),
+                nn.BatchNorm1d(64)
+            )
+        elif input_size == constants.SLEEP_EPOCH_SIZE:
+            first_enc = nn.Identity()
+        else:
+            print("No encoder supported for this epoch size, exiting...")
+            exit(1)
         self.net = nn.Sequential(
-            nn.Conv1d(in_channels=1,
-                      out_channels=128,
-                      kernel_size=7,
-                      stride=2,
-                      padding=3,
-                      bias=False),  # Output: 6000
-            nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv1d(in_channels=128,
-                      out_channels=128,
-                      kernel_size=7,
-                      stride=2,
-                      padding=3,
-                      bias=False),  # Output: 3000
-            nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv1d(in_channels=128,
-                      out_channels=128,
+            first_enc,
+            nn.Conv1d(in_channels=64 if input_size != constants.SLEEP_EPOCH_SIZE else 1,
+                      out_channels=64,
                       kernel_size=7,
                       stride=2,
                       padding=3,
                       bias=False),  # Output: 1500
-            nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv1d(in_channels=128,
-                      out_channels=128,
+            nn.GELU(),
+            nn.BatchNorm1d(64),
+            nn.Conv1d(in_channels=64,
+                      out_channels=64,
                       kernel_size=7,
                       stride=2,
                       padding=3,
                       bias=False),  # Output: 750
-            nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv1d(in_channels=128,
-                      out_channels=128,
+            nn.GELU(),
+            nn.BatchNorm1d(64),
+            nn.Conv1d(in_channels=64,
+                      out_channels=64,
                       kernel_size=7,
                       stride=2,
                       padding=3,
                       bias=False),  # Output: 375
-            nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv1d(in_channels=128,
+            nn.GELU(),
+            nn.BatchNorm1d(64),
+            nn.Conv1d(in_channels=64,
                       out_channels=32,
                       kernel_size=5,
                       stride=2,
                       padding=0,
                       dilation=2,
                       bias=False),  # Output: 184
+            nn.BatchNorm1d(32)
         )
 
     def forward(self, x):

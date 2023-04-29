@@ -135,7 +135,7 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
     #                  pretrained_classifier=pretrained_classifier)
 
 
-def test_networks(pretrained_model, test_ds_args, train_path, logistic_save_name, supervised_save_name, finetune_save_name,
+def test_networks(pretrained_model, test_ds_args, train_path, logistic_save_name, supervised_save_name, finetune_save_name, test_supervised,
                   device):
     """
         Checkpoint path is the path for the testing
@@ -150,21 +150,21 @@ def test_networks(pretrained_model, test_ds_args, train_path, logistic_save_name
     )
 
     # print(list(iter(test_dm.test_dataloader()))[0][0].shape)
-
-    #sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
-    #sup_res = trainer.test(model=sup_model,
-    #                       datamodule=test_dm)
-    sup_res = 0
+    if test_supervised:
+        sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
+        sup_res = trainer.test(model=sup_model,
+                               datamodule=test_dm)
+    else:
+        sup_res = 0
     logistic_model = load_model(SupervisedModel, get_checkpoint_path(train_path, logistic_save_name))
-    backbone = pretrained_model.f
-    encoded_ds_test = pass_through_encoder(backbone, test_dm, mode="test")
-
-    logistic_res = trainer.test(model=logistic_model,
-                                dataloaders=data.DataLoader(
-                                    dataset=encoded_ds_test,
-                                    batch_size=64,
-                                    shuffle=False
-                                ))
+    backbone = deepcopy(pretrained_model.f)
+    classifier = deepcopy(logistic_model.classifier)
+    #encoded_ds_test = pass_through_encoder(backbone, test_dm, mode="test")
+    logistic_test_model = SupervisedModel(encoder=backbone,
+                                        classifier=classifier,
+                                        optim_hparams=None)
+    logistic_res = trainer.test(model=logistic_test_model,
+                                datamodule=test_dm)
 
     fully_tuned_model = load_model(SupervisedModel, get_checkpoint_path(train_path, finetune_save_name))
     fully_tuned_res = trainer.test(model=fully_tuned_model,
