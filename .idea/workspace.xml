@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train MAEEG">
-      <change afterPath="$PROJECT_DIR$/models/cnn_transformer.py" afterDir="false" />
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="Ready to train cnn transformer for the first time">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datasets.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/SleepGPT/train_sleep_gpt.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnTransformer/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/fully_supervised_IT_5pat/lightning_logs/version_0/events.out.tfevents.1680514488.DelVanTom.3428.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_10pat0/lightning_logs/version_0/events.out.tfevents.1680709242.DelVanTom.2812.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_10pat0/lightning_logs/version_1/events.out.tfevents.1680710366.DelVanTom.12604.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_10pat0/lightning_logs/version_2/events.out.tfevents.1680715096.DelVanTom.6448.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_5pat0/lightning_logs/version_0/events.out.tfevents.1680779448.DelVanTom.15228.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_5pat0/lightning_logs/version_1/checkpoints/epoch=0-step=762.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_5pat0/lightning_logs/version_1/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_5pat0/lightning_logs/version_1/events.out.tfevents.1680779548.DelVanTom.11896.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_5pat0/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_5pat0/lightning_logs/version_2/checkpoints/epoch=2-step=177.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_5pat0/lightning_logs/version_2/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_5pat0/lightning_logs/version_2/events.out.tfevents.1680779671.DelVanTom.21600.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_5pat0/lightning_logs/version_2/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings0/pretrained_IT_5pat0/lightning_logs/version_3/events.out.tfevents.1680790178.DelVanTom.15900.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings8/logistic_on_simclr_IT_20pat/lightning_logs/version_0/events.out.tfevents.1680865020.DelVanTom.12132.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/simclr_trainings8/logistic_on_simclr_IT_20pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SleepTransformer/simclr/visualize_pretrained_model.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,14 +47,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "last_opened_file_path": "C:/Users/tomsm/PycharmProjects/thesis02/experiments/CnnTransformer/train.py"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis02/experiments/CnnTransformer/train.py&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.cnn_transformer">
     <configuration name="cnn_transformer" type="PythonConfigurationType" factoryName="Python">
       <module name="thesis02" />
@@ -103,7 +116,8 @@
       <workItem from="1681481667112" duration="17000" />
       <workItem from="1681501465009" duration="896000" />
       <workItem from="1681553169247" duration="7731000" />
-      <workItem from="1681657602512" duration="3707000" />
+      <workItem from="1681657602512" duration="6958000" />
+      <workItem from="1682760339745" duration="362000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -119,7 +133,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681642770260</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Ready to train cnn transformer for the first time">
+      <created>1681661455269</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1681661455269</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,23 +160,13 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
     <MESSAGE value="ready to train MAEEG" />
-    <option name="LAST_COMMIT_MESSAGE" value="ready to train MAEEG" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/models/cnn_transformer.py</url>
-          <line>31</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Ready to train cnn transformer for the first time" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ready to train cnn transformer for the first time" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$train_eval.coverage" NAME="train_main Coverage Results" MODIFIED="1667944214747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/thesis02$train_inner_transformer.coverage" NAME="train_inner_transformer Coverage Results" MODIFIED="1681646189981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
-    <SUITE FILE_PATH="coverage/thesis02$cnn_transformer.coverage" NAME="cnn_transformer Coverage Results" MODIFIED="1681661263374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnTransformer" />
+    <SUITE FILE_PATH="coverage/thesis02$cnn_transformer.coverage" NAME="cnn_transformer Coverage Results" MODIFIED="1681661389967" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnTransformer" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670185038195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
     <SUITE FILE_PATH="coverage/thesis$train__2_.coverage" NAME="train (2) Coverage Results" MODIFIED="1679680548180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer" />
     <SUITE FILE_PATH="coverage/thesis$.coverage" NAME=" Coverage Results" MODIFIED="1680191626502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
