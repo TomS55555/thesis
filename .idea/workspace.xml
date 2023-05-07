@@ -1,9 +1,382 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to pretrain cnn transformer">
-      <change afterPath="$PROJECT_DIR$/experiments/view_augmentations.ipynb" afterDir="false" />
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/augmentations.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/augmentations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/plot_results.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/plot_results.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/view_augmentations.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/view_augmentations.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/gpt.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plot_results.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_0/checkpoints/epoch=3-step=572.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_0/events.out.tfevents.1669811652.DESKTOPTOM.15452.6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_0/events.out.tfevents.1669812609.DESKTOPTOM.15452.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_0/events.out.tfevents.1669812658.DESKTOPTOM.15452.8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_1/checkpoints/epoch=14-step=2145.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_1/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_1/events.out.tfevents.1669816958.DESKTOPTOM.15452.12" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_1/events.out.tfevents.1669818251.DESKTOPTOM.15452.13" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_1/events.out.tfevents.1669818301.DESKTOPTOM.15452.14" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/finetuned_simclr/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_0/checkpoints/epoch=11-step=1716.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_0/events.out.tfevents.1669810113.DESKTOPTOM.15452.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_0/events.out.tfevents.1669810210.DESKTOPTOM.15452.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_0/events.out.tfevents.1669810214.DESKTOPTOM.15452.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_1/checkpoints/epoch=0-step=10.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_1/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_1/events.out.tfevents.1670001486.DESKTOPTOM.20600.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_1/events.out.tfevents.1670001495.DESKTOPTOM.20600.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_1/events.out.tfevents.1670001498.DESKTOPTOM.20600.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_2/checkpoints/epoch=4-step=50.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_2/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_2/events.out.tfevents.1670001539.DESKTOPTOM.20600.3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_2/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_3/checkpoints/epoch=0-step=10.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_3/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_3/events.out.tfevents.1670001796.DESKTOPTOM.20600.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_3/events.out.tfevents.1670001805.DESKTOPTOM.20600.5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_3/events.out.tfevents.1670001809.DESKTOPTOM.20600.6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_3/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_4/checkpoints/epoch=0-step=12.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_4/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_4/events.out.tfevents.1670001922.DESKTOPTOM.8616.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_4/events.out.tfevents.1670001930.DESKTOPTOM.8616.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_4/events.out.tfevents.1670001934.DESKTOPTOM.8616.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/logistic_on_simclr/lightning_logs/version_4/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_0/checkpoints/epoch=2-step=429.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_0/events.out.tfevents.1669810500.DESKTOPTOM.15452.3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_0/events.out.tfevents.1669811431.DESKTOPTOM.15452.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_0/events.out.tfevents.1669811480.DESKTOPTOM.15452.5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_1/checkpoints/epoch=14-step=2145.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_1/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_1/events.out.tfevents.1669815862.DESKTOPTOM.15452.9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_1/events.out.tfevents.1669816816.DESKTOPTOM.15452.10" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_1/events.out.tfevents.1669816865.DESKTOPTOM.15452.11" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_2/checkpoints/epoch=0-step=504.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_2/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_2/events.out.tfevents.1669981961.DESKTOPTOM.6848.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_2/events.out.tfevents.1669982436.DESKTOPTOM.6848.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/checkpoints/supervised_simclr/lightning_logs/version_2/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/plot_results.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/simclr_cnn_test.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/simclr_graph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/simclr_graph/plot_results.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/simclr_graph/simclr_graph_kappa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/simclr_graph/simclr_graph_testacc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/simclr_graph/test_results.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/simclr_graph/tsne_plots.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/simclr_graph/tsne_simclr_jwz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/simclr_graph_kappa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/simclr_test.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings0/pretrained_IT_500pat0/lightning_logs/version_0/checkpoints/epoch=2-step=1050.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings0/pretrained_IT_500pat0/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings0/pretrained_IT_500pat0/lightning_logs/version_0/events.out.tfevents.1682414443.thesis-1-vm.14869.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings0/pretrained_IT_500pat0/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fine_tuned_simclr_IT_3pat/lightning_logs/version_0/checkpoints/epoch=34-step=1225.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fine_tuned_simclr_IT_3pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fine_tuned_simclr_IT_3pat/lightning_logs/version_0/events.out.tfevents.1682432116.thesis-1-vm.31267.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fine_tuned_simclr_IT_3pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fully_supervised_IT_3pat/lightning_logs/version_0/checkpoints/epoch=6-step=245.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fully_supervised_IT_3pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fully_supervised_IT_3pat/lightning_logs/version_0/events.out.tfevents.1682432024.thesis-1-vm.31267.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fully_supervised_IT_3pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fully_supervised_IT_5pat/lightning_logs/version_0/checkpoints/epoch=3-step=236.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fully_supervised_IT_5pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fully_supervised_IT_5pat/lightning_logs/version_0/events.out.tfevents.1682432177.thesis-1-vm.31267.3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/fully_supervised_IT_5pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/logistic_on_simclr_IT_3pat/lightning_logs/version_0/checkpoints/epoch=39-step=1400.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/logistic_on_simclr_IT_3pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/logistic_on_simclr_IT_3pat/lightning_logs/version_0/events.out.tfevents.1682432089.thesis-1-vm.31267.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/logistic_on_simclr_IT_3pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/pretrained_IT_500pat1/lightning_logs/version_0/checkpoints/epoch=80-step=28389.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/pretrained_IT_500pat1/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/pretrained_IT_500pat1/lightning_logs/version_0/events.out.tfevents.1682415145.thesis-1-vm.16775.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_encoder_trainings1/pretrained_IT_500pat1/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_0/events.out.tfevents.1681899057.thesis-1-vm.10703.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_1/checkpoints/epoch=1-step=1123.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_1/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_1/events.out.tfevents.1681899143.thesis-1-vm.10927.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_2/events.out.tfevents.1681900704.thesis-1-vm.14795.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_2/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_3/events.out.tfevents.1681900791.thesis-1-vm.15115.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_3/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_4/checkpoints/epoch=18-step=10877.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_4/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_4/events.out.tfevents.1681900872.thesis-1-vm.15311.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings0/pretrained_IT_1000pat0/lightning_logs/version_4/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_100pat/lightning_logs/version_0/checkpoints/epoch=19-step=22540.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_100pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_100pat/lightning_logs/version_0/events.out.tfevents.1682641637.thesis-1-vm.25405.17" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_100pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_10pat/lightning_logs/version_0/checkpoints/epoch=34-step=4305.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_10pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_10pat/lightning_logs/version_0/events.out.tfevents.1682636135.thesis-1-vm.25405.8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_10pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_20pat/lightning_logs/version_0/checkpoints/epoch=8-step=1971.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_20pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_20pat/lightning_logs/version_0/events.out.tfevents.1682636864.thesis-1-vm.25405.11" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_20pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_250pat/lightning_logs/version_0/checkpoints/epoch=17-step=50346.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_250pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_250pat/lightning_logs/version_0/events.out.tfevents.1682648984.thesis-1-vm.25405.20" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_250pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_3pat/lightning_logs/version_0/checkpoints/epoch=38-step=1365.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_3pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_3pat/lightning_logs/version_0/events.out.tfevents.1682635423.thesis-1-vm.25405.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_3pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_50pat/lightning_logs/version_0/checkpoints/epoch=18-step=10830.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_50pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_50pat/lightning_logs/version_0/events.out.tfevents.1682638440.thesis-1-vm.25405.14" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_50pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_5pat/lightning_logs/version_0/checkpoints/epoch=19-step=1180.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_5pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_5pat/lightning_logs/version_0/events.out.tfevents.1682635696.thesis-1-vm.25405.5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fine_tuned_simclr_IT_5pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_100pat/lightning_logs/version_0/checkpoints/epoch=6-step=7889.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_100pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_100pat/lightning_logs/version_0/events.out.tfevents.1682639353.thesis-1-vm.25405.15" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_100pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_10pat/lightning_logs/version_0/checkpoints/epoch=9-step=1230.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_10pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_10pat/lightning_logs/version_0/events.out.tfevents.1682635828.thesis-1-vm.25405.6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_10pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_20pat/lightning_logs/version_0/checkpoints/epoch=6-step=1533.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_20pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_20pat/lightning_logs/version_0/events.out.tfevents.1682636363.thesis-1-vm.25405.9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_20pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_250pat/lightning_logs/version_0/checkpoints/epoch=7-step=22376.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_250pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_250pat/lightning_logs/version_0/events.out.tfevents.1682643406.thesis-1-vm.25405.18" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_250pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_3pat/lightning_logs/version_0/checkpoints/epoch=6-step=245.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_3pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_3pat/lightning_logs/version_0/events.out.tfevents.1682635293.thesis-1-vm.25405.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_3pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_50pat/lightning_logs/version_0/checkpoints/epoch=6-step=3990.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_50pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_50pat/lightning_logs/version_0/events.out.tfevents.1682637242.thesis-1-vm.25405.12" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_50pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_5pat/lightning_logs/version_0/checkpoints/epoch=4-step=295.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_5pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_5pat/lightning_logs/version_0/events.out.tfevents.1682635517.thesis-1-vm.25405.3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/fully_supervised_IT_5pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_100pat/lightning_logs/version_0/checkpoints/epoch=38-step=43953.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_100pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_100pat/lightning_logs/version_0/events.out.tfevents.1682641339.thesis-1-vm.25405.16" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_100pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_10pat/lightning_logs/version_0/checkpoints/epoch=39-step=4920.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_10pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_10pat/lightning_logs/version_0/events.out.tfevents.1682636084.thesis-1-vm.25405.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_10pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_20pat/lightning_logs/version_0/checkpoints/epoch=39-step=8760.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_20pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_20pat/lightning_logs/version_0/events.out.tfevents.1682636789.thesis-1-vm.25405.10" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_20pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_250pat/lightning_logs/version_0/checkpoints/epoch=29-step=83910.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_250pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_250pat/lightning_logs/version_0/events.out.tfevents.1682648264.thesis-1-vm.25405.19" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_250pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_3pat/lightning_logs/version_0/checkpoints/epoch=39-step=1400.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_3pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_3pat/lightning_logs/version_0/events.out.tfevents.1682635396.thesis-1-vm.25405.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_3pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_50pat/lightning_logs/version_0/checkpoints/epoch=39-step=22800.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_50pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_50pat/lightning_logs/version_0/events.out.tfevents.1682638278.thesis-1-vm.25405.13" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_50pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_5pat/lightning_logs/version_0/checkpoints/epoch=39-step=2360.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_5pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_5pat/lightning_logs/version_0/events.out.tfevents.1682635662.thesis-1-vm.25405.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/logistic_on_simclr_IT_5pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/pretrained_IT_500pat1/lightning_logs/version_0/checkpoints/epoch=94-step=33296.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/pretrained_IT_500pat1/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/pretrained_IT_500pat1/lightning_logs/version_0/events.out.tfevents.1682600469.thesis-1-vm.3921.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/pretrained_IT_500pat1/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_0/events.out.tfevents.1682653274.thesis-1-vm.25405.21" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_0/events.out.tfevents.1682653317.thesis-1-vm.25405.22" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_0/events.out.tfevents.1682653329.thesis-1-vm.25405.23" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_1/events.out.tfevents.1682653338.thesis-1-vm.25405.24" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_1/events.out.tfevents.1682653381.thesis-1-vm.25405.25" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_1/events.out.tfevents.1682653392.thesis-1-vm.25405.26" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_2/events.out.tfevents.1682653401.thesis-1-vm.25405.27" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_2/events.out.tfevents.1682653444.thesis-1-vm.25405.28" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_2/events.out.tfevents.1682653455.thesis-1-vm.25405.29" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_2/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_3/events.out.tfevents.1682653464.thesis-1-vm.25405.30" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_3/events.out.tfevents.1682653506.thesis-1-vm.25405.31" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_3/events.out.tfevents.1682653517.thesis-1-vm.25405.32" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_3/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_4/events.out.tfevents.1682653527.thesis-1-vm.25405.33" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_4/events.out.tfevents.1682653570.thesis-1-vm.25405.34" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_4/events.out.tfevents.1682653581.thesis-1-vm.25405.35" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_4/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_5/events.out.tfevents.1682653591.thesis-1-vm.25405.36" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_5/events.out.tfevents.1682653633.thesis-1-vm.25405.37" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_5/events.out.tfevents.1682653644.thesis-1-vm.25405.38" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_5/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_6/events.out.tfevents.1682653654.thesis-1-vm.25405.39" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_6/events.out.tfevents.1682653696.thesis-1-vm.25405.40" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_6/events.out.tfevents.1682653707.thesis-1-vm.25405.41" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_cnn_transformer_trainings1/testing/lightning_logs/version_6/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_graph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings1/pretrained_IT_5000pat1/lightning_logs/version_0/events.out.tfevents.1680428152.thesis-1-vm.17597.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings1/pretrained_IT_5000pat1/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings1/pretrained_IT_5000pat1/lightning_logs/version_1/checkpoints/epoch=1-step=701.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings1/pretrained_IT_5000pat1/lightning_logs/version_1/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings1/pretrained_IT_5000pat1/lightning_logs/version_1/events.out.tfevents.1680430105.thesis-1-vm.20005.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings1/pretrained_IT_5000pat1/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings1/pretrained_IT_5000pat1/lightning_logs/version_2/checkpoints/epoch=26-step=9676.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings1/pretrained_IT_5000pat1/lightning_logs/version_2/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings1/pretrained_IT_5000pat1/lightning_logs/version_2/events.out.tfevents.1680430964.thesis-1-vm.21117.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings1/pretrained_IT_5000pat1/lightning_logs/version_2/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings2/pretrained_IT_5000pat2/lightning_logs/version_0/checkpoints/epoch=93-step=33705.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings2/pretrained_IT_5000pat2/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings2/pretrained_IT_5000pat2/lightning_logs/version_0/events.out.tfevents.1680436133.thesis-1-vm.28429.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simclr_trainings2/pretrained_IT_5000pat2/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/software_architecture.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results_cnn_transformer1" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnTransformer/simclr/test_results_cnn_transformer1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model/cnn_model.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model/cnn_model_supervised.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model/description.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model01.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_0/checkpoints/epoch=0-step=59.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_0/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_0/events.out.tfevents.1675113359.DESKTOPTOM.17696.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_0/events.out.tfevents.1675113442.DESKTOPTOM.17696.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_0/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_1/checkpoints/epoch=0-step=59.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_1/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_1/events.out.tfevents.1675113665.DESKTOPTOM.13636.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_1/events.out.tfevents.1675113746.DESKTOPTOM.13636.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_2/checkpoints/epoch=0-step=288.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_2/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_2/events.out.tfevents.1676915788.DESKTOPTOM.7444.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_2/events.out.tfevents.1676916809.DESKTOPTOM.7444.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_2/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr1000pat/lightning_logs/version_3/events.out.tfevents.1677146970.DESKTOPTOM.4548.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/fit-[Strategy]SingleDeviceStrategy.training_step.1677584618440.pt.trace.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/fit-[Strategy]SingleDeviceStrategy.training_step.1677595106296.pt.trace.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/fit-[Strategy]SingleDeviceStrategy.training_step.1678114215990.pt.trace.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/fit-[Strategy]SingleDeviceStrategy.training_step.1678272847517.pt.trace.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/fit-[Strategy]SingleDeviceStrategy.validation_step.1677595180160.pt.trace.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/fit-[Strategy]SingleDeviceStrategy.validation_step.1678114741605.pt.trace.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/fit-[Strategy]SingleDeviceStrategy.validation_step.1678272864195.pt.trace.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_0/events.out.tfevents.1677167497.DESKTOPTOM.6552.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_1/checkpoints/epoch=1-step=580.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_1/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_1/events.out.tfevents.1677167654.DESKTOPTOM.3724.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_1/events.out.tfevents.1677168514.DESKTOPTOM.3724.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_10/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_11/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_12/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_13/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_14/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_15/checkpoints/epoch=1-step=22.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_15/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_15/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_15/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_16/checkpoints/epoch=1-step=146.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_16/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_16/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_16/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_17/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_18/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_19/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_2/events.out.tfevents.1677169671.DESKTOPTOM.16780.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_2/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_20/checkpoints/epoch=1-step=146.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_20/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_20/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_20/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_21/checkpoints/epoch=4-step=365.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_21/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_21/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_21/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_22/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_22/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_23/checkpoints/epoch=1-step=146.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_23/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_23/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_23/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_24/checkpoints/epoch=0-step=73.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_24/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_24/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_24/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_25/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_26/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_27/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_28/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_3/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_30/checkpoints/epoch=0-step=455.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_30/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_30/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_30/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_31/checkpoints/epoch=0-step=455.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_31/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_31/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_31/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_32/checkpoints/epoch=4-step=226.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_32/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_32/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_32/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_33/checkpoints/epoch=4-step=226.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_33/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_33/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_33/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_34/checkpoints/epoch=4-step=180.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_34/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_34/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_34/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_35/checkpoints/epoch=4-step=180.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_35/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_35/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_35/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_36/checkpoints/epoch=4-step=180.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_36/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_36/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_36/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_37/checkpoints/epoch=4-step=717.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_37/checkpoints/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_37/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_37/metrics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_4/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_5/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_6/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_7/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_8/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_1000pat/checkpoints/simclr5000pat/lightning_logs/version_9/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_5000pat/checkpoints/simclr5000pat/lightning_logs/version_1/hparams.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_5000pat/epoch=52-step=19361.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_5000pat/last.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_5000pat/train.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_simple/cnn_model_simple.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_model_simple/description.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_simclr01.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/cnn_simclr_500pat.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/simclr01.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/simclr02.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/simclr03.ckpt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trained_models/simclr05.ckpt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,19 +405,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "last_opened_file_path": "C:/Users/tomsm/PycharmProjects/thesis/experiments"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis/experiments&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis02\experiments\CnnTransformer\simclr" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\CnnEncoder\simclr" />
     </key>
   </component>
@@ -162,6 +536,8 @@
       <workItem from="1682410522617" duration="8264000" />
       <workItem from="1682521180977" duration="1415000" />
       <workItem from="1682596268458" duration="7389000" />
+      <workItem from="1682772522370" duration="4180000" />
+      <workItem from="1683457309133" duration="633000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -233,11 +609,11 @@
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1682413830709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
     <SUITE FILE_PATH="coverage/thesis$train_eval.coverage" NAME="train_main Coverage Results" MODIFIED="1667944214747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/thesis02$train_inner_transformer.coverage" NAME="train_inner_transformer Coverage Results" MODIFIED="1681646189981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
-    <SUITE FILE_PATH="coverage/thesis02$cnn_transformer.coverage" NAME="cnn_transformer Coverage Results" MODIFIED="1681661263374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnTransformer" />
+    <SUITE FILE_PATH="coverage/thesis02$cnn_transformer.coverage" NAME="cnn_transformer Coverage Results" MODIFIED="1681661389967" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnTransformer" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670185038195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
     <SUITE FILE_PATH="coverage/thesis$train__2_.coverage" NAME="train (2) Coverage Results" MODIFIED="1679680548180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer" />
     <SUITE FILE_PATH="coverage/thesis$.coverage" NAME=" Coverage Results" MODIFIED="1680191626502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
-    <SUITE FILE_PATH="coverage/thesis$train.coverage" NAME="train Coverage Results" MODIFIED="1680122318568" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
+    <SUITE FILE_PATH="coverage/thesis$train.coverage" NAME="train Coverage Results" MODIFIED="1678104817701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
     <SUITE FILE_PATH="coverage/thesis02$train_arg.coverage" NAME="train_arg Coverage Results" MODIFIED="1666436211007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/1D_CNN" />
     <SUITE FILE_PATH="coverage/thesis$simclr_graph_train.coverage" NAME="simclr_graph_train Coverage Results" MODIFIED="1678710795262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/simclr_graph" />
     <SUITE FILE_PATH="coverage/thesis02$.coverage" NAME=" Coverage Results" MODIFIED="1678632695110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/simclr_graph" />
