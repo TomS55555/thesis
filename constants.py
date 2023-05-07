@@ -1,4 +1,7 @@
+import os.path
+
 import torch.nn as nn
+from scipy.io import loadmat
 from models.mymodules import CNN_head, SimpleMLP
 from random import sample
 
@@ -30,6 +33,14 @@ PROJECTION_HEADS = {
 CLASSIFIERS = {
     "logistic": lambda input_dim: nn.Linear(input_dim, N_CLASSES)
 }
+
+if os.path.exists('datasets/data_split_eval.mat'):
+    f = loadmat('datasets/data_split_eval.mat')
+else:
+    "Could not find data split!"
+    exit(1)
+
+TEST_SET_BIG = f['test_sub']
 
 TEST_SET_0 = \
     (1426,
