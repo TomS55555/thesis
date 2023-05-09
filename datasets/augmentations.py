@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 import constants
 import scipy.signal as signal
 import torch.nn as nn
+import torch.fft
 import pytorch_lightning as pl
 
 
@@ -84,6 +85,11 @@ class AugmentationModule(nn.Module):
         time_shifted = torch.stack([torch.roll(inputs[i], shifts[i], dims=0) for i in range(inputs.shape[0])])
         x = time_shifted[:, x.shape[-1]:2*x.shape[-1]]
         return x
+
+    def freq_mask(self, x, ranges):
+        masked_fft = self.zero_mask(torch.fft.rfft(x), ranges)
+        return torch.fft.irfft(masked_fft)
+
 
 
 class AugmentationModuleSTFT(nn.Module):
