@@ -1,4 +1,0 @@
-lr-AdamW,step,train_loss,train_acc_top1,train_acc_top5,train_acc_mean_pos,epoch,val_loss,val_acc_top1,val_acc_top5,val_acc_mean_pos
-0.0003,0,,,,,,,,,
-,49,2.7656309604644775,0.4599609375,0.681640625,14.1435546875,0,,,,
-,72,,,,,0,1.9924817085266113,0.5754665732383728,0.8090277910232544,6.192925453186035
