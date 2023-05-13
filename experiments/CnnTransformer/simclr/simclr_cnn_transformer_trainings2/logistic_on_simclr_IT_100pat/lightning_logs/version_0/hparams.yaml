@@ -1,0 +1,157 @@
+classifier: !!python/object:torch.nn.modules.linear.Linear
+  _backward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _buffers: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _is_full_backward_hook: null
+  _load_state_dict_post_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _modules: !!python/object/apply:collections.OrderedDict
+  - []
+  _non_persistent_buffers_set: !!set {}
+  _parameters: !!python/object/apply:collections.OrderedDict
+  - - - weight
+      - !!python/object/apply:torch._utils._rebuild_parameter
+        - !!python/object/apply:torch._utils._rebuild_tensor_v2
+          - !!python/object/apply:torch.storage._load_from_bytes
+            - !!binary |
+              gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+              AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+              aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+              Z2UKcQFYDgAAADk0NjA2OTM2ODMxMDU2cQJYAwAAAGNwdXEDTZgDTnRxBFEugAJdcQBYDgAAADk0
+              NjA2OTM2ODMxMDU2cQFhLpgDAAAAAAAAGTArPUncn7pQJ4c99vYYPKqVMbnuV029KI6DPMAzlr2l
+              gxg9RghovDBPgL164ye7Za2gvIsziL33mvk83MiPvSx4fz1Fovc8nHQSvIdDOD2F16s8H71bvYEN
+              Nb2XsnA9btKPPdLqwTtsIlG8e1dKvU0olj03cUu96Yo4PTfDiT2zCVq9pAMgPThYjD262Iu90jIa
+              PH6LXb3Ax4O9M4T6PLiISL1+YhI9BmVZPQZgCD1KQIq9c+XyvFfbEjqsXTo8FipIvSyWeb2WBUo8
+              jYWJPYjhZz2dZGu9bkhZvIy4kr1CVUs95Vv1O7rS5Dy3YeO87YbsvLgphj2wdPS84s9cvYGlhr2L
+              Wfw8y7GQvfAu6LzA2Zw62KgFPZ4jYD2s/2q99tY/vAQ5Rr0EK5C9I7R1PWNaRz33wYS9hfaDvUp3
+              6jxC8IQ6kvVvvVJGcb2TOXM9DzAPPf1ZHTyZx9U8LSGbvJ9nsrrbm0Q8Mj9HPWfvqztd4dk8MHtx
+              PQ85ar3Q8Gs8XufROwkJYT1B+x296aTQOsOrOD14Rjw9uKORuwUB3DxDqvk8uEGAvIfJJzzkko29
+              Ln86O2Mr57wjchO9X8aMPeo2VL0xwKU8zlzbux0bVj0L6w29KygjvNFA47zVfNM7YqOhPJq3lj2R
+              2kq9aA7IPFfkb7zdPYY83J/2vLGeF70QVEG9B7Hcu1XgUL3jxMy8Sr7ovCnK57usw0K9W5QpvTR/
+              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
+          - 0
+          - !!python/tuple
+            - 5
+            - 184
+          - !!python/tuple
+            - 184
+            - 1
+          - false
+          - !!python/object/apply:collections.OrderedDict
+            - []
+        - true
+        - !!python/object/apply:collections.OrderedDict
+          - []
+    - - bias
+      - !!python/object/apply:torch._utils._rebuild_parameter
+        - !!python/object/apply:torch._utils._rebuild_tensor_v2
+          - !!python/object/apply:torch.storage._load_from_bytes
+            - !!binary |
+              gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+              AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+              aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+              Z2UKcQFYDgAAADk0NjA2OTQwMDE4NTQ0cQJYAwAAAGNwdXEDSwVOdHEEUS6AAl1xAFgOAAAAOTQ2
+              MDY5NDAwMTg1NDRxAWEuBQAAAAAAAABh7Ri9s5hFvYJNlD0pEoW9HAyTPQ==
+          - 0
+          - !!python/tuple
+            - 5
+          - !!python/tuple
+            - 1
+          - false
+          - !!python/object/apply:collections.OrderedDict
+            - []
+        - true
+        - !!python/object/apply:collections.OrderedDict
+          - []
+  _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  in_features: 184
+  out_features: 5
+  training: true
+encoder: !!python/object:torch.nn.modules.linear.Identity
+  _backward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _buffers: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _is_full_backward_hook: null
+  _load_state_dict_post_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _modules: !!python/object/apply:collections.OrderedDict
+  - []
+  _non_persistent_buffers_set: !!set {}
+  _parameters: !!python/object/apply:collections.OrderedDict
+  - []
+  _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  training: true
+optim_hparams:
+  lr: 0.0001
+  lr_hparams: null
+  weight_decay: 0
