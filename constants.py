@@ -3,6 +3,7 @@ import sys, os
 
 import torch.nn as nn
 from scipy.io import loadmat
+from pathlib import Path
 from models.mymodules import CNN_head, SimpleMLP
 from random import sample
 
@@ -36,7 +37,7 @@ CLASSIFIERS = {
 }
 
 base_path = os.getcwd().split('thesis')[0]
-full_path = os.path.join(base_path, 'thesis'+os.getcwd().split('thesis')[1].split('\\')[0], 'datasets\\data_split_eval.mat')
+full_path = os.path.join(base_path, 'thesis'+os.getcwd().split('thesis')[1].split('\\')[0], Path('datasets', 'data_split_eval.mat'))
 
 if os.path.exists(full_path):
     f = loadmat(full_path)

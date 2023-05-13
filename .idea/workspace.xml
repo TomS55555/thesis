@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="commit">
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train CnnEncoder for a final time">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/view_augmentations.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/view_augmentations.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +166,7 @@
       <workItem from="1682772522370" duration="4180000" />
       <workItem from="1683457309133" duration="1307000" />
       <workItem from="1683463999860" duration="2014000" />
-      <workItem from="1683965967619" duration="1476000" />
+      <workItem from="1683965967619" duration="1985000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -226,7 +224,21 @@
       <option name="project" value="LOCAL" />
       <updated>1683464717902</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="ready to train CnnEncoder for a final time">
+      <created>1683967469882</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683967469882</updated>
+    </task>
+    <task id="LOCAL-00010" summary="ready to train CnnEncoder for a final time">
+      <created>1683967716283</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1683967716283</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -249,7 +261,8 @@
     <MESSAGE value="ready to pretrain cnn encoder" />
     <MESSAGE value="ready to pretrain cnn transformer" />
     <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="ready to train CnnEncoder for a final time" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to train CnnEncoder for a final time" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1682413830709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
