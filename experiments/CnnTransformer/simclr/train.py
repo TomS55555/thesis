@@ -173,7 +173,7 @@ def pretrain(device, version):
     model = SimCLR_Transformer(
         aug_module=AugmentationModule(
             batch_size=batch_size,
-            noise_max=0.3,
+            noise_max=0.5,
             zeromask_min=400,
             zeromask_max=800,
             amplitude_min=0.75,
