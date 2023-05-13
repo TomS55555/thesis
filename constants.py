@@ -45,7 +45,7 @@ else:
     "Could not find data split!"
     sys.exit(1)
 
-TEST_SET_BIG = f['test_sub']
+TEST_SET_BIG = f['test_sub'].squeeze()
 
 TEST_SET_0 = \
     (1426,
