@@ -103,9 +103,9 @@ class AugmentationModule(nn.Module):
         start_freqs.cpu()
         x.to("cpu")
         for i in range(self.batch_size):
-            sos = signal.butter(8, [start_freqs[i], start_freqs[i] + self.freq_window], btype="bandstop", output="sos", fs=fs)
+            sos = signal.butter(8, [start_freqs[i], start_freqs[i] + self.freq_window/2], btype="bandstop", output="sos", fs=fs)
             x_filtered[i, :] = torch.as_tensor(signal.sosfilt(sos, x.cpu()[i, :]), dtype=torch.float32)
-        return x_filtered
+        return x_filtered.to("cuda:0")
 
 
 
