@@ -63,7 +63,7 @@ class AugmentationModule(nn.Module):
         x = self.time_shift(x, shifts)
 
         # Band pass
-        rand_start = 100*torch.rand(self.batch_size)
+        rand_start = (100-self.freq_window)*torch.rand(self.batch_size)
         x = self.bandpass_filter(x, rand_start)
 
         return x
