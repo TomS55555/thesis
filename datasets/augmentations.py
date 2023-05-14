@@ -1,10 +1,10 @@
 import torch
 from abc import ABC, abstractmethod
 import constants
-import scipy.signal as signal
+from scipy import signal
 import torch.nn as nn
 import torch.fft
-import pytorch_lightning as pl
+import numpy as np
 
 
 class AugmentationModule(nn.Module):
@@ -20,7 +20,7 @@ class AugmentationModule(nn.Module):
                  noise_max: float = 0.3,
                  bandstop_min: int = 3,
                  bandstop_max: int = 45,
-                 freq_window: int = 3):
+                 freq_window: int = 10):
         super().__init__()
         self.amplitude_min = amplitude_min
         self.amplitude_max = amplitude_max
@@ -36,6 +36,9 @@ class AugmentationModule(nn.Module):
         self.batch_size = batch_size
 
     def forward(self, x):
+        """
+            x: size B x Epoch length
+        """
         # Must work for a batch!!
 
         # Amplitude scale
@@ -58,6 +61,10 @@ class AugmentationModule(nn.Module):
                                size=(self.batch_size,)).to(x)
         shifts = tuple(shifts.int().tolist())
         x = self.time_shift(x, shifts)
+
+        # Band pass
+        rand_start = 100*torch.rand(self.batch_size)
+        x = self.bandpass_filter(x, rand_start)
 
         return x
 
@@ -89,6 +96,14 @@ class AugmentationModule(nn.Module):
     def freq_mask(self, x, ranges):
         masked_fft = self.zero_mask(torch.fft.rfft(x), ranges)
         return torch.fft.irfft(masked_fft)
+
+    def bandpass_filter(self, x, start_freqs, fs=100):
+        # Cutoff in Hz
+        x_filtered = torch.zeros_like(x)
+        for i in range(self.batch_size):
+            sos = signal.butter(8, [start_freqs[i], start_freqs[i] + self.freq_window], btype="bandstop", output="sos", fs=fs)
+            x_filtered[i, :] = torch.as_tensor(signal.sosfilt(sos, x[i,:]), dtype=torch.float32)
+        return x_filtered
 
 
 

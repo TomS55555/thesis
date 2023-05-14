@@ -50,9 +50,9 @@ def get_encoder():
     """
     return nn.Sequential(
         CnnEncoder(input_size=constants.SLEEP_EPOCH_SIZE),
-        # Aggregator(feat_dim=FEAT_DIM)
-        nn.Flatten(), # Output of size FEAT_DIM * 32 (last conv filter)
-        nn.Linear(FEAT_DIM*32, FEAT_DIM)
+        Aggregator(feat_dim=FEAT_DIM)
+        #nn.Flatten(), # Output of size FEAT_DIM * 32 (last conv filter)
+        #nn.Linear(FEAT_DIM*32, FEAT_DIM)
     )
 
 
@@ -161,7 +161,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     # TODO: fix normalization of STFT images!
-    num_patients = 5000
+    num_patients = 100
     batch_size = 512
     max_epochs = 100
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
@@ -175,12 +175,13 @@ def pretrain(device, version):
             amplitude_min=0.75,
             amplitude_max=1.5,
             timeshift_min=-100,
-            timeshift_max=100
+            timeshift_max=100,
+            freq_window=10
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
         recon_projector=None,
-        temperature=1e-3,
+        temperature=1e-4,
         alpha=1,
         optim_hparams={
             "max_epochs": max_epochs,

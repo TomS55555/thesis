@@ -179,7 +179,8 @@ def pretrain(device, version):
             amplitude_min=0.75,
             amplitude_max=1.5,
             timeshift_min=-100,
-            timeshift_max=100
+            timeshift_max=100,
+            freq_window=10
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
