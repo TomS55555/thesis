@@ -99,7 +99,8 @@ class AugmentationModule(nn.Module):
 
     def bandpass_filter(self, x, start_freqs, fs=100):
         # Cutoff in Hz
-        x_filtered = torch.zeros_like(x)
+        x_filtered = torch.zeros_like(x).cpu()
+        x.cpu()
         for i in range(self.batch_size):
             sos = signal.butter(8, [start_freqs[i], start_freqs[i] + self.freq_window], btype="bandstop", output="sos", fs=fs)
             x_filtered[i, :] = torch.as_tensor(signal.sosfilt(sos, x[i,:]), dtype=torch.float32)
