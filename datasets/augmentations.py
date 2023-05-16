@@ -5,6 +5,7 @@ from scipy import signal
 import torch.nn as nn
 import torch.fft
 import numpy as np
+import torchaudio.functional as F
 
 
 class AugmentationModule(nn.Module):
@@ -63,7 +64,7 @@ class AugmentationModule(nn.Module):
         x = self.time_shift(x, shifts)
 
         # Band pass
-        rand_start = (100-self.freq_window)*torch.rand(self.batch_size)/2
+        rand_start = torch.rand() * (50-self.freq_window-1)+0.1 # make sure 0 and end are never hit
         x = self.bandpass_filter(x, rand_start)
 
         return x
@@ -97,15 +98,17 @@ class AugmentationModule(nn.Module):
         masked_fft = self.zero_mask(torch.fft.rfft(x), ranges)
         return torch.fft.irfft(masked_fft)
 
-    def bandpass_filter(self, x, start_freqs, fs=100):
+    def bandpass_filter(self, x, start_freq, fs=100):
         # Cutoff in Hz
-        x_filtered = torch.zeros_like(x).cpu()
-        start_freqs.cpu()
-        x.to("cpu")
-        for i in range(self.batch_size):
-            sos = signal.butter(8, [start_freqs[i], start_freqs[i] + self.freq_window/2], btype="bandstop", output="sos", fs=fs)
-            x_filtered[i, :] = torch.as_tensor(signal.sosfilt(sos, x.cpu()[i, :]), dtype=torch.float32)
-        return x_filtered.to("cuda:0")
+        b, a = signal.butter(2, (start_freq, start_freq+self.freq_window), btype='bandstop', fs=fs, output='ba')
+        return F.lfilter(x, torch.as_tensor(a, dtype=torch.float32), torch.as_tensor(b, dtype=torch.float32), clamp=False)
+        # x_filtered = torch.zeros_like(x).cpu()
+        # start_freqs.cpu()
+        # x.to("cpu")
+        # for i in range(self.batch_size):
+        #     sos = signal.butter(8, [start_freqs[i], start_freqs[i] + self.freq_window/2], btype="bandstop", output="sos", fs=fs)
+        #     x_filtered[i, :] = torch.as_tensor(signal.sosfilt(sos, x.cpu()[i, :]), dtype=torch.float32)
+        # return x_filtered.to("cuda:0")
 
 
 
