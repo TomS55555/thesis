@@ -38,13 +38,13 @@ class AugmentationModule(nn.Module):
 
         # The a and b coefficients need to be made on CPU, therefore make them already
         self.Nab = 100
-        self.a_list = torch.zeros(self.Nab, dtype=torch.float32)
-        self.b_list = torch.zeros(self.Nab, dtype=torch.float32)
+        self.a_list = torch.zeros((self.Nab, 5), dtype=torch.float32)
+        self.b_list = torch.zeros((self.Nab, 5), dtype=torch.float32)
         for i in range(self.Nab):
             start_freq = (torch.rand(1) * (50 - self.freq_window - 1)) + 0.1  # make sure 0 and end are never hit
             b, a = signal.butter(2, (start_freq, start_freq + self.freq_window), btype='bandstop', fs=100, output='ba')
-            self.a_list[i] = a
-            self.b_list[i] = b
+            self.a_list[i, :] = a
+            self.b_list[i, :] = b
 
     def forward(self, x):
         """
@@ -110,7 +110,7 @@ class AugmentationModule(nn.Module):
 
     def bandpass_filter(self, x, rand_idx, fs=100):
         # Cutoff in Hz
-        return F.lfilter(x, torch.as_tensor(self.a_list[rand_idx], dtype=torch.float32), torch.as_tensor(self.b_list[rand_idx], dtype=torch.float32), clamp=False)
+        return F.lfilter(x, torch.as_tensor(self.a_list[rand_idx, :], dtype=torch.float32), torch.as_tensor(self.b_list[rand_idx, :], dtype=torch.float32), clamp=False)
         # x_filtered = torch.zeros_like(x).cpu()
         # start_freqs.cpu()
         # x.to("cpu")
