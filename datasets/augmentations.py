@@ -36,6 +36,16 @@ class AugmentationModule(nn.Module):
         self.freq_window = freq_window
         self.batch_size = batch_size
 
+        # The a and b coefficients need to be made on CPU, therefore make them already
+        self.Nab = 100
+        self.a_list = torch.zeros(self.Nab, dtype=torch.float32)
+        self.b_list = torch.zeros(self.Nab, dtype=torch.float32)
+        for i in range(self.Nab):
+            start_freq = (torch.rand(1) * (50 - self.freq_window - 1)) + 0.1  # make sure 0 and end are never hit
+            b, a = signal.butter(2, (start_freq, start_freq + self.freq_window), btype='bandstop', fs=100, output='ba')
+            self.a_list[i] = a
+            self.b_list[i] = b
+
     def forward(self, x):
         """
             x: size B x Epoch length
@@ -64,8 +74,8 @@ class AugmentationModule(nn.Module):
         x = self.time_shift(x, shifts)
 
         # Band pass
-        rand_start = (torch.rand(1) * (50-self.freq_window-1))+0.1 # make sure 0 and end are never hit
-        x = self.bandpass_filter(x, rand_start)
+        rand_idx = int(torch.randint(low=0, high=self.Nab-1, size=(1,)))
+        x = self.bandpass_filter(x, rand_idx)
 
         return x
 
@@ -98,10 +108,9 @@ class AugmentationModule(nn.Module):
         masked_fft = self.zero_mask(torch.fft.rfft(x), ranges)
         return torch.fft.irfft(masked_fft)
 
-    def bandpass_filter(self, x, start_freq, fs=100):
+    def bandpass_filter(self, x, rand_idx, fs=100):
         # Cutoff in Hz
-        b, a = signal.butter(2, (start_freq, start_freq+self.freq_window), btype='bandstop', fs=fs, output='ba')
-        return F.lfilter(x, torch.as_tensor(a, dtype=torch.float32), torch.as_tensor(b, dtype=torch.float32), clamp=False)
+        return F.lfilter(x, torch.as_tensor(self.a_list[rand_idx], dtype=torch.float32), torch.as_tensor(self.b_list[rand_idx], dtype=torch.float32), clamp=False)
         # x_filtered = torch.zeros_like(x).cpu()
         # start_freqs.cpu()
         # x.to("cpu")
