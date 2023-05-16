@@ -1,7 +1,9 @@
 import os.path
+import sys, os
 
 import torch.nn as nn
 from scipy.io import loadmat
+from pathlib import Path
 from models.mymodules import CNN_head, SimpleMLP
 from random import sample
 
@@ -34,13 +36,16 @@ CLASSIFIERS = {
     "logistic": lambda input_dim: nn.Linear(input_dim, N_CLASSES)
 }
 
-if os.path.exists('datasets/data_split_eval.mat'):
-    f = loadmat('datasets/data_split_eval.mat')
+base_path = os.getcwd().split('thesis')[0]
+full_path = os.path.join(base_path, 'thesis'+os.getcwd().split('thesis')[1].split('\\')[0], Path('datasets', 'data_split_eval.mat'))
+
+if os.path.exists(full_path):
+    f = loadmat(full_path)
 else:
     "Could not find data split!"
-    exit(1)
+    sys.exit(1)
 
-TEST_SET_BIG = f['test_sub']
+TEST_SET_BIG = f['test_sub'].squeeze()
 
 TEST_SET_0 = \
     (1426,
