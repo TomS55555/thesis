@@ -109,8 +109,9 @@ class AugmentationModule(nn.Module):
         return torch.fft.irfft(masked_fft)
 
     def bandpass_filter(self, x, rand_idx, fs=100):
-        self.a_list = self.a_list.to(x)
-        self.b_list = self.b_list.to(x)
+        if self.a_list.device != x.device:
+            self.a_list = self.a_list.to(x)
+            self.b_list = self.b_list.to(x)
         return F.lfilter(x, torch.as_tensor(self.a_list[rand_idx, :], dtype=torch.float32), torch.as_tensor(self.b_list[rand_idx, :], dtype=torch.float32), clamp=False)
         # x_filtered = torch.zeros_like(x).cpu()
         # start_freqs.cpu()
