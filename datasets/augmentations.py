@@ -43,8 +43,8 @@ class AugmentationModule(nn.Module):
         for i in range(self.Nab):
             start_freq = (torch.rand(1) * (50 - self.freq_window - 1)) + 0.1  # make sure 0 and end are never hit
             b, a = signal.butter(2, (start_freq, start_freq + self.freq_window), btype='bandstop', fs=100, output='ba')
-            self.a_list[i, :] = a
-            self.b_list[i, :] = b
+            self.a_list[i, :] = torch.as_tensor(a, dtype=torch.float32)
+            self.b_list[i, :] = torch.as_tensor(b, dtype=torch.float32)
 
     def forward(self, x):
         """
