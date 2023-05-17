@@ -50,7 +50,7 @@ class EEGdataModule(pl.LightningDataModule):
                 data_path=data_path,
                 first_patient=first_patient,
                 num_patients=num_patients,
-                exclude_test_set=exclude_test_set,
+                exclude_test_set=exclude_test_set if len(exclude_test_set) < 500 else np.random.choice(constants.TEST_SET_BIG, size=500),
                 test_set=True,
                 window_size=window_size
             )

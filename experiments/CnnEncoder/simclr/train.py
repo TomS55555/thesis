@@ -4,7 +4,7 @@ import sys
 from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
 
 sys.path.extend([os.getcwd()])
-
+import random
 import constants
 import math
 import torch
@@ -21,16 +21,17 @@ from datasets.augmentations import AugmentationModule
 from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 from models.sleep_transformer import Aggregator
+import numpy as np
 
-#patients_list = [3, 5, 10, 20, 50, 100, 250, 500]
-patients_list = [10]
+patients_list = [3, 5, 10, 20, 50, 100, 250, 500]
+#patients_list = [10]
 
 OUTER_DIM = 1
 
 PATIENTS_PER_DS = 250  # Depends on RAM size of PC
 
-train_path = "simclr_cnn_encoder_trainings"  # path used for training the networks
-result_file_name = "test_results"
+train_path = "simclr_cnn_encoder_trainings_final"  # path used for training the networks
+result_file_name = "test_results_cnn_encoder_final"
 
 pretrained_save_name = "pretrained_IT"
 logistic_save_name = "logistic_on_simclr_IT"
@@ -94,7 +95,7 @@ def get_data_args(num_patients, batch_size, num_workers=4):
         "batch_size": batch_size,
         "num_workers": num_workers,
         "num_ds": math.ceil(num_patients / PATIENTS_PER_DS),
-        "exclude_test_set": constants.TEST_SET_1,
+        "exclude_test_set": constants.TEST_SET_BIG,
         "dataset_type": SHHSdataset,
         "window_size": OUTER_DIM
     }
@@ -163,7 +164,7 @@ def pretrain(device, version):
     # TODO: fix normalization of STFT images!
     num_patients = 250
     batch_size = 512
-    max_epochs = 200
+    max_epochs = 150
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = SimCLR_Transformer(
@@ -176,7 +177,7 @@ def pretrain(device, version):
             amplitude_max=1.5,
             timeshift_min=-100,
             timeshift_max=100,
-            freq_window=4
+            freq_window=5
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
@@ -283,5 +284,11 @@ if __name__ == "__main__":
             dev, version)
         train(pretrained_model, dev, version, True)
         test(pretrained_model, dev, version, True)
+    elif args.mode == 'final':
+        pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
+            dev, version)
+        for i in range(5):
+            train(pretrained_model, dev, version+i, True)
+            test(pretrained_model, dev, version+i, True)
     else:
         exit("Mode not recognized!")
