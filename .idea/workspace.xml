@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="made bandpass filter batched">
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="augs">
+      <change afterPath="$PROJECT_DIR$/experiments/MaskedOuterTransformer/train.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/test.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/maeeg_transformer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datasets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/view_augmentations.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/view_augmentations.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/visualize_pretrained_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/visualize_pretrained_model.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/sleep_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/sleep_transformer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +44,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis02&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis/experiments/MaskedOuterTransformer/train.py&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -50,7 +57,7 @@
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\CnnEncoder\simclr" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.simclr_cnn_encoder">
+  <component name="RunManager" selected="Python.train_maeeg">
     <configuration name="cnn_transformer" type="PythonConfigurationType" factoryName="Python">
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -139,11 +146,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="train_maeeg" type="PythonConfigurationType" factoryName="Python">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\tomsm\anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/MaskedOuterTransformer" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/MaskedOuterTransformer/train.py" />
+      <option name="PARAMETERS" value="--mode pretrain --version 0" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.train_inner_transformer" />
       <item itemvalue="Python.cnn_transformer" />
       <item itemvalue="Python.simclr_cnn_transformer" />
       <item itemvalue="Python.simclr_cnn_encoder" />
+      <item itemvalue="Python.train_maeeg" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -170,6 +200,8 @@
       <workItem from="1683965967619" duration="4190000" />
       <workItem from="1683972533285" duration="5836000" />
       <workItem from="1684050916530" duration="7098000" />
+      <workItem from="1684314534121" duration="14523000" />
+      <workItem from="1684336780714" duration="8634000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -360,7 +392,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684251626928</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="augs">
+      <created>1684314603803</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1684314603803</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -387,7 +426,8 @@
     <MESSAGE value="ready to train CnnTransformer for a final time" />
     <MESSAGE value="Lets train cnnencoder once more" />
     <MESSAGE value="made bandpass filter batched" />
-    <option name="LAST_COMMIT_MESSAGE" value="made bandpass filter batched" />
+    <MESSAGE value="augs" />
+    <option name="LAST_COMMIT_MESSAGE" value="augs" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1684251549680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
@@ -400,6 +440,7 @@
     <SUITE FILE_PATH="coverage/thesis$train.coverage" NAME="train Coverage Results" MODIFIED="1680122318568" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_cnn_transformer.coverage" NAME="simclr_cnn_transformer Coverage Results" MODIFIED="1684053936429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnTransformer/simclr" />
     <SUITE FILE_PATH="coverage/thesis02$train_arg.coverage" NAME="train_arg Coverage Results" MODIFIED="1666436211007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/1D_CNN" />
+    <SUITE FILE_PATH="coverage/thesis$train_maeeg.coverage" NAME="train_maeeg Coverage Results" MODIFIED="1684353713259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/MaskedOuterTransformer" />
     <SUITE FILE_PATH="coverage/thesis$simclr_graph_train.coverage" NAME="simclr_graph_train Coverage Results" MODIFIED="1678710795262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/simclr_graph" />
     <SUITE FILE_PATH="coverage/thesis02$.coverage" NAME=" Coverage Results" MODIFIED="1678632695110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/simclr_graph" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_inner_transformer.coverage" NAME="simclr_inner_transformer Coverage Results" MODIFIED="1680864431803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />

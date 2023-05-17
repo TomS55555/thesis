@@ -57,9 +57,9 @@ class SHHSdataset(torch.utils.data.Dataset):
 
     def __getitem__(self, item):
         if self.window_size == 4:
-            inputs = self.X1[item:item + self.window_size].view(1, self.window_size*constants.SLEEP_EPOCH_SIZE)
+            inputs = self.X1[item:item + self.window_size]
             # prev_inputs = self.X1[item-1: item-1 + self.window_size].view(1, 1, self.window_size*constants.SLEEP_EPOCH_SIZE) if item > 0 else inputs
-            label = self.labels[item+2]
+            label = self.labels[item:item+self.window_size]
         else:
             inputs = self.X1[item]
             # prev_inputs = self.X1[item-1] if item > 0 else inputs

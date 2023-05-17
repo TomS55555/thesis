@@ -151,7 +151,7 @@ class Aggregator(nn.Module):
         It does this by using attention which results in a weighted sum
     """
 
-    def __init__(self, feat_dim, hidden_dim=None):
+    def __init__(self, feat_dim, hidden_dim=None, unsqeeze=False):
         """
             hidden_dim is the hidden dimension used by attention
             feat_dim is the feature dimension
@@ -166,6 +166,7 @@ class Aggregator(nn.Module):
                                 out_features=hidden_dim)
         self.tanh = nn.Tanh()
         self.softmax = nn.Softmax(dim=-1)
+        self.unsqueeze = unsqeeze
 
     def forward(self, x):
         # b, l, f = x.shape
@@ -173,7 +174,10 @@ class Aggregator(nn.Module):
         ats = self.tanh(self.linear(x))
         alphas = self.softmax(ats @ self.ae)
         result = torch.bmm(x.transpose(1, 2), alphas).squeeze(2)
-        return result
+        if not self.unsqueeze:
+            return result
+        else:
+            return result.unsqueeze(1)
 
 
 class Classifier(nn.Module):
