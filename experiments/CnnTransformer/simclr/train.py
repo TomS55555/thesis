@@ -22,7 +22,7 @@ from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 from models.sleep_transformer import Aggregator
 
-patients_list = [3, 5, 10, 20, 50, 100, 250]
+patients_list = [10]
 
 OUTER_DIM = 1  # Only 1 and 4 are supported at the moment
 
@@ -83,10 +83,13 @@ def get_reconstruction_head():
 
 
 def get_classifier():
-    return nn.Linear(
-        FEAT_DIM,
-        constants.N_CLASSES
-    )
+    return nn.Sequential(
+            nn.Linear(
+                FEAT_DIM,
+                256
+            ),
+            nn.GELU(),
+            nn.Linear(256, constants.N_CLASSES))
 
 
 def get_data_args(num_patients, batch_size, num_workers=4):
@@ -165,9 +168,9 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     # TODO: fix normalization of STFT images!
-    num_patients = 5000
+    num_patients = 250
     batch_size = 512
-    max_epochs = 250
+    max_epochs = 150
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = SimCLR_Transformer(
@@ -180,7 +183,7 @@ def pretrain(device, version):
             amplitude_max=1.5,
             timeshift_min=-100,
             timeshift_max=100,
-            freq_window=10
+            freq_window=5
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
