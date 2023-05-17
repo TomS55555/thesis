@@ -163,20 +163,20 @@ def pretrain(device, version):
     # TODO: fix normalization of STFT images!
     num_patients = 250
     batch_size = 512
-    max_epochs = 100
+    max_epochs = 200
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = SimCLR_Transformer(
         aug_module=AugmentationModule(
             batch_size=batch_size,
             noise_max=0.3,
-            zeromask_min=400,
-            zeromask_max=800,
+            zeromask_min=300,
+            zeromask_max=500,
             amplitude_min=0.75,
             amplitude_max=1.5,
             timeshift_min=-100,
             timeshift_max=100,
-            freq_window=10
+            freq_window=5
         ),
         encoder=get_encoder(),
         cont_projector=get_contrastive_projection_head(),
