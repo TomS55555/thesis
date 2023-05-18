@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="implemented maeeg">
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="READY TO TRAIN CNNENCODER FOR FINAL TIME">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datasets.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/supervised_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/supervised_model.py" afterDir="false" />
     </list>
@@ -197,7 +195,8 @@
       <workItem from="1683972533285" duration="5836000" />
       <workItem from="1684050916530" duration="7098000" />
       <workItem from="1684314534121" duration="14523000" />
-      <workItem from="1684336780714" duration="10042000" />
+      <workItem from="1684336780714" duration="10809000" />
+      <workItem from="1684400164149" duration="887000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -402,7 +401,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684355326585</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="READY TO TRAIN CNNENCODER FOR FINAL TIME">
+      <created>1684356564142</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1684356564142</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -431,7 +437,8 @@
     <MESSAGE value="made bandpass filter batched" />
     <MESSAGE value="augs" />
     <MESSAGE value="implemented maeeg" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented maeeg" />
+    <MESSAGE value="READY TO TRAIN CNNENCODER FOR FINAL TIME" />
+    <option name="LAST_COMMIT_MESSAGE" value="READY TO TRAIN CNNENCODER FOR FINAL TIME" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1684251549680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />

@@ -233,7 +233,7 @@ def train(pretrained_model, device, version, train_supervised=False):
     # Then train logistic classifier on top of pretrained transformer
 
 
-def test(pretrained_model, device, version, test_supervised=False):
+def test(pretrained_model, device, version, test_supervised=False, test_version=0):
     results = dict()
 
     for n_patients in patients_list:
@@ -252,7 +252,7 @@ def test(pretrained_model, device, version, test_supervised=False):
         results[str(n_patients) + "_pat"] = test_results
         print(test_results)
     print(results)
-    with open(result_file_name + str(version), 'w+') as f:
+    with open(result_file_name + str(version) +'_test' + str(test_version), 'w+') as f:
         json.dump(results, f)
 
 
@@ -288,7 +288,7 @@ if __name__ == "__main__":
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
             dev, version)
         for i in range(5):
-            train(pretrained_model, dev, version+i, True)
-            test(pretrained_model, dev, version+i, True)
+            # train(pretrained_model, dev, version+i, True)
+            test(pretrained_model, dev, version, True, i)
     else:
         exit("Mode not recognized!")

@@ -70,7 +70,7 @@ class SupervisedModel(pl.LightningModule):
         preds = self.net(inputs)  # Remove the epoch dimension of size 1
         acc = (preds.argmax(dim=-1) == labels.squeeze()).float().mean()
         self.log('test_acc', acc)
-        preds = preds.cpu()
+        preds = preds.argmax(dim=-1).cpu()
         labels = labels.cpu()
         kappa = 1.0 if torch.equal(preds, labels) else cohen_kappa_score(preds, labels)
         self.log('kappa', kappa)
