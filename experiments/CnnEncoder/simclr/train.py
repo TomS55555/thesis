@@ -276,13 +276,13 @@ if __name__ == "__main__":
         train(pretrained_model, dev, version, True)
     elif args.mode == "test":
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
-        test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=2))
+        test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0))
         test(pretrained_model, dev, version, test_dm, True)
     elif args.mode == 'both':
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
             dev, version)
         train(pretrained_model, dev, version, True)
-        test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=2))
+        test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0))
         test(pretrained_model, dev, version, test_dm, True)
     elif args.mode == 'final':
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
@@ -290,7 +290,7 @@ if __name__ == "__main__":
         for i in range(5):
             if i != 0:
                 train(pretrained_model, dev, version+i, True)
-            test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=2))
+            test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0))
             test(pretrained_model, dev, version+i, test_dm, True)
     else:
         exit("Mode not recognized!")
