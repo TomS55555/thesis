@@ -153,7 +153,7 @@ def test_networks(pretrained_model, test_ds_args, train_path, logistic_save_name
     if test_supervised:
         sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
         sup_res = trainer.test(model=sup_model,
-                               datamodule=test_dm)
+                               dataloaders=test_dm.get_test_dataloaders())
     else:
         sup_res = 0
     logistic_model = load_model(SupervisedModel, get_checkpoint_path(train_path, logistic_save_name))
@@ -164,11 +164,11 @@ def test_networks(pretrained_model, test_ds_args, train_path, logistic_save_name
                                         classifier=classifier,
                                         optim_hparams=None)
     logistic_res = trainer.test(model=logistic_test_model,
-                                datamodule=test_dm)
+                                dataloaders=test_dm.get_test_dataloaders())
 
     fully_tuned_model = load_model(SupervisedModel, get_checkpoint_path(train_path, finetune_save_name))
     fully_tuned_res = trainer.test(model=fully_tuned_model,
-                                   datamodule=test_dm)
+                                   dataloaders=test_dm.get_test_dataloaders())
 
     return {
         "sup_res": sup_res,
