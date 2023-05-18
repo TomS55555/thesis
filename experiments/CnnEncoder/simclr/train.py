@@ -239,9 +239,7 @@ def test(pretrained_model, device, version, test_dm: EEGdataModule, test_supervi
     for n_patients in patients_list:
         test_results = test_networks(
             pretrained_model=pretrained_model,
-            test_ds_args=get_data_args(num_patients=5,
-                                       batch_size=64,
-                                       num_workers=0),  # TODO: LOOK INTO THIS!!
+            test_dm=test_dm,  # TODO: LOOK INTO THIS!!
             train_path=train_path + str(version),
             logistic_save_name=logistic_save_name + "_" + str(n_patients) + "pat",
             supervised_save_name=supervised_save_name + "_" + str(n_patients) + "pat",
