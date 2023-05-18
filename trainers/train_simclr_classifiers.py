@@ -140,14 +140,21 @@ def test_networks(pretrained_model, test_dm: EEGdataModule, train_path, logistic
     """
         Checkpoint path is the path for the testing
     """
-
-    trainer = get_trainer(
-        checkpoint_path=train_path,
-        save_name="testing",
-        num_ds=test_dm.num_ds,
-        trainer_hparams={},
-        device=device
+    trainer = pl.Trainer(
+        default_root_dir=os.path.join(train_path, "testing"),
+        accelerator="gpu" if str(device).startswith("cuda") else "cpu",
+        reload_dataloaders_every_n_epochs=0,
+        # Reload dataloaders to get different part of the big dataset
+        devices=1,  # How many GPUs/CPUs to use
+        callbacks=[
+            ModelCheckpoint(save_weights_only=True, mode="min", monitor="val_loss", save_last=True),
+            # Save the best checkpoint based on the maximum val_acc recorded. Saves only weights and not optimizer
+            LearningRateMonitor("epoch")],  # Log learning rate every epoch
+        enable_progress_bar=True,
     )
+    trainer.logger._log_graph = True  # If True, we plot the computation graph in tensorboard
+    trainer.logger._default_hp_metric = None  # Optional logging argument that we don't need
+
 
     # print(list(iter(test_dm.test_dataloader()))[0][0].shape)
     if test_supervised:

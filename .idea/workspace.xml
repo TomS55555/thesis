@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="READY TO TEST CNNENCODER FOR FINAL TIME" />
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainers/train_simclr_classifiers.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -192,7 +195,7 @@
       <workItem from="1684050916530" duration="7098000" />
       <workItem from="1684314534121" duration="14523000" />
       <workItem from="1684336780714" duration="10809000" />
-      <workItem from="1684400164149" duration="5090000" />
+      <workItem from="1684400164149" duration="6149000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -439,7 +442,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684409262776</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684409856495</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1684409856495</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
