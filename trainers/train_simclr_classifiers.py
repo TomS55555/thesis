@@ -135,7 +135,7 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
     #                  pretrained_classifier=pretrained_classifier)
 
 
-def test_networks(pretrained_model, test_dm: EEGdataModule, train_path, logistic_save_name, supervised_save_name, finetune_save_name, test_supervised,
+def test_networks(pretrained_model, test_dls, train_path, logistic_save_name, supervised_save_name, finetune_save_name, test_supervised,
                   device):
     """
         Checkpoint path is the path for the testing
@@ -160,7 +160,7 @@ def test_networks(pretrained_model, test_dm: EEGdataModule, train_path, logistic
     if test_supervised:
         sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
         sup_res = trainer.test(model=sup_model,
-                               dataloaders=test_dm.get_test_dataloaders())
+                               dataloaders=test_dls)
     else:
         sup_res = 0
     logistic_model = load_model(SupervisedModel, get_checkpoint_path(train_path, logistic_save_name))
@@ -171,11 +171,11 @@ def test_networks(pretrained_model, test_dm: EEGdataModule, train_path, logistic
                                         classifier=classifier,
                                         optim_hparams=None)
     logistic_res = trainer.test(model=logistic_test_model,
-                                dataloaders=test_dm.get_test_dataloaders())
+                                dataloaders=test_dls)
 
     fully_tuned_model = load_model(SupervisedModel, get_checkpoint_path(train_path, finetune_save_name))
     fully_tuned_res = trainer.test(model=fully_tuned_model,
-                                   dataloaders=test_dm.get_test_dataloaders())
+                                   dataloaders=test_dls)
 
     return {
         "sup_res": sup_res,
