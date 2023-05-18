@@ -235,11 +235,10 @@ def train(pretrained_model, device, version, train_supervised=False):
 
 def test(pretrained_model, device, version, test_dm: EEGdataModule, test_supervised=False):
     results = dict()
-    test_dls = test_dm.get_test_dataloaders()
     for n_patients in patients_list:
         test_results = test_networks(
             pretrained_model=pretrained_model,
-            test_dls=test_dls,  # TODO: LOOK INTO THIS!!
+            test_dm=test_dm,  # TODO: LOOK INTO THIS!!
             train_path=train_path + str(version),
             logistic_save_name=logistic_save_name + "_" + str(n_patients) + "pat",
             supervised_save_name=supervised_save_name + "_" + str(n_patients) + "pat",
