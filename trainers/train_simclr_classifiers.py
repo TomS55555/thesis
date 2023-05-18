@@ -135,12 +135,12 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
     #                  pretrained_classifier=pretrained_classifier)
 
 
-def test_networks(pretrained_model, test_ds_args, train_path, logistic_save_name, supervised_save_name, finetune_save_name, test_supervised,
+def test_networks(pretrained_model, test_dm: EEGdataModule, train_path, logistic_save_name, supervised_save_name, finetune_save_name, test_supervised,
                   device):
     """
         Checkpoint path is the path for the testing
     """
-    test_dm = EEGdataModule(test_set=True, **test_ds_args)
+
     trainer = get_trainer(
         checkpoint_path=train_path,
         save_name="testing",

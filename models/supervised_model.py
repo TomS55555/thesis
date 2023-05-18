@@ -65,7 +65,7 @@ class SupervisedModel(pl.LightningModule):
         self.log('val_acc', acc)
         self.log('val_loss', loss)
 
-    def test_step(self, batch, batch_idx):
+    def test_step(self, batch, batch_idx, dataloader_idx=0):
         inputs, labels = batch
         preds = self.net(inputs)  # Remove the epoch dimension of size 1
         acc = (preds.argmax(dim=-1) == labels.squeeze()).float().mean()
