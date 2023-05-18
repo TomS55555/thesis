@@ -159,12 +159,12 @@ def test_networks(pretrained_model, test_dm: EEGdataModule, train_path, logistic
     # print(list(iter(test_dm.test_dataloader()))[0][0].shape)
     if test_supervised:
         sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
-        temp_sup_res = 0
+        temp_sup_res = list()
         for i in range(test_dm.n_test):
             test_dm.load_test_set(i)
-            temp_sup_res += trainer.test(model=sup_model,
-                                        dataloaders=test_dm.test_dataloader())
-        sup_res = temp_sup_res / test_dm.n_test
+            temp_sup_res.append(trainer.test(model=sup_model,
+                                        dataloaders=test_dm.test_dataloader()))
+        sup_res = temp_sup_res
     else:
         sup_res = 0
     logistic_model = load_model(SupervisedModel, get_checkpoint_path(train_path, logistic_save_name))
@@ -174,23 +174,23 @@ def test_networks(pretrained_model, test_dm: EEGdataModule, train_path, logistic
     logistic_test_model = SupervisedModel(encoder=backbone,
                                         classifier=classifier,
                                         optim_hparams=None)
-    temp_logistic_res = 0
+    temp_logistic_res = list()
     for i in range(test_dm.n_test):
-        temp_logistic_res += trainer.test(
-            model=logistic_model,
+        temp_logistic_res.append(trainer.test(
+            model=logistic_test_model,
             dataloaders=test_dm.test_dataloader()
-        )
-    logistic_res = temp_logistic_res / test_dm.n_test
+        ))
+    logistic_res = temp_logistic_res
 
     fully_tuned_model = load_model(SupervisedModel, get_checkpoint_path(train_path, finetune_save_name))
 
-    temp_full_tuned_res = 0
+    temp_full_tuned_res = list()
     for i in range(test_dm.n_test):
-        temp_full_tuned_res += trainer.test(
+        temp_full_tuned_res.append(trainer.test(
             model=fully_tuned_model,
             dataloaders=test_dm.test_dataloader()
-        )
-    fully_tuned_res = temp_full_tuned_res / test_dm.n_test
+        ))
+    fully_tuned_res = temp_full_tuned_res
 
     return {
         "sup_res": sup_res,
