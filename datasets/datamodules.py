@@ -62,6 +62,7 @@ class EEGdataModule(pl.LightningDataModule):
             test_set=True,
             window_size=self.window_size
         )
+        gc.collect()
 
     def load_dataset(self, idx):
         first_patient = self.first_patient + idx * self.num_patients_per_ds  # ! Make sure idx starts at 0

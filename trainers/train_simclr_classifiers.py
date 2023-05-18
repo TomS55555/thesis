@@ -135,7 +135,7 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
     #                  pretrained_classifier=pretrained_classifier)
 
 
-def test_networks(pretrained_model, test_dls, train_path, logistic_save_name, supervised_save_name, finetune_save_name, test_supervised,
+def test_networks(pretrained_model, test_dm: EEGdataModule, train_path, logistic_save_name, supervised_save_name, finetune_save_name, test_supervised,
                   device):
     """
         Checkpoint path is the path for the testing
@@ -159,8 +159,12 @@ def test_networks(pretrained_model, test_dls, train_path, logistic_save_name, su
     # print(list(iter(test_dm.test_dataloader()))[0][0].shape)
     if test_supervised:
         sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
-        sup_res = trainer.test(model=sup_model,
-                               dataloaders=test_dls)
+        temp_sup_res = 0
+        for i in range(test_dm.n_test):
+            test_dm.load_test_set(i)
+            temp_sup_res += trainer.test(model=sup_model,
+                                        dataloaders=test_dm.test_dataloader())
+        sup_res = temp_sup_res / test_dm.n_test
     else:
         sup_res = 0
     logistic_model = load_model(SupervisedModel, get_checkpoint_path(train_path, logistic_save_name))
@@ -170,12 +174,23 @@ def test_networks(pretrained_model, test_dls, train_path, logistic_save_name, su
     logistic_test_model = SupervisedModel(encoder=backbone,
                                         classifier=classifier,
                                         optim_hparams=None)
-    logistic_res = trainer.test(model=logistic_test_model,
-                                dataloaders=test_dls)
+    temp_logistic_res = 0
+    for i in range(test_dm.n_test):
+        temp_logistic_res += trainer.test(
+            model=logistic_model,
+            dataloaders=test_dm.test_dataloader()
+        )
+    logistic_res = temp_logistic_res / test_dm.n_test
 
     fully_tuned_model = load_model(SupervisedModel, get_checkpoint_path(train_path, finetune_save_name))
-    fully_tuned_res = trainer.test(model=fully_tuned_model,
-                                   dataloaders=test_dls)
+
+    temp_full_tuned_res = 0
+    for i in range(test_dm.n_test):
+        temp_full_tuned_res += trainer.test(
+            model=fully_tuned_model,
+            dataloaders=test_dm.test_dataloader()
+        )
+    fully_tuned_res = temp_full_tuned_res / test_dm.n_test
 
     return {
         "sup_res": sup_res,
