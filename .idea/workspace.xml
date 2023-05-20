@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="Lets train cnnencoder once more">
-      <change beforePath="$PROJECT_DIR$/datasets/augmentations.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/augmentations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +168,9 @@
       <workItem from="1683463999860" duration="2014000" />
       <workItem from="1683965967619" duration="4190000" />
       <workItem from="1683972533285" duration="5836000" />
-      <workItem from="1684050916530" duration="7098000" />
+      <workItem from="1684050916530" duration="10149000" />
+      <workItem from="1684241066035" duration="1127000" />
+      <workItem from="1684572576065" duration="693000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -303,7 +305,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684060561125</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Lets train cnnencoder once more">
+      <created>1684060653357</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1684060653357</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
