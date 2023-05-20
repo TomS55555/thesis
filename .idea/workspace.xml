@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="Lets train cnnencoder once more">
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <change afterPath="$PROJECT_DIR$/experiments/process_results.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/sample_results" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/sample_results2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +40,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis02&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis/experiments/MaskedOuterTransformer/train.py&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -49,7 +53,7 @@
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\CnnEncoder\simclr" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.simclr_cnn_transformer">
+  <component name="RunManager" selected="Python.train_maeeg">
     <configuration name="cnn_transformer" type="PythonConfigurationType" factoryName="Python">
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -138,11 +142,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="train_maeeg" type="PythonConfigurationType" factoryName="Python">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\tomsm\anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/MaskedOuterTransformer" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/MaskedOuterTransformer/train.py" />
+      <option name="PARAMETERS" value="--mode pretrain --version 0" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.train_inner_transformer" />
       <item itemvalue="Python.cnn_transformer" />
       <item itemvalue="Python.simclr_cnn_transformer" />
       <item itemvalue="Python.simclr_cnn_encoder" />
+      <item itemvalue="Python.train_maeeg" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -168,9 +195,11 @@
       <workItem from="1683463999860" duration="2014000" />
       <workItem from="1683965967619" duration="4190000" />
       <workItem from="1683972533285" duration="5836000" />
-      <workItem from="1684050916530" duration="10149000" />
-      <workItem from="1684241066035" duration="1127000" />
-      <workItem from="1684572576065" duration="693000" />
+      <workItem from="1684050916530" duration="7098000" />
+      <workItem from="1684314534121" duration="14523000" />
+      <workItem from="1684336780714" duration="10809000" />
+      <workItem from="1684400164149" duration="9635000" />
+      <workItem from="1684486473664" duration="4708000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -305,14 +334,161 @@
       <option name="project" value="LOCAL" />
       <updated>1684060561125</updated>
     </task>
-    <task id="LOCAL-00020" summary="Lets train cnnencoder once more">
-      <created>1684060653357</created>
+    <task id="LOCAL-00020" summary="made bandpass filter batched">
+      <created>1684249593070</created>
       <option name="number" value="00020" />
       <option name="presentableId" value="LOCAL-00020" />
       <option name="project" value="LOCAL" />
-      <updated>1684060653357</updated>
+      <updated>1684249593070</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="made bandpass filter batched">
+      <created>1684249803759</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1684249803759</updated>
+    </task>
+    <task id="LOCAL-00022" summary="made bandpass filter batched">
+      <created>1684250390848</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1684250390848</updated>
+    </task>
+    <task id="LOCAL-00023" summary="made bandpass filter batched">
+      <created>1684250576466</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1684250576466</updated>
+    </task>
+    <task id="LOCAL-00024" summary="made bandpass filter batched">
+      <created>1684250719953</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1684250719953</updated>
+    </task>
+    <task id="LOCAL-00025" summary="made bandpass filter batched">
+      <created>1684250863387</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1684250863387</updated>
+    </task>
+    <task id="LOCAL-00026" summary="made bandpass filter batched">
+      <created>1684251394690</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1684251394690</updated>
+    </task>
+    <task id="LOCAL-00027" summary="made bandpass filter batched">
+      <created>1684251626928</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1684251626928</updated>
+    </task>
+    <task id="LOCAL-00028" summary="augs">
+      <created>1684314603803</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1684314603803</updated>
+    </task>
+    <task id="LOCAL-00029" summary="implemented maeeg">
+      <created>1684355326585</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1684355326585</updated>
+    </task>
+    <task id="LOCAL-00030" summary="READY TO TRAIN CNNENCODER FOR FINAL TIME">
+      <created>1684356564142</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1684356564142</updated>
+    </task>
+    <task id="LOCAL-00031" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684405233528</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1684405233528</updated>
+    </task>
+    <task id="LOCAL-00032" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684407475394</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1684407475394</updated>
+    </task>
+    <task id="LOCAL-00033" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684407574068</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1684407574068</updated>
+    </task>
+    <task id="LOCAL-00034" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684408573170</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1684408573170</updated>
+    </task>
+    <task id="LOCAL-00035" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684409262776</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1684409262776</updated>
+    </task>
+    <task id="LOCAL-00036" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684409856495</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1684409856495</updated>
+    </task>
+    <task id="LOCAL-00037" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684410920161</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1684410920161</updated>
+    </task>
+    <task id="LOCAL-00038" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684411011876</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1684411011876</updated>
+    </task>
+    <task id="LOCAL-00039" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684413390004</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1684413390004</updated>
+    </task>
+    <task id="LOCAL-00040" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684413447524</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1684413447524</updated>
+    </task>
+    <task id="LOCAL-00041" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684413997119</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1684413997119</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,19 +514,25 @@
     <MESSAGE value="ready to train CnnEncoder for a final time" />
     <MESSAGE value="ready to train CnnTransformer for a final time" />
     <MESSAGE value="Lets train cnnencoder once more" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lets train cnnencoder once more" />
+    <MESSAGE value="made bandpass filter batched" />
+    <MESSAGE value="augs" />
+    <MESSAGE value="implemented maeeg" />
+    <MESSAGE value="READY TO TRAIN CNNENCODER FOR FINAL TIME" />
+    <MESSAGE value="READY TO TEST CNNENCODER FOR FINAL TIME" />
+    <option name="LAST_COMMIT_MESSAGE" value="READY TO TEST CNNENCODER FOR FINAL TIME" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1682413830709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
+    <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1684251549680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
     <SUITE FILE_PATH="coverage/thesis$train_eval.coverage" NAME="train_main Coverage Results" MODIFIED="1667944214747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/thesis02$train_inner_transformer.coverage" NAME="train_inner_transformer Coverage Results" MODIFIED="1681646189981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
-    <SUITE FILE_PATH="coverage/thesis02$cnn_transformer.coverage" NAME="cnn_transformer Coverage Results" MODIFIED="1681661389967" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnTransformer" />
+    <SUITE FILE_PATH="coverage/thesis02$cnn_transformer.coverage" NAME="cnn_transformer Coverage Results" MODIFIED="1681661263374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnTransformer" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_graph.coverage" NAME="simclr_graph Coverage Results" MODIFIED="1670185038195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/results" />
     <SUITE FILE_PATH="coverage/thesis$train__2_.coverage" NAME="train (2) Coverage Results" MODIFIED="1679680548180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer" />
     <SUITE FILE_PATH="coverage/thesis$.coverage" NAME=" Coverage Results" MODIFIED="1680191626502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
-    <SUITE FILE_PATH="coverage/thesis$train.coverage" NAME="train Coverage Results" MODIFIED="1678104817701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trained_models/cnn_model_1000pat" />
+    <SUITE FILE_PATH="coverage/thesis$train.coverage" NAME="train Coverage Results" MODIFIED="1680122318568" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_cnn_transformer.coverage" NAME="simclr_cnn_transformer Coverage Results" MODIFIED="1684053936429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnTransformer/simclr" />
     <SUITE FILE_PATH="coverage/thesis02$train_arg.coverage" NAME="train_arg Coverage Results" MODIFIED="1666436211007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/1D_CNN" />
+    <SUITE FILE_PATH="coverage/thesis$train_maeeg.coverage" NAME="train_maeeg Coverage Results" MODIFIED="1684353713259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/MaskedOuterTransformer" />
     <SUITE FILE_PATH="coverage/thesis$simclr_graph_train.coverage" NAME="simclr_graph_train Coverage Results" MODIFIED="1678710795262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/simclr_graph" />
     <SUITE FILE_PATH="coverage/thesis02$.coverage" NAME=" Coverage Results" MODIFIED="1678632695110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/simclr_graph" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_inner_transformer.coverage" NAME="simclr_inner_transformer Coverage Results" MODIFIED="1680864431803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />

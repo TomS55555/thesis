@@ -135,25 +135,36 @@ def train_networks(pretrained_model, data_args, logistic_args, supervised_args, 
     #                  pretrained_classifier=pretrained_classifier)
 
 
-def test_networks(pretrained_model, test_ds_args, train_path, logistic_save_name, supervised_save_name, finetune_save_name, test_supervised,
+def test_networks(pretrained_model, test_dm: EEGdataModule, train_path, logistic_save_name, supervised_save_name, finetune_save_name, test_supervised,
                   device):
     """
         Checkpoint path is the path for the testing
     """
-    test_dm = EEGdataModule(test_set=True, **test_ds_args)
-    trainer = get_trainer(
-        checkpoint_path=train_path,
-        save_name="testing",
-        num_ds=test_dm.num_ds,
-        trainer_hparams={},
-        device=device
+    trainer = pl.Trainer(
+        default_root_dir=os.path.join(train_path, "testing"),
+        accelerator="gpu" if str(device).startswith("cuda") else "cpu",
+        reload_dataloaders_every_n_epochs=0,
+        # Reload dataloaders to get different part of the big dataset
+        devices=1,  # How many GPUs/CPUs to use
+        callbacks=[
+            ModelCheckpoint(save_weights_only=True, mode="min", monitor="val_loss", save_last=True),
+            # Save the best checkpoint based on the maximum val_acc recorded. Saves only weights and not optimizer
+            LearningRateMonitor("epoch")],  # Log learning rate every epoch
+        enable_progress_bar=True,
     )
+    trainer.logger._log_graph = True  # If True, we plot the computation graph in tensorboard
+    trainer.logger._default_hp_metric = None  # Optional logging argument that we don't need
+
 
     # print(list(iter(test_dm.test_dataloader()))[0][0].shape)
     if test_supervised:
         sup_model = load_model(SupervisedModel, get_checkpoint_path(train_path, supervised_save_name))
-        sup_res = trainer.test(model=sup_model,
-                               datamodule=test_dm)
+        temp_sup_res = list()
+        for i in range(test_dm.n_test):
+            test_dm.load_test_set(i)
+            temp_sup_res.append(trainer.test(model=sup_model,
+                                        dataloaders=test_dm.test_dataloader()))
+        sup_res = temp_sup_res
     else:
         sup_res = 0
     logistic_model = load_model(SupervisedModel, get_checkpoint_path(train_path, logistic_save_name))
@@ -163,12 +174,23 @@ def test_networks(pretrained_model, test_ds_args, train_path, logistic_save_name
     logistic_test_model = SupervisedModel(encoder=backbone,
                                         classifier=classifier,
                                         optim_hparams=None)
-    logistic_res = trainer.test(model=logistic_test_model,
-                                datamodule=test_dm)
+    temp_logistic_res = list()
+    for i in range(test_dm.n_test):
+        temp_logistic_res.append(trainer.test(
+            model=logistic_test_model,
+            dataloaders=test_dm.test_dataloader()
+        ))
+    logistic_res = temp_logistic_res
 
     fully_tuned_model = load_model(SupervisedModel, get_checkpoint_path(train_path, finetune_save_name))
-    fully_tuned_res = trainer.test(model=fully_tuned_model,
-                                   datamodule=test_dm)
+
+    temp_full_tuned_res = list()
+    for i in range(test_dm.n_test):
+        temp_full_tuned_res.append(trainer.test(
+            model=fully_tuned_model,
+            dataloaders=test_dm.test_dataloader()
+        ))
+    fully_tuned_res = temp_full_tuned_res
 
     return {
         "sup_res": sup_res,

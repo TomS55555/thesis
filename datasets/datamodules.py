@@ -8,7 +8,7 @@ import numpy as np
 from datasets.datasets import SHHSdataset, SHHS_dataset_2
 from utils.helper_functions import memReport, cpuStats
 import random
-
+import math
 
 class EEGdataModule(pl.LightningDataModule):
     """
@@ -45,17 +45,24 @@ class EEGdataModule(pl.LightningDataModule):
 
         self.my_seed = random.randint(0, 2**32 - 1)  # random seed for splitting dataset
         # self.load_dataset(0)
+        self.MAX_TEST_SIZE = 500
         if test_set:
-            self.eeg_test = dataset_type(
-                data_path=data_path,
-                first_patient=first_patient,
-                num_patients=num_patients,
-                exclude_test_set=exclude_test_set,
-                test_set=True,
-                window_size=window_size
-            )
+            self.n_test = math.ceil(len(exclude_test_set) / self.MAX_TEST_SIZE)
+            self.eeg_test = self.load_test_set(0)
         else:
             self.load_dataset(0)
+
+    def load_test_set(self, idx):
+        test_set = self.exclude_test_set[idx*self.MAX_TEST_SIZE:(idx+1)*self.MAX_TEST_SIZE]
+        self.eeg_test = self.dataset_type(
+            data_path=self.data_path,
+            first_patient=self.first_patient,
+            num_patients=self.num_patients,
+            exclude_test_set=test_set,
+            test_set=True,
+            window_size=self.window_size
+        )
+        gc.collect()
 
     def load_dataset(self, idx):
         first_patient = self.first_patient + idx * self.num_patients_per_ds  # ! Make sure idx starts at 0
@@ -104,6 +111,16 @@ class EEGdataModule(pl.LightningDataModule):
         return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers,
                                drop_last=True)
 
+    def get_test_dataloaders(self):
+        """
+            Returns a sequence of dataloaders referring to different parts of the test set
+        """
+        dl_list = list()
+        for i in range(self.n_test):
+            self.load_test_set(i)
+            dl_list.append(data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers,
+                               drop_last=True))
+        return dl_list
 
 class SimCLRdataModule(pl.LightningDataModule):
     def __init__(self, pretrained_model, dm, batch_size, num_workers, device):
