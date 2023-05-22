@@ -16,3 +16,4 @@
 /simclr_trainings*
 ./.idea/workspace.xml
 /trainings/
+/simclr*
