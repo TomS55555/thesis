@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test siamsiam for first time">
-      <change beforePath="$PROJECT_DIR$/experiments/SiamSiamTransformer/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SiamSiamTransformer/train.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/FeatPredictor/train.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/feat_predictor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,11 +38,12 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "true",
-    "last_opened_file_path": "C:/Users/tomsm/PycharmProjects/thesis/experiments/SiamSiamTransformer/train.py"
+    "last_opened_file_path": "C:/Users/tomsm/PycharmProjects/thesis/experiments/FeatPredictor"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\FeatPredictor" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\SiamSiamTransformer" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments" />
     </key>
@@ -221,7 +224,7 @@
       <workItem from="1684336780714" duration="10809000" />
       <workItem from="1684400164149" duration="9635000" />
       <workItem from="1684486473664" duration="5322000" />
-      <workItem from="1684748826970" duration="5127000" />
+      <workItem from="1684748826970" duration="6244000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -545,7 +548,21 @@
       <option name="project" value="LOCAL" />
       <updated>1684770904326</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="ready to test siamsiam for first time">
+      <created>1684770945133</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1684770945133</updated>
+    </task>
+    <task id="LOCAL-00048" summary="ready to test siamsiam for first time">
+      <created>1684771068576</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1684771068576</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
