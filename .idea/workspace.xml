@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test featpredictor for first time">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/FeatPredictor/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/FeatPredictor/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -222,14 +223,7 @@
       <workItem from="1684336780714" duration="10809000" />
       <workItem from="1684400164149" duration="9635000" />
       <workItem from="1684486473664" duration="5322000" />
-      <workItem from="1684748826970" duration="6486000" />
-    </task>
-    <task id="LOCAL-00001" summary="test">
-      <created>1681556249624</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1681556249624</updated>
+      <workItem from="1684748826970" duration="6630000" />
     </task>
     <task id="LOCAL-00002" summary="ready to train MAEEG">
       <created>1681642770260</created>
@@ -567,7 +561,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684772063169</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="ready to test featpredictor for first time">
+      <created>1684772302068</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1684772302069</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

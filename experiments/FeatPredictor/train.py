@@ -264,7 +264,7 @@ if __name__ == "__main__":
     )
 
     if args.mode == "pretrain":
-        encoder = load_model(ENCODER_TYPE, args.pretrained_encoder_path)
+        encoder = load_model(SimCLR_Transformer, args.pretrained_encoder_path).f
         pretrain(dev, version, encoder)
     elif args.mode == "train":
         if args.pretrained_path is None:
