@@ -198,8 +198,8 @@ def pretrain(device, version):
         recon_head=get_reconstruction_head(),
         optim_hparams={
             "max_epochs": max_epochs,
-            "lr": 1e-4,
-            "weight_decay": 1e-5
+            "lr": 1e-3,
+            "weight_decay": 1e-7
         },
         train_encoder=True
     )
