@@ -29,7 +29,7 @@ OUTER_DIM = 4  # Only 1 and 4 are supported at the moment
 
 PATIENTS_PER_DS = 250  # Depends on RAM size of PC
 
-train_path = "simclr_cnn_transformer_trainings"  # path used for training the networks
+train_path = "maeeg_trainings"  # path used for training the networks
 result_file_name = "test_results_cnn_transformer"
 
 pretrained_save_name = "pretrained_IT"

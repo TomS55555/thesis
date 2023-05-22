@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="READY TO TEST CNNENCODER FOR FINAL TIME">
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test maeeg for first time">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/MaskedOuterTransformer/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/MaskedOuterTransformer/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/process_results.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/process_results.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final20" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final20" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final21" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final21" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final22" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final22" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final30" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final30" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final32" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final32" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final33" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final33" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final34" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final34" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/maeeg_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/maeeg_transformer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +199,7 @@
       <workItem from="1684336780714" duration="10809000" />
       <workItem from="1684400164149" duration="9635000" />
       <workItem from="1684486473664" duration="5322000" />
-      <workItem from="1684748826970" duration="1906000" />
+      <workItem from="1684748826970" duration="2884000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -502,7 +495,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684491218035</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="ready to test maeeg for first time">
+      <created>1684760847831</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1684760847831</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -533,7 +533,8 @@
     <MESSAGE value="implemented maeeg" />
     <MESSAGE value="READY TO TRAIN CNNENCODER FOR FINAL TIME" />
     <MESSAGE value="READY TO TEST CNNENCODER FOR FINAL TIME" />
-    <option name="LAST_COMMIT_MESSAGE" value="READY TO TEST CNNENCODER FOR FINAL TIME" />
+    <MESSAGE value="ready to test maeeg for first time" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to test maeeg for first time" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1684251549680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
