@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test featpredictor for first time">
+      <change afterPath="$PROJECT_DIR$/models/random_shuffle_transformer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/FeatPredictor/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/FeatPredictor/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/CnnTransformer/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnTransformer/simclr/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,14 +224,7 @@
       <workItem from="1684336780714" duration="10809000" />
       <workItem from="1684400164149" duration="9635000" />
       <workItem from="1684486473664" duration="5322000" />
-      <workItem from="1684748826970" duration="7261000" />
-    </task>
-    <task id="LOCAL-00003" summary="ready to pretrain cnn transformer">
-      <created>1681898833406</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1681898833406</updated>
+      <workItem from="1684748826970" duration="8990000" />
     </task>
     <task id="LOCAL-00004" summary="ready to pretrain cnn encoder">
       <created>1682413988830</created>
@@ -568,7 +562,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684772441494</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="ready to test featpredictor for first time">
+      <created>1684773073557</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1684773073557</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

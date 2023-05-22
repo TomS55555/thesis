@@ -40,7 +40,7 @@ finetune_save_name = "fine_tuned_simclr_IT"
 HIDDEN_DIM = 256
 Z_DIM = 128
 
-MAX_EPOCHS = 100  # max epochs independent of number of datasets
+MAX_EPOCHS = 50  # max epochs independent of number of datasets
 
 
 def get_encoder():
@@ -86,10 +86,8 @@ def get_classifier():
     return nn.Sequential(
             nn.Linear(
                 FEAT_DIM,
-                256
-            ),
-            nn.GELU(),
-            nn.Linear(256, constants.N_CLASSES))
+                constants.N_CLASSES
+            ))
 
 
 def get_data_args(num_patients, batch_size, num_workers=4):
@@ -168,7 +166,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     # TODO: fix normalization of STFT images!
-    num_patients = 250
+    num_patients = 5700
     batch_size = 512
     max_epochs = 150
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
@@ -176,7 +174,7 @@ def pretrain(device, version):
     model = SimCLR_Transformer(
         aug_module=AugmentationModule(
             batch_size=batch_size,
-            noise_max=0.5,
+            noise_max=0.3,
             zeromask_min=400,
             zeromask_max=800,
             amplitude_min=0.75,
@@ -239,15 +237,12 @@ def train(pretrained_model, device, version, train_supervised=False):
     # Then train logistic classifier on top of pretrained transformer
 
 
-def test(pretrained_model, device, version, test_supervised=False):
+def test(pretrained_model, device, version, test_dm: EEGdataModule, test_supervised=False):
     results = dict()
-
     for n_patients in patients_list:
         test_results = test_networks(
             pretrained_model=pretrained_model,
-            test_ds_args=get_data_args(num_patients=5,
-                                       batch_size=64,
-                                       num_workers=0),  # TODO: LOOK INTO THIS!!
+            test_dm=test_dm,  # TODO: LOOK INTO THIS!!
             train_path=train_path + str(version),
             logistic_save_name=logistic_save_name + "_" + str(n_patients) + "pat",
             supervised_save_name=supervised_save_name + "_" + str(n_patients) + "pat",
@@ -284,11 +279,20 @@ if __name__ == "__main__":
         train(pretrained_model, dev, version, True)
     elif args.mode == "test":
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
-        test(pretrained_model, dev, version, True)
+        test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0))
+        test(pretrained_model, dev, version, test_dm, True)
     elif args.mode == 'both':
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
             dev, version)
         train(pretrained_model, dev, version, True)
-        test(pretrained_model, dev, version, True)
+        test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0))
+        test(pretrained_model, dev, version, test_dm, True)
+    elif args.mode == 'final':
+        pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
+            dev, version)
+        for i in range(5):
+            train(pretrained_model, dev, version+i, True)
+            test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0))
+            test(pretrained_model, dev, version+i, test_dm, True)
     else:
         exit("Mode not recognized!")
