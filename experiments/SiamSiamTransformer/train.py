@@ -172,8 +172,8 @@ def pretrain(device, version):
         proj_head=get_projection_head(),
         optim_hparams={
             "max_epochs": max_epochs,
-            "lr": 1e-3,
-            "weight_decay": 1e-7
+            "lr": 5e-5,
+            "weight_decay": 1e-5
         },
         train_encoder=True
     )
