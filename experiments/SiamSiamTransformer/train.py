@@ -175,7 +175,7 @@ def pretrain(device, version):
             "lr": 5e-5,
             "weight_decay": 1e-5
         },
-        train_encoder=True
+        train_encoder=False
     )
 
     save_name = pretrained_save_name + '_' + str(num_patients) + 'pat'
