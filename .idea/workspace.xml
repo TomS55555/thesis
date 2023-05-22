@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test siamsiam for first time">
-      <change afterPath="$PROJECT_DIR$/experiments/FeatPredictor/train.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/feat_predictor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test featpredictor for first time">
+      <change beforePath="$PROJECT_DIR$/experiments/FeatPredictor/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/FeatPredictor/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -224,7 +222,7 @@
       <workItem from="1684336780714" duration="10809000" />
       <workItem from="1684400164149" duration="9635000" />
       <workItem from="1684486473664" duration="5322000" />
-      <workItem from="1684748826970" duration="6244000" />
+      <workItem from="1684748826970" duration="6486000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -562,7 +560,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684771068576</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="ready to test featpredictor for first time">
+      <created>1684772063169</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1684772063169</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -595,7 +600,8 @@
     <MESSAGE value="READY TO TEST CNNENCODER FOR FINAL TIME" />
     <MESSAGE value="ready to test maeeg for first time" />
     <MESSAGE value="ready to test siamsiam for first time" />
-    <option name="LAST_COMMIT_MESSAGE" value="ready to test siamsiam for first time" />
+    <MESSAGE value="ready to test featpredictor for first time" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to test featpredictor for first time" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1684251549680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />

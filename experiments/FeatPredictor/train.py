@@ -159,7 +159,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
     }
 
 
-def pretrain(device, version):
+def pretrain(device, version, encoder=None):
     # TODO: fix normalization of STFT images!
     num_patients = 20
     batch_size = 64
@@ -167,7 +167,7 @@ def pretrain(device, version):
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = FeatPredictor(
-        encoder=get_encoder(),
+        encoder=get_encoder() if encoder is None else encoder,
         transformer=get_transformer(),
         proj_head=get_projection_head(),
         optim_hparams={
@@ -256,8 +256,16 @@ if __name__ == "__main__":
 
     version = int(args.version)
 
+    ENCODER_TYPE = nn.Sequential(
+        CnnEncoder(input_size=constants.SLEEP_EPOCH_SIZE),
+        #Aggregator(feat_dim=FEAT_DIM)
+        nn.Flatten(), # Output of size FEAT_DIM * 32 (last conv filter)
+        nn.Linear(FEAT_DIM*32, FEAT_DIM)
+    )
+
     if args.mode == "pretrain":
-        pretrain(dev, version)
+        encoder = load_model(ENCODER_TYPE, args.pretrained_encoder_path)
+        pretrain(dev, version, encoder)
     elif args.mode == "train":
         if args.pretrained_path is None:
             print("A pretrained encoder is required, specify it with the --pretrained_path")
