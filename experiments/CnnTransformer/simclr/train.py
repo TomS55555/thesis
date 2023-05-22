@@ -99,7 +99,7 @@ def get_data_args(num_patients, batch_size, num_workers=4):
         "batch_size": batch_size,
         "num_workers": num_workers,
         "num_ds": math.ceil(num_patients / PATIENTS_PER_DS),
-        "exclude_test_set": constants.TEST_SET_1,
+        "exclude_test_set": constants.TEST_SET_BIG,
         "dataset_type": SHHSdataset,
         "window_size": OUTER_DIM
     }
@@ -118,7 +118,7 @@ def get_logistic_args(save_name, checkpoint_path, num_ds):
             "max_epochs": min(MAX_EPOCHS, 40 * num_ds),
         },
         "optim_hparams": {
-            "lr": 1e-4,
+            "lr": 5e-5,
             "weight_decay": 0,
             "lr_hparams": None
         }
@@ -138,7 +138,7 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
             # "profiler": "simple"
         },
         "optim_hparams": {
-            "lr": 1e-4,
+            "lr": 5e-5,
             "weight_decay": 0,
             "lr_hparams": None
         }
@@ -157,7 +157,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
             "max_epochs": min(40 * num_ds, MAX_EPOCHS)  # TODO: change back to 60
         },
         "optim_hparams": {
-            "lr": 1e-5,
+            "lr": 5e-6,
             "weight_decay": 0,
             "lr_hparams": None
         }
