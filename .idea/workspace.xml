@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="READY TO TEST CNNENCODER FOR FINAL TIME">
-      <change afterPath="$PROJECT_DIR$/experiments/process_results.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/sample_results" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/experiments/sample_results2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/MaskedOuterTransformer/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/MaskedOuterTransformer/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/process_results.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/process_results.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final20" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final20" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final21" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final21" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final22" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final22" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final30" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final30" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final32" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final32" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final33" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final33" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_results_cnn_encoder_final34" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnEncoder/simclr/test_results/test_results_cnn_encoder_final34" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +53,7 @@
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\CnnEncoder\simclr\test_results" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\experiments" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\experiments\CnnTransformer\simclr" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\CnnEncoder\simclr" />
@@ -199,7 +205,8 @@
       <workItem from="1684314534121" duration="14523000" />
       <workItem from="1684336780714" duration="10809000" />
       <workItem from="1684400164149" duration="9635000" />
-      <workItem from="1684486473664" duration="4708000" />
+      <workItem from="1684486473664" duration="5322000" />
+      <workItem from="1684748826970" duration="1906000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -488,7 +495,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684413997119</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
+      <created>1684491218035</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1684491218035</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
