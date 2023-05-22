@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test maeeg for first time">
-      <change afterPath="$PROJECT_DIR$/experiments/SiamSiamTransformer/train.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/siamsiam_outer_transformer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test siamsiam for first time">
+      <change beforePath="$PROJECT_DIR$/experiments/SiamSiamTransformer/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/SiamSiamTransformer/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +221,7 @@
       <workItem from="1684336780714" duration="10809000" />
       <workItem from="1684400164149" duration="9635000" />
       <workItem from="1684486473664" duration="5322000" />
-      <workItem from="1684748826970" duration="4865000" />
+      <workItem from="1684748826970" duration="5097000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1681556249624</created>
@@ -533,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684768556566</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="ready to test siamsiam for first time">
+      <created>1684770825864</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1684770825864</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -565,7 +570,8 @@
     <MESSAGE value="READY TO TRAIN CNNENCODER FOR FINAL TIME" />
     <MESSAGE value="READY TO TEST CNNENCODER FOR FINAL TIME" />
     <MESSAGE value="ready to test maeeg for first time" />
-    <option name="LAST_COMMIT_MESSAGE" value="ready to test maeeg for first time" />
+    <MESSAGE value="ready to test siamsiam for first time" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to test siamsiam for first time" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1684251549680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
@@ -579,7 +585,7 @@
     <SUITE FILE_PATH="coverage/thesis02$simclr_cnn_transformer.coverage" NAME="simclr_cnn_transformer Coverage Results" MODIFIED="1684053936429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnTransformer/simclr" />
     <SUITE FILE_PATH="coverage/thesis02$train_arg.coverage" NAME="train_arg Coverage Results" MODIFIED="1666436211007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/1D_CNN" />
     <SUITE FILE_PATH="coverage/thesis$train_maeeg.coverage" NAME="train_maeeg Coverage Results" MODIFIED="1684353713259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/MaskedOuterTransformer" />
-    <SUITE FILE_PATH="coverage/thesis$train_siamsiam.coverage" NAME="train_siamsiam Coverage Results" MODIFIED="1684770554024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SiamSiamTransformer" />
+    <SUITE FILE_PATH="coverage/thesis$train_siamsiam.coverage" NAME="train_siamsiam Coverage Results" MODIFIED="1684770669422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SiamSiamTransformer" />
     <SUITE FILE_PATH="coverage/thesis$simclr_graph_train.coverage" NAME="simclr_graph_train Coverage Results" MODIFIED="1678710795262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/simclr_graph" />
     <SUITE FILE_PATH="coverage/thesis02$.coverage" NAME=" Coverage Results" MODIFIED="1678632695110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/simclr_graph" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_inner_transformer.coverage" NAME="simclr_inner_transformer Coverage Results" MODIFIED="1680864431803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
