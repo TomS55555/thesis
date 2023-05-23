@@ -59,7 +59,7 @@ class RandomShuffleTransformer(pl.LightningModule):
         shuffled_feats = feats.clone()
 
         idxs = torch.arange(b, dtype=torch.long).to(feats).type(torch.long)
-        shuffled_feats[idxs, to_shuffle_idxs, :] = torch.zeros((b, feat)).to(feat) #feats[randperm, to_shuffle_idxs[randperm], :]  # old location = new location
+        shuffled_feats[idxs, to_shuffle_idxs, :] = torch.zeros((b, feat)) #feats[randperm, to_shuffle_idxs[randperm], :]  # old location = new location
 
         return to_shuffle_idxs, shuffled_feats
 
