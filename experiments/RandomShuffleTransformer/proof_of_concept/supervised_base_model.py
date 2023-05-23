@@ -166,7 +166,7 @@ def train_supervised(device, checkpoint_path):
 
     trainer.fit(model=supervised_model,
                 datamodule=dm)
-    return model
+    return supervised_model
 
 
 
