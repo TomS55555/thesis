@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train supervised base model on 50 patients for full transformer">
-      <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/CnnTransformer/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnTransformer/simclr/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +65,7 @@
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\CnnEncoder\simclr" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.pof_outer">
+  <component name="RunManager" selected="Python.cnn_transformer">
     <configuration name="cnn_transformer" type="PythonConfigurationType" factoryName="Python">
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -283,21 +284,7 @@
       <workItem from="1684748826970" duration="9273000" />
       <workItem from="1684834011441" duration="4316000" />
       <workItem from="1684839123253" duration="2082000" />
-      <workItem from="1684841437770" duration="16462000" />
-    </task>
-    <task id="LOCAL-00027" summary="made bandpass filter batched">
-      <created>1684251626928</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1684251626928</updated>
-    </task>
-    <task id="LOCAL-00028" summary="augs">
-      <created>1684314603803</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1684314603803</updated>
+      <workItem from="1684841437770" duration="17760000" />
     </task>
     <task id="LOCAL-00029" summary="implemented maeeg">
       <created>1684355326585</created>
@@ -628,7 +615,21 @@
       <option name="project" value="LOCAL" />
       <updated>1684870438527</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="ready to train supervised base model on 50 patients for full transformer">
+      <created>1684870859577</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1684870859577</updated>
+    </task>
+    <task id="LOCAL-00077" summary="ready to train supervised base model on 50 patients for full transformer">
+      <created>1684871067032</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1684871067032</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

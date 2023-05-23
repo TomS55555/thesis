@@ -22,7 +22,7 @@ from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 from models.sleep_transformer import Aggregator
 
-patients_list = [10]
+patients_list = [3, 5, 10, 20, 50, 100, 250, 500]
 
 OUTER_DIM = 1  # Only 1 and 4 are supported at the moment
 
@@ -40,7 +40,7 @@ finetune_save_name = "fine_tuned_simclr_IT"
 HIDDEN_DIM = 256
 Z_DIM = 128
 
-MAX_EPOCHS = 50  # max epochs independent of number of datasets
+MAX_EPOCHS = 40  # max epochs independent of number of datasets
 
 
 def get_encoder():
@@ -139,7 +139,7 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
         },
         "optim_hparams": {
             "lr": 5e-5,
-            "weight_decay": 0,
+            "weight_decay": 1e-5,
             "lr_hparams": None
         }
     }
