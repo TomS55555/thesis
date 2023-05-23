@@ -23,6 +23,7 @@ from models.cnn_transformer import CnnEncoder, FEAT_DIM
 from models.sleep_transformer import OuterTransformer, Aggregator
 from utils.helper_functions import load_model, get_data_path
 from models.outer_supervised import OuterSupervisedModel
+
 N_PATIENTS = 20
 
 OUTER_DIM = 6  # Only 1 and 4 are supported at the moment
@@ -99,7 +100,7 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": 40
+            "max_epochs": 5
             # "profiler": "simple"
         },
         "optim_hparams": {
