@@ -106,7 +106,7 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
             # "profiler": "simple"
         },
         "optim_hparams": {
-            "lr": 1e-6,
+            "lr": 1e-5,
             "weight_decay": 1e-9,
             "lr_hparams": None
         }
