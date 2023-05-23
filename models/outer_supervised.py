@@ -18,11 +18,23 @@ class OuterSupervisedModel(pl.LightningModule):
                  encoder: nn.Module,
                  transformer: nn.Module,
                  classifier: nn.Module,
-                 optim_hparams):
+                 optim_hparams,
+                 finetune_encoder=False,
+                 finetune_transformer=False):
         super().__init__()
         self.save_hyperparameters()
           # encoder and classifier parameters are already saved because they are nn.Modules
         self.optim_hparams = optim_hparams
+        for par in encoder.parameters():
+            if finetune_encoder:
+                par.requires_grad = True
+            else:
+                par.requires_grad = False
+        for par in transformer.parameters():
+            if finetune_transformer:
+                par.requires_grad = True
+            else:
+                par.requires_grad = False
         self.encoder = encoder
         self.transformer = transformer
         self.classifier = classifier

@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train supervised base model on 20 patients for full transformer">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/outer_supervised.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/outer_supervised.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -283,21 +285,7 @@
       <workItem from="1684748826970" duration="9273000" />
       <workItem from="1684834011441" duration="4316000" />
       <workItem from="1684839123253" duration="2082000" />
-      <workItem from="1684841437770" duration="12275000" />
-    </task>
-    <task id="LOCAL-00021" summary="made bandpass filter batched">
-      <created>1684249803759</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1684249803759</updated>
-    </task>
-    <task id="LOCAL-00022" summary="made bandpass filter batched">
-      <created>1684250390848</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1684250390848</updated>
+      <workItem from="1684841437770" duration="13785000" />
     </task>
     <task id="LOCAL-00023" summary="made bandpass filter batched">
       <created>1684250576466</created>
@@ -628,7 +616,21 @@
       <option name="project" value="LOCAL" />
       <updated>1684859587758</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="ready to train supervised base model on 20 patients for full transformer">
+      <created>1684859832667</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1684859832667</updated>
+    </task>
+    <task id="LOCAL-00071" summary="ready to train supervised base model on 20 patients for full transformer">
+      <created>1684859871269</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1684859871269</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

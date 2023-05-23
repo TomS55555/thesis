@@ -24,7 +24,7 @@ from models.sleep_transformer import OuterTransformer, Aggregator
 from utils.helper_functions import load_model, get_data_path
 from models.outer_supervised import OuterSupervisedModel
 
-N_PATIENTS = 250
+N_PATIENTS = 50
 
 OUTER_DIM = 6  # Only 1 and 4 are supported at the moment
 
@@ -105,7 +105,7 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
         },
         "optim_hparams": {
             "lr": 1e-4,
-            "weight_decay": 1e-5,
+            "weight_decay": 1e-3,
             "lr_hparams": None
         }
     }
@@ -139,15 +139,17 @@ def test_supervised(device, model):
     return sup_res
 
 
-def train_supervised(device, checkpoint_path):
+def train_supervised(device, checkpoint_path, args):
     dm = EEGdataModule(**get_data_args(N_PATIENTS, batch_size=64))
     supervised_args = get_supervised_args(save_name=supervised_save_name,
                                           checkpoint_path=checkpoint_path,
                                           num_ds=dm.num_ds)
-    supervised_model = OuterSupervisedModel(encoder=supervised_args['encoder'],
+    supervised_model = OuterSupervisedModel(encoder=supervised_args['encoder'] if args.pretrained_encoder is None else args.pretrained_encoder,
                                        classifier=supervised_args['classifier'],
-                                        transformer=supervised_args['transformer'],
-                                       optim_hparams=supervised_args['optim_hparams'])
+                                        transformer=supervised_args['transformer'] if args.pretrained_transformer is None else args.pretrained_transformer,
+                                       optim_hparams=supervised_args['optim_hparams'],
+                                            finetune_encoder=args.finetune_encoder,
+                                            finetune_transformer=args.finetune_transformer)
     trainer = pl.Trainer(
         default_root_dir=os.path.join(checkpoint_path, supervised_save_name),
         accelerator="gpu" if str(device).startswith("cuda") else "cpu",
@@ -173,6 +175,10 @@ def train_supervised(device, checkpoint_path):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--version", required=False, default='0')
+    parser.add_argument("--pretrained_encoder", required=False, default=None)
+    parser.add_argument("--pretrained_transformer", required=False, default=None)
+    parser.add_argument("--finetune_encoder", required=False, default=False)
+    parser.add_argument("--finetune_transformer", required=False, default=False)
     args = parser.parse_args()
 
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
@@ -180,6 +186,6 @@ if __name__ == "__main__":
 
     version = int(args.version)
 
-    model = train_supervised(dev, train_path)
+    model = train_supervised(dev, train_path, args)
     result = test_supervised(dev, model)
     print(result)
