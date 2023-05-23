@@ -106,8 +106,8 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
             # "profiler": "simple"
         },
         "optim_hparams": {
-            "lr": 1e-4,
-            "weight_decay": 1e-6,
+            "lr": 1e-6,
+            "weight_decay": 1e-9,
             "lr_hparams": None
         }
     }
@@ -141,13 +141,13 @@ def test_supervised(device, model):
     return sup_res
 
 
-def train_supervised(device, checkpoint_path, encoder, transformer, finetune_encoder, finetune_transformer):
+def train_supervised(device, checkpoint_path, encoder, transformer, classifier, finetune_encoder, finetune_transformer):
     dm = EEGdataModule(**get_data_args(N_PATIENTS, batch_size=64))
     supervised_args = get_supervised_args(save_name=supervised_save_name,
                                           checkpoint_path=checkpoint_path,
                                           num_ds=dm.num_ds)
     supervised_model = OuterSupervisedModel(encoder=encoder,
-                                       classifier=supervised_args['classifier'],
+                                       classifier=classifier,
                                         transformer=transformer,
                                        optim_hparams=supervised_args['optim_hparams'],
                                             finetune_encoder=finetune_encoder,
@@ -181,16 +181,18 @@ if __name__ == "__main__":
     parser.add_argument("--pretrained_transformer", required=False, default=None)
     parser.add_argument("--finetune_encoder", required=False, default=False)
     parser.add_argument("--finetune_transformer", required=False, default=False)
+    parser.add_argument("--pretrained_classifier", required=False, default=None)
     args = parser.parse_args()
 
     encoder = load_model(SimCLR_Transformer, args.pretrained_encoder).f if args.pretrained_encoder is not None else get_CNN_encoder()
     transformer = load_model(RandomShuffleTransformer, args.pretrained_transformer).transformer if args.pretrained_transformer is not None else get_transformer()
+    classifier = load_model(OuterSupervisedModel, args.pretrained_classifier).classifier if args.classifier is not None else get_classifier()
 
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(dev)
 
     version = int(args.version)
 
-    model = train_supervised(dev, train_path, encoder, transformer, args.finetune_encoder, args.finetune_transformer)
+    model = train_supervised(dev, train_path, encoder, transformer, classifier, args.finetune_encoder, args.finetune_transformer)
     result = test_supervised(dev, model)
     print(result)
