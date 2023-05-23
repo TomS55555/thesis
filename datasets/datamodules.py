@@ -84,8 +84,8 @@ class EEGdataModule(pl.LightningDataModule):
         # Choose a random piece to be the validation set and choose always the same one by choosing an appropriate seed
         val_piece_idx = torch.randint(0, num_pieces, (1,), generator=torch.Generator().manual_seed(self.my_seed))
         train_idxs = [x for x in range(num_pieces) if x != val_piece_idx]
-        self.eeg_val = eeg_trainval[val_piece_idx*piece_length: (val_piece_idx+1)*piece_length]
-        self.eeg_train = data.ConcatDataset([eeg_trainval[idx*piece_length:(idx+1)*piece_length] for idx in train_idxs])
+        self.eeg_val = data.Subset(eeg_trainval, range(val_piece_idx*piece_length, (val_piece_idx+1)*piece_length))
+        self.eeg_train = data.ConcatDataset([data.Subset(eeg_trainval, range(idx*piece_length, (idx+1)*piece_length)) for idx in train_idxs])
 
         gc.collect()
         #split = [self.data_split[0] * piece, eeg_trainval.__len__() - self.data_split[0] * piece]
