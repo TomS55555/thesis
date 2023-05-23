@@ -284,14 +284,7 @@
       <workItem from="1684748826970" duration="9273000" />
       <workItem from="1684834011441" duration="4316000" />
       <workItem from="1684839123253" duration="2082000" />
-      <workItem from="1684841437770" duration="10277000" />
-    </task>
-    <task id="LOCAL-00018" summary="Lets train cnnencoder once more">
-      <created>1684060132553</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1684060132553</updated>
+      <workItem from="1684841437770" duration="11223000" />
     </task>
     <task id="LOCAL-00019" summary="Lets train cnnencoder once more">
       <created>1684060561125</created>
@@ -629,7 +622,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684855975331</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="ready to train supervised base model on 20 patients for full transformer">
+      <created>1684857837288</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1684857837288</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
