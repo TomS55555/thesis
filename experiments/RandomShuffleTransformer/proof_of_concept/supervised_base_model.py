@@ -24,7 +24,7 @@ from models.sleep_transformer import OuterTransformer, Aggregator
 from utils.helper_functions import load_model, get_data_path
 from models.outer_supervised import OuterSupervisedModel
 
-N_PATIENTS = 20
+N_PATIENTS = 250
 
 OUTER_DIM = 6  # Only 1 and 4 are supported at the moment
 
@@ -105,7 +105,7 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
         },
         "optim_hparams": {
             "lr": 1e-4,
-            "weight_decay": 0,
+            "weight_decay": 1e-5,
             "lr_hparams": None
         }
     }

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train supervised base model on 20 patients for full transformer">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,14 +283,7 @@
       <workItem from="1684748826970" duration="9273000" />
       <workItem from="1684834011441" duration="4316000" />
       <workItem from="1684839123253" duration="2082000" />
-      <workItem from="1684841437770" duration="12035000" />
-    </task>
-    <task id="LOCAL-00020" summary="made bandpass filter batched">
-      <created>1684249593070</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1684249593070</updated>
+      <workItem from="1684841437770" duration="12275000" />
     </task>
     <task id="LOCAL-00021" summary="made bandpass filter batched">
       <created>1684249803759</created>
@@ -629,7 +621,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684858813743</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="ready to train supervised base model on 20 patients for full transformer">
+      <created>1684859587758</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1684859587758</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
