@@ -56,7 +56,7 @@ class SHHSdataset(torch.utils.data.Dataset):
         return self.length
 
     def __getitem__(self, item):
-        if self.window_size == 4:
+        if self.window_size != 1:
             inputs = self.X1[item:item + self.window_size]
             label = self.labels[item:item+self.window_size]
         else:

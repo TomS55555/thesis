@@ -24,7 +24,7 @@ from models.random_shuffle_transformer import RandomShuffleTransformer
 
 patients_list = [3, 5, 10, 20, 50, 100, 250]
 
-OUTER_DIM = 4  # Only 1 and 4 are supported at the moment
+OUTER_DIM = 6  # Only 1 and 4 are supported at the moment
 
 PATIENTS_PER_DS = 250  # Depends on RAM size of PC
 
