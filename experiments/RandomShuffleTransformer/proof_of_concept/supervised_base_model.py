@@ -23,6 +23,8 @@ from models.cnn_transformer import CnnEncoder, FEAT_DIM
 from models.sleep_transformer import OuterTransformer, Aggregator
 from utils.helper_functions import load_model, get_data_path
 from models.outer_supervised import OuterSupervisedModel
+from models.simclr_transformer import SimCLR_Transformer
+from models.random_shuffle_transformer import RandomShuffleTransformer
 
 N_PATIENTS = 50
 
@@ -139,17 +141,17 @@ def test_supervised(device, model):
     return sup_res
 
 
-def train_supervised(device, checkpoint_path, args):
+def train_supervised(device, checkpoint_path, encoder, transformer, finetune_encoder, finetune_transformer):
     dm = EEGdataModule(**get_data_args(N_PATIENTS, batch_size=64))
     supervised_args = get_supervised_args(save_name=supervised_save_name,
                                           checkpoint_path=checkpoint_path,
                                           num_ds=dm.num_ds)
-    supervised_model = OuterSupervisedModel(encoder=supervised_args['encoder'] if args.pretrained_encoder is None else args.pretrained_encoder,
+    supervised_model = OuterSupervisedModel(encoder=encoder,
                                        classifier=supervised_args['classifier'],
-                                        transformer=supervised_args['transformer'] if args.pretrained_transformer is None else args.pretrained_transformer,
+                                        transformer=transformer,
                                        optim_hparams=supervised_args['optim_hparams'],
-                                            finetune_encoder=args.finetune_encoder,
-                                            finetune_transformer=args.finetune_transformer)
+                                            finetune_encoder=finetune_encoder,
+                                            finetune_transformer=finetune_transformer)
     trainer = pl.Trainer(
         default_root_dir=os.path.join(checkpoint_path, supervised_save_name),
         accelerator="gpu" if str(device).startswith("cuda") else "cpu",
@@ -181,11 +183,14 @@ if __name__ == "__main__":
     parser.add_argument("--finetune_transformer", required=False, default=False)
     args = parser.parse_args()
 
+    encoder = load_model(SimCLR_Transformer, args.pretrained_encoder).f if args.pretrained_encoder is not None else get_CNN_encoder()
+    transformer = load_model(RandomShuffleTransformer, args.pretrained_transformer).transformer if args.pretrained_transformer is not None else get_transformer()
+
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(dev)
 
     version = int(args.version)
 
-    model = train_supervised(dev, train_path, args)
+    model = train_supervised(dev, train_path, encoder, transformer, args.finetune_encoder, args.finetune_transformer)
     result = test_supervised(dev, model)
     print(result)
