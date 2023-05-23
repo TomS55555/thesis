@@ -95,7 +95,7 @@ class OuterSupervisedModel(pl.LightningModule):
 
         acc = (preds_plus.argmax(dim=-1) == labels_plus).float().mean()
         self.log('test_acc', acc)
-        preds = preds.argmax(dim=-1).cpu()
-        labels = labels.cpu()
+        preds = preds_plus.argmax(dim=-1).cpu()
+        labels = labels_plus.cpu()
         kappa = 1.0 if torch.equal(preds, labels) else cohen_kappa_score(preds, labels)
         self.log('kappa', kappa)
