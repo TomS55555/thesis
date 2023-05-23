@@ -100,7 +100,7 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": 5
+            "max_epochs": 20
             # "profiler": "simple"
         },
         "optim_hparams": {
