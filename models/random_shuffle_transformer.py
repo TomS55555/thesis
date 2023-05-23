@@ -3,7 +3,6 @@ import pytorch_lightning as pl
 import torch.optim as optim
 import torch.nn as nn
 from models.cnn_transformer import FEAT_DIM
-from models.sleep_transformer import Aggregator
 
 
 class RandomShuffleTransformer(pl.LightningModule):
@@ -25,7 +24,8 @@ class RandomShuffleTransformer(pl.LightningModule):
         self.transformer = transformer
         self.proj_head = proj_head
         self.train_encoder = train_encoder
-        self.aggregator = Aggregator(feat_dim=FEAT_DIM)
+
+        self.loss_module = nn.CrossEntropyLoss()
 
         if self.train_encoder:
             for p in self.encoder.parameters():
@@ -43,31 +43,25 @@ class RandomShuffleTransformer(pl.LightningModule):
                                                             eta_min=self.optim_hparams['lr'] / 50)
         return [optimizer], [lr_scheduler]
 
-    def mask_feats(self, feats):
+    def pretext_task(self, feats):
         """
             feats should be a tensor of size (batch x outer x feat)
-            This function returns a copy such that the original is not affected and can be used for reconstruction
+            This function defines the following pretext task: in every example of the batch, one index in the range(outer)
+            is chosen. Thus there are a number of 'batch' indices, corresponding to a number of 'batch' feature vectors.
+            Those are shuffled throughout the batch and the pretext
+            task is then for the network to predict which index of every example has been replaced.
+            The function returns both the shuffled indices which are the speudolabels and the shuffled feats
         """
         b, outer, feat = feats.size()
-        mask_idxs = torch.randint(0, outer, (b,))  # random idx to mask for each example of the batch
-        mask_token = -100 # Some value outside the range of the input EEG features
-        masked_feats = feats.clone()
-        what_is_masked = masked_feats[torch.arange(b), mask_idxs, :].clone()
-        masked_feats[torch.arange(b), mask_idxs, :] = torch.randn((feat,), device=feats.device)
-        return masked_feats, what_is_masked  # This returns a copy which is needed
+        to_shuffle_idxs = torch.randint(0, outer, (b,)).to(feats).type(torch.long)  # random idx to shuffle for each example
 
+        randperm = torch.randperm(b, dtype=torch.long).to(feats).type(torch.long)  # create a random permutation within the batch
+        shuffled_feats = feats.clone()
 
-    def reconstruction_loss(self, original, projected):
-        """
-            This function calculates the reconstruction loss between original and projected
-            Both are tensors of size (batch, feat)
+        idxs = torch.arange(b, dtype=torch.long).to(feats).type(torch.long)
+        shuffled_feats[idxs, to_shuffle_idxs, :] = feats[randperm, to_shuffle_idxs[randperm], :]  # old location = new location
 
-            The loss is calculated as the l2 normalized MSE
-        """
-        norm_original = torch.linalg.vector_norm(original, dim=-1)
-        norm_projected = torch.linalg.vector_norm(projected, dim=-1)
-        loss = 1 - torch.linalg.vecdot(original, projected, dim=-1) / (norm_original * norm_projected)
-        return torch.mean(loss)
+        return to_shuffle_idxs, shuffled_feats
 
 
     def common_step(self, batch, mode):
@@ -80,20 +74,28 @@ class RandomShuffleTransformer(pl.LightningModule):
 
         # First encode the set of 'outer' epochs into a set of 'outer' features
         feats = self.encoder(inputs.view(b*out, c, t)).view(b, out, FEAT_DIM)  # feats of size (batch, outer, feat)
+        # create pretext task
         with torch.no_grad():
-            masked_feats, what_is_masked = self.mask_feats(feats)  # mask some of the feature vectors
+            pseudo_labels, shuffled_feats = self.pretext_task(feats)
 
-        # Send masked feats through transformer and then through projection head
-        transformed_feats_masked = self.transformer(masked_feats)  # output of size (batch, outer, feat)
-        aggregated_feats_masked = self.aggregator(transformed_feats_masked)
-        projected_feats = self.proj_head(aggregated_feats_masked)  # output of size (batch, feat)
+        # Send shuffled feats through transformer and then through projection head
+        transformed_feats = self.transformer(shuffled_feats)  # output of size (batch, outer, feat)
+        preds = self.proj_head(transformed_feats)  # output of size (batch, outer), logits over class labels
 
-        loss = self.reconstruction_loss(what_is_masked, projected_feats)
-        self.log(mode + "_loss", loss)
-        return loss
+        acc = (preds.argmax(dim=-1) == pseudo_labels.squeeze()).float().mean()
+
+        loss = self.loss_module(preds, pseudo_labels.long())
+
+        return acc, loss
 
     def training_step(self, batch, batch_idx):
-        return self.common_step(batch, mode="train")
+        acc, loss = self.common_step(batch, mode="train")
+        self.log('train_acc', acc, on_step=False, on_epoch=True)
+        self.log('train_loss', loss)
+        return loss
 
     def validation_step(self, batch, batch_idx):
-        return self.common_step(batch, mode="val")
+        acc, loss = self.common_step(batch, mode="val")
+        self.log('val_acc', acc)
+        self.log('val_loss', loss)
+        return loss

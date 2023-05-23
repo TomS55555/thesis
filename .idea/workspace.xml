@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test featpredictor for first time">
-      <change afterPath="$PROJECT_DIR$/models/random_shuffle_transformer.py" afterDir="false" />
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test CnnTransformer for final time">
+      <change afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/CnnTransformer/simclr/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/CnnTransformer/simclr/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/random_shuffle_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/random_shuffle_transformer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,14 +33,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "last_opened_file_path": "C:/Users/tomsm/PycharmProjects/thesis/experiments/FeatPredictor"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis/experiments/RandomShuffleTransformer/train.py&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\FeatPredictor" />
@@ -54,7 +54,7 @@
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\CnnEncoder\simclr" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.train_siamsiam">
+  <component name="RunManager" selected="Python.train_randomshuffle">
     <configuration name="cnn_transformer" type="PythonConfigurationType" factoryName="Python">
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -165,6 +165,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="train_randomshuffle" type="PythonConfigurationType" factoryName="Python">
+      <module name="thesis02" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\tomsm\anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/RandomShuffleTransformer" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" />
+      <option name="PARAMETERS" value="--version 0 --mode pretrain" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="train_siamsiam" type="PythonConfigurationType" factoryName="Python">
       <module name="thesis02" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -194,6 +216,7 @@
       <item itemvalue="Python.simclr_cnn_encoder" />
       <item itemvalue="Python.train_maeeg" />
       <item itemvalue="Python.train_siamsiam" />
+      <item itemvalue="Python.train_randomshuffle" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -224,21 +247,10 @@
       <workItem from="1684336780714" duration="10809000" />
       <workItem from="1684400164149" duration="9635000" />
       <workItem from="1684486473664" duration="5322000" />
-      <workItem from="1684748826970" duration="8990000" />
-    </task>
-    <task id="LOCAL-00004" summary="ready to pretrain cnn encoder">
-      <created>1682413988830</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1682413988830</updated>
-    </task>
-    <task id="LOCAL-00005" summary="ready to pretrain cnn encoder">
-      <created>1682598483725</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1682598483725</updated>
+      <workItem from="1684748826970" duration="9273000" />
+      <workItem from="1684834011441" duration="4316000" />
+      <workItem from="1684839123253" duration="2082000" />
+      <workItem from="1684841437770" duration="657000" />
     </task>
     <task id="LOCAL-00006" summary="ready to pretrain cnn transformer">
       <created>1682600405881</created>
@@ -569,7 +581,21 @@
       <option name="project" value="LOCAL" />
       <updated>1684773073557</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="ready to test featpredictor for first time">
+      <created>1684793915724</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1684793915724</updated>
+    </task>
+    <task id="LOCAL-00054" summary="ready to test CnnTransformer for final time">
+      <created>1684794006633</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1684794006633</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -603,7 +629,19 @@
     <MESSAGE value="ready to test maeeg for first time" />
     <MESSAGE value="ready to test siamsiam for first time" />
     <MESSAGE value="ready to test featpredictor for first time" />
-    <option name="LAST_COMMIT_MESSAGE" value="ready to test featpredictor for first time" />
+    <MESSAGE value="ready to test CnnTransformer for final time" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to test CnnTransformer for final time" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/models/random_shuffle_transformer.py</url>
+          <line>61</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1684251549680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
@@ -614,6 +652,7 @@
     <SUITE FILE_PATH="coverage/thesis$train__2_.coverage" NAME="train (2) Coverage Results" MODIFIED="1679680548180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer" />
     <SUITE FILE_PATH="coverage/thesis$.coverage" NAME=" Coverage Results" MODIFIED="1680191626502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
     <SUITE FILE_PATH="coverage/thesis$train.coverage" NAME="train Coverage Results" MODIFIED="1680122318568" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/SleepTransformer/simclr" />
+    <SUITE FILE_PATH="coverage/thesis$train_randomshuffle.coverage" NAME="train_randomshuffle Coverage Results" MODIFIED="1684841629267" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/RandomShuffleTransformer" />
     <SUITE FILE_PATH="coverage/thesis02$simclr_cnn_transformer.coverage" NAME="simclr_cnn_transformer Coverage Results" MODIFIED="1684053936429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnTransformer/simclr" />
     <SUITE FILE_PATH="coverage/thesis02$train_arg.coverage" NAME="train_arg Coverage Results" MODIFIED="1666436211007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/1D_CNN" />
     <SUITE FILE_PATH="coverage/thesis$train_maeeg.coverage" NAME="train_maeeg Coverage Results" MODIFIED="1684353713259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/MaskedOuterTransformer" />
