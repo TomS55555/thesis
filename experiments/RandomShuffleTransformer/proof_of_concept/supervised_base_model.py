@@ -102,12 +102,12 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": 20
+            "max_epochs": 30
             # "profiler": "simple"
         },
         "optim_hparams": {
             "lr": 1e-4,
-            "weight_decay": 1e-3,
+            "weight_decay": 1e-6,
             "lr_hparams": None
         }
     }
