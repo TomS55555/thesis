@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test CnnTransformer for final time">
-      <change afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" afterDir="false" />
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test Random Shuffle for final time">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/random_shuffle_transformer.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/random_shuffle_transformer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +178,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" />
-      <option name="PARAMETERS" value="--version 0 --mode pretrain" />
+      <option name="PARAMETERS" value="--version 0 --mode pretrain --pretrained_encoder_path ../CnnEncoder/simclr/pretrained_250pat_with_bandpass.ckpt" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -250,14 +249,7 @@
       <workItem from="1684748826970" duration="9273000" />
       <workItem from="1684834011441" duration="4316000" />
       <workItem from="1684839123253" duration="2082000" />
-      <workItem from="1684841437770" duration="657000" />
-    </task>
-    <task id="LOCAL-00006" summary="ready to pretrain cnn transformer">
-      <created>1682600405881</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1682600405881</updated>
+      <workItem from="1684841437770" duration="1081000" />
     </task>
     <task id="LOCAL-00007" summary="commit">
       <created>1683458536153</created>
@@ -595,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684794006633</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="ready to test Random Shuffle for final time">
+      <created>1684842116324</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1684842116324</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -630,7 +629,8 @@
     <MESSAGE value="ready to test siamsiam for first time" />
     <MESSAGE value="ready to test featpredictor for first time" />
     <MESSAGE value="ready to test CnnTransformer for final time" />
-    <option name="LAST_COMMIT_MESSAGE" value="ready to test CnnTransformer for final time" />
+    <MESSAGE value="ready to test Random Shuffle for final time" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to test Random Shuffle for final time" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
