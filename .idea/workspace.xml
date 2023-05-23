@@ -283,14 +283,7 @@
       <workItem from="1684748826970" duration="9273000" />
       <workItem from="1684834011441" duration="4316000" />
       <workItem from="1684839123253" duration="2082000" />
-      <workItem from="1684841437770" duration="15847000" />
-    </task>
-    <task id="LOCAL-00026" summary="made bandpass filter batched">
-      <created>1684251394690</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1684251394690</updated>
+      <workItem from="1684841437770" duration="16462000" />
     </task>
     <task id="LOCAL-00027" summary="made bandpass filter batched">
       <created>1684251626928</created>
@@ -628,7 +621,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684869927250</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="ready to train supervised base model on 50 patients for full transformer">
+      <created>1684870438527</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1684870438527</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

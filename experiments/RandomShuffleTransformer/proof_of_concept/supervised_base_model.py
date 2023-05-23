@@ -186,13 +186,15 @@ if __name__ == "__main__":
 
     encoder = load_model(SimCLR_Transformer, args.pretrained_encoder).f if args.pretrained_encoder is not None else get_CNN_encoder()
     transformer = load_model(RandomShuffleTransformer, args.pretrained_transformer).transformer if args.pretrained_transformer is not None else get_transformer()
-    classifier = load_model(OuterSupervisedModel, args.pretrained_classifier).classifier if args.classifier is not None else get_classifier()
+    classifier = load_model(OuterSupervisedModel, args.pretrained_classifier).classifier if args.pretrained_classifier is not None else get_classifier()
+    finetune_encoder = bool(args.finetune_encoder) if args.finetune_encoder is not None else False
+    finetune_transformer = bool(args.finetune_transformer) if args.finetune_transformer is not None else False
 
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(dev)
 
     version = int(args.version)
 
-    model = train_supervised(dev, train_path, encoder, transformer, classifier, args.finetune_encoder, args.finetune_transformer)
+    model = train_supervised(dev, train_path, encoder, transformer, classifier, finetune_encoder, finetune_transformer)
     result = test_supervised(dev, model)
     print(result)
