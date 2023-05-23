@@ -164,9 +164,9 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version, encoder=None):
     # TODO: fix normalization of STFT images!
-    num_patients = 20
+    num_patients = 50
     batch_size = 64
-    max_epochs = 50
+    max_epochs = 250
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = RandomShuffleTransformer(
@@ -175,7 +175,7 @@ def pretrain(device, version, encoder=None):
         proj_head=get_projection_head(),
         optim_hparams={
             "max_epochs": max_epochs,
-            "lr": 1e-4,
+            "lr": 1e-5,
             "weight_decay": 1e-5
         },
         train_encoder=False

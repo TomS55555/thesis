@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="debugging random shuffle">
-      <change beforePath="$PROJECT_DIR$/datasets/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datasets.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -249,21 +248,7 @@
       <workItem from="1684748826970" duration="9273000" />
       <workItem from="1684834011441" duration="4316000" />
       <workItem from="1684839123253" duration="2082000" />
-      <workItem from="1684841437770" duration="2222000" />
-    </task>
-    <task id="LOCAL-00011" summary="ready to train CnnEncoder for a final time">
-      <created>1683967973170</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1683967973170</updated>
-    </task>
-    <task id="LOCAL-00012" summary="ready to train CnnEncoder for a final time">
-      <created>1683968378443</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1683968378443</updated>
+      <workItem from="1684841437770" duration="2962000" />
     </task>
     <task id="LOCAL-00013" summary="ready to train CnnTransformer for a final time">
       <created>1684012190438</created>
@@ -594,7 +579,21 @@
       <option name="project" value="LOCAL" />
       <updated>1684843392039</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="debugging random shuffle">
+      <created>1684843704291</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1684843704291</updated>
+    </task>
+    <task id="LOCAL-00061" summary="debugging random shuffle">
+      <created>1684843788126</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1684843788126</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
