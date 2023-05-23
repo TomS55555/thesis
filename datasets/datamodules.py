@@ -48,7 +48,7 @@ class EEGdataModule(pl.LightningDataModule):
         self.MAX_TEST_SIZE = 500
         if test_set:
             self.n_test = math.ceil(len(exclude_test_set) / self.MAX_TEST_SIZE)
-            self.eeg_test = self.load_test_set(0)
+            self.eeg_test = None
         else:
             self.load_dataset(0)
 
@@ -69,21 +69,33 @@ class EEGdataModule(pl.LightningDataModule):
         if idx != 0:
             del self.eeg_train
             del self.eeg_val
+
         eeg_trainval = self.dataset_type(data_path=self.data_path,
                                          first_patient=first_patient,
                                          num_patients=self.num_patients_per_ds,
                                          exclude_test_set=self.exclude_test_set,
                                          window_size=self.window_size)
+
         print("SIZE eeg_trainval:", eeg_trainval.__len__())
 
-        num = np.array(self.data_split).sum()
-        piece = eeg_trainval.__len__() // num
-        split = [self.data_split[0] * piece, eeg_trainval.__len__() - self.data_split[0] * piece]
+        num_pieces = np.array(self.data_split).sum()  # Number of dataset pieces
+        # piece_length = eeg_trainval.__len__() // num_pieces  # the length of one piece
+
+        # Choose a random piece to be the validation set and choose always the same one by choosing an appropriate seed
+        val_piece_idx = torch.randint(0, num_pieces, (1,), generator=torch.Generator().manual_seed(self.my_seed))
+
+        pieces = torch.tensor_split(eeg_trainval, num_pieces)
+
+        self.eeg_val = pieces[val_piece_idx]
+        self.eeg_train = torch.cat([pieces[i] for i in range(num_pieces) if i != val_piece_idx])
+        gc.collect()
+        #split = [self.data_split[0] * piece, eeg_trainval.__len__() - self.data_split[0] * piece]
+
         # print("BEFORE loading reassigning")
         # memReport()
         # cpuStats()
-        self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split, generator=torch.Generator().manual_seed(self.my_seed))
-        gc.collect()
+        #self.eeg_train, self.eeg_val = data.random_split(eeg_trainval, split, generator=torch.Generator().manual_seed(self.my_seed))
+        #gc.collect()
         # self.eeg_train = eeg_trainval
         # print("AFTER loading reassigning")
         # memReport()
@@ -107,7 +119,7 @@ class EEGdataModule(pl.LightningDataModule):
 
     def test_dataloader(self):
         if self.eeg_test is None:
-            raise NotImplementedError
+            self.load_test_set(0)
         return data.DataLoader(self.eeg_test, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers,
                                drop_last=True)
 
