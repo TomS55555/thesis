@@ -115,10 +115,10 @@ def get_logistic_args(save_name, checkpoint_path, num_ds):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": min(MAX_EPOCHS, 40 * num_ds),
+            "max_epochs": 80,
         },
         "optim_hparams": {
-            "lr": 5e-5,
+            "lr": 1e-4,
             "weight_decay": 0,
             "lr_hparams": None
         }
@@ -138,8 +138,8 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
             # "profiler": "simple"
         },
         "optim_hparams": {
-            "lr": 5e-5,
-            "weight_decay": 1e-5,
+            "lr": 3e-5,
+            "weight_decay": 3e-5,
             "lr_hparams": None
         }
     }
@@ -154,7 +154,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": min(40 * num_ds, MAX_EPOCHS)  # TODO: change back to 60
+            "max_epochs": 40
         },
         "optim_hparams": {
             "lr": 5e-6,
@@ -290,7 +290,7 @@ if __name__ == "__main__":
     elif args.mode == 'final':
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
             dev, version)
-        for i in range(5):
+        for i in range(5,10):
             train(pretrained_model, dev, version+i, True)
             test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0))
             test(pretrained_model, dev, version+i, test_dm, True)
