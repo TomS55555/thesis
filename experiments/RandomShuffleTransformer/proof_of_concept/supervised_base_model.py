@@ -101,7 +101,7 @@ def get_supervised_args(save_name, checkpoint_path):
             # "profiler": "simple"
         },
         "optim_hparams": {
-            "lr": 1e-5,
+            "lr": 1e-4,
             "weight_decay": 1e-9,
             "lr_hparams": None
         }
@@ -280,7 +280,7 @@ if __name__ == "__main__":
 
     version = int(args.version)
     train_supervised(device=dev,
-                     num_patients=100,
+                     num_patients=500,
                      encoder=get_CNN_encoder(),
                      transformer=get_transformer(),
                      classifier=get_classifier(),
