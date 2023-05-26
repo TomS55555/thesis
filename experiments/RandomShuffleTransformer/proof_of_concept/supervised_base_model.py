@@ -279,13 +279,17 @@ if __name__ == "__main__":
     print(dev)
 
     version = int(args.version)
-    train_models_n_pat(dev,
-                       num_patients=50,
-                       save_name='test',
-                       checkpoint_path='test',
-                       pretrained_encoder=get_CNN_encoder(),
-                       pretrained_transformer=get_transformer(),
-                       result_file_name='result_test')
+    train_supervised(device=dev,
+                     num_patients=100,
+                     encoder=get_CNN_encoder(),
+                     transformer=get_transformer(),
+                     classifier=get_classifier(),
+                     finetune_encoder=True,
+                     finetune_transformer=True,
+                     args=get_supervised_args(
+                         save_name='test_random_shuffle',
+                         checkpoint_path='test_random_shuffle'
+                     ))
     #model = train_supervised(dev, train_path, encoder, transformer, classifier, finetune_encoder, finetune_transformer)
     #result = test_supervised(dev, model)
     #print(result)

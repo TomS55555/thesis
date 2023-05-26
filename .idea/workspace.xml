@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train CnnTransformer for final time with better hyperpars">
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to test pretext task">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/process_results.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/process_results.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/sample_results" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/sample_results" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/sample_results2" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/sample_results2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/visualize_pretrained_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/visualize_pretrained_model.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +59,7 @@
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\CnnTransformer\simclr\test_results" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\CnnEncoder\simclr\test_results" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\experiments" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis02\experiments\CnnTransformer\simclr" />
@@ -292,20 +289,7 @@
       <workItem from="1684930564777" duration="7216000" />
       <workItem from="1685003913480" duration="7461000" />
       <workItem from="1685051693575" duration="1257000" />
-    </task>
-    <task id="LOCAL-00031" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
-      <created>1684405233528</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1684405233528</updated>
-    </task>
-    <task id="LOCAL-00032" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
-      <created>1684407475394</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1684407475394</updated>
+      <workItem from="1685112057376" duration="1269000" />
     </task>
     <task id="LOCAL-00033" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
       <created>1684407574068</created>
@@ -636,7 +620,21 @@
       <option name="project" value="LOCAL" />
       <updated>1684943250952</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="ready to test pretext task">
+      <created>1685112085486</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1685112085486</updated>
+    </task>
+    <task id="LOCAL-00081" summary="ready to test pretext task">
+      <created>1685112943431</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1685112943431</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -677,7 +675,8 @@
     <MESSAGE value="ready to train supervised base model on 50 patients for full transformer" />
     <MESSAGE value="ready to train CnnTransformer for final time" />
     <MESSAGE value="ready to train CnnTransformer for final time with better hyperpars" />
-    <option name="LAST_COMMIT_MESSAGE" value="ready to train CnnTransformer for final time with better hyperpars" />
+    <MESSAGE value="ready to test pretext task" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to test pretext task" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1684251549680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
