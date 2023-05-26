@@ -21,7 +21,7 @@ from datasets.augmentations import AugmentationModule
 from trainers.train_simclr_classifiers import train_networks, test_networks
 import json
 from models.random_shuffle_transformer import RandomShuffleTransformer
-
+from models.supervised_model import SupervisedModel
 patients_list = [3, 5, 10, 20, 50, 100, 250]
 
 OUTER_DIM = 6  # Only 1 and 4 are supported at the moment
@@ -157,7 +157,7 @@ if __name__ == "__main__":
     version = int(args.version)
 
     if args.mode == "pretrain":
-        encoder = load_model(SimCLR_Transformer, args.pretrained_encoder_path).f
+        encoder = load_model(SupervisedModel, args.pretrained_encoder_path).encoder
         pretrain(dev, version, encoder)
     else:
         exit("Mode not recognized!")
