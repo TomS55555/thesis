@@ -32,9 +32,6 @@ train_path = "randomshuffle_trainings"  # path used for training the networks
 result_file_name = "test_results_randomshuffle_transformer"
 
 pretrained_save_name = "pretrained_IT"
-logistic_save_name = "logistic_on_simclr_IT"
-supervised_save_name = "fully_supervised_IT"
-finetune_save_name = "fine_tuned_simclr_IT"
 
 # parameters for SimCLR projection head
 HIDDEN_DIM = 256
@@ -102,71 +99,11 @@ def get_data_args(num_patients, batch_size, num_workers=4):
         "window_size": OUTER_DIM
     }
 
-
-def get_logistic_args(save_name, checkpoint_path, num_ds):
-    return {
-        "save_name": save_name,
-        "CHECKPOINT_PATH": checkpoint_path,
-
-        "encoder": None,
-
-        "classifier": get_classifier(),
-
-        "trainer_hparams": {
-            "max_epochs": min(MAX_EPOCHS, 40 * num_ds),
-        },
-        "optim_hparams": {
-            "lr": 1e-4,
-            "weight_decay": 0,
-            "lr_hparams": None
-        }
-    }
-
-
-def get_supervised_args(save_name, checkpoint_path, num_ds):
-    return {
-        "save_name": save_name,
-        "CHECKPOINT_PATH": checkpoint_path,
-
-        "encoder": get_encoder(),
-        "classifier": get_classifier(),
-
-        "trainer_hparams": {
-            "max_epochs": min(40 * num_ds, MAX_EPOCHS)
-            # "profiler": "simple"
-        },
-        "optim_hparams": {
-            "lr": 1e-4,
-            "weight_decay": 0,
-            "lr_hparams": None
-        }
-    }
-
-
-def get_finetune_args(save_name, checkpoint_path, num_ds):
-    return {
-        "save_name": save_name,
-        "CHECKPOINT_PATH": checkpoint_path,
-
-        "encoder": get_encoder(),
-        "classifier": get_classifier(),
-
-        "trainer_hparams": {
-            "max_epochs": min(40 * num_ds, MAX_EPOCHS)  # TODO: change back to 60
-        },
-        "optim_hparams": {
-            "lr": 1e-5,
-            "weight_decay": 0,
-            "lr_hparams": None
-        }
-    }
-
-
 def pretrain(device, version, encoder=None):
     # TODO: fix normalization of STFT images!
     num_patients = 50
     batch_size = 64
-    max_epochs = 250
+    max_epochs = 400
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = RandomShuffleTransformer(
@@ -175,7 +112,7 @@ def pretrain(device, version, encoder=None):
         proj_head=get_projection_head(),
         optim_hparams={
             "max_epochs": max_epochs,
-            "lr": 1e-5,
+            "lr": 5e-5,
             "weight_decay": 1e-5
         },
         train_encoder=False
@@ -204,46 +141,6 @@ def pretrain(device, version, encoder=None):
     return model
 
 
-def train(pretrained_model, device, version, train_supervised=False):
-    for n_patients in patients_list:
-        num_ds = math.ceil(n_patients / PATIENTS_PER_DS)
-        train_networks(
-            pretrained_model=pretrained_model,
-            data_args=get_data_args(n_patients, batch_size=64),
-            logistic_args=get_logistic_args(logistic_save_name + "_" + str(n_patients) + "pat",
-                                            train_path + str(version), num_ds),
-            supervised_args=get_supervised_args(supervised_save_name + "_" + str(n_patients) + "pat",
-                                                train_path + str(version), num_ds),
-            finetune_args=get_finetune_args(finetune_save_name + "_" + str(n_patients) + "pat",
-                                            train_path + str(version), num_ds),
-            train_supervised=train_supervised,
-            device=device
-        )
-
-    # Then train logistic classifier on top of pretrained transformer
-
-
-def test(pretrained_model, device, version, test_supervised=False):
-    results = dict()
-
-    for n_patients in patients_list:
-        test_results = test_networks(
-            pretrained_model=pretrained_model,
-            test_ds_args=get_data_args(num_patients=5,
-                                       batch_size=64,
-                                       num_workers=0),  # TODO: LOOK INTO THIS!!
-            train_path=train_path + str(version),
-            logistic_save_name=logistic_save_name + "_" + str(n_patients) + "pat",
-            supervised_save_name=supervised_save_name + "_" + str(n_patients) + "pat",
-            finetune_save_name=finetune_save_name + "_" + str(n_patients) + "pat",
-            device=device,
-            test_supervised=test_supervised
-        )
-        results[str(n_patients) + "_pat"] = test_results
-        print(test_results)
-    print(results)
-    with open(result_file_name + str(version), 'w+') as f:
-        json.dump(results, f)
 
 
 if __name__ == "__main__":
@@ -262,19 +159,5 @@ if __name__ == "__main__":
     if args.mode == "pretrain":
         encoder = load_model(SimCLR_Transformer, args.pretrained_encoder_path).f
         pretrain(dev, version, encoder)
-    elif args.mode == "train":
-        if args.pretrained_path is None:
-            print("A pretrained encoder is required, specify it with the --pretrained_path")
-            sys.exit(1)
-        pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
-        train(pretrained_model, dev, version, True)
-    elif args.mode == "test":
-        pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path)
-        test(pretrained_model, dev, version, True)
-    elif args.mode == 'both':
-        pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
-            dev, version)
-        train(pretrained_model, dev, version, True)
-        test(pretrained_model, dev, version, True)
     else:
         exit("Mode not recognized!")
