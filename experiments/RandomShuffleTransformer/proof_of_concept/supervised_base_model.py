@@ -270,7 +270,7 @@ if __name__ == "__main__":
     parser.add_argument("--pretrained_classifier", required=False, default=None)
     args = parser.parse_args()
 
-    encoder = load_model(SupervisedModel, args.pretrained_encoder).f if args.pretrained_encoder is not None else get_CNN_encoder()
+    encoder = load_model(SupervisedModel, args.pretrained_encoder).encoder if args.pretrained_encoder is not None else get_CNN_encoder()
     transformer = load_model(RandomShuffleTransformer, args.pretrained_transformer).transformer if args.pretrained_transformer is not None else get_transformer()
     classifier = load_model(OuterSupervisedModel, args.pretrained_classifier).classifier if args.pretrained_classifier is not None else get_classifier()
     finetune_encoder = bool(args.finetune_encoder)
