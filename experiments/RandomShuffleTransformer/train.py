@@ -101,9 +101,9 @@ def get_data_args(num_patients, batch_size, num_workers=4):
 
 def pretrain(device, version, encoder=None):
     # TODO: fix normalization of STFT images!
-    num_patients = 250
+    num_patients = 5700
     batch_size = 64
-    max_epochs = 500
+    max_epochs = 1000
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = RandomShuffleTransformer(

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train outer transformer">
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train randomshuffle on 250 patients">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/datamodules.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/datamodules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/process_results.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/process_results.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/sample_results" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/sample_results" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -294,14 +289,7 @@
       <workItem from="1685003913480" duration="7461000" />
       <workItem from="1685051693575" duration="1257000" />
       <workItem from="1685112057376" duration="6619000" />
-      <workItem from="1685175106734" duration="8078000" />
-    </task>
-    <task id="LOCAL-00045" summary="ready to test siamsiam for first time">
-      <created>1684770825864</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1684770825864</updated>
+      <workItem from="1685175106734" duration="9320000" />
     </task>
     <task id="LOCAL-00046" summary="ready to test siamsiam for first time">
       <created>1684770904326</created>
@@ -639,7 +627,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685183561836</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="ready to train randomshuffle on 250 patients">
+      <created>1685194530803</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1685194530819</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="test" />
     <MESSAGE value="ready to train MAEEG" />
     <MESSAGE value="ready to pretrain cnn encoder" />
     <MESSAGE value="ready to pretrain cnn transformer" />
@@ -682,7 +676,8 @@
     <MESSAGE value="ready to train CnnTransformer for final time with better hyperpars" />
     <MESSAGE value="ready to test pretext task" />
     <MESSAGE value="ready to train outer transformer" />
-    <option name="LAST_COMMIT_MESSAGE" value="ready to train outer transformer" />
+    <MESSAGE value="ready to train randomshuffle on 250 patients" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to train randomshuffle on 250 patients" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1684251549680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
