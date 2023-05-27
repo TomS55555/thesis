@@ -28,6 +28,7 @@ from models.random_shuffle_transformer import RandomShuffleTransformer
 import json
 from models.supervised_model import SupervisedModel
 from copy import deepcopy
+import random
 
 
 OUTER_DIM = 6
@@ -73,7 +74,7 @@ def get_classifier():
     )
 
 
-def get_data_args(num_patients, batch_size, num_workers=4):
+def get_data_args(num_patients, batch_size, num_workers=4, seed:int =None):
     return {
         "data_path": get_data_path(),
         "data_split": [4, 1],
@@ -84,7 +85,8 @@ def get_data_args(num_patients, batch_size, num_workers=4):
         "num_ds": math.ceil(num_patients / PATIENTS_PER_DS),
         "exclude_test_set": constants.TEST_SET_BIG,
         "dataset_type": SHHSdataset,
-        "window_size": OUTER_DIM
+        "window_size": OUTER_DIM,
+        "seed": seed
     }
 
 
@@ -136,7 +138,7 @@ def get_finetune_args(save_name, checkpoint_path):
         "classifier": None,
 
         "trainer_hparams": {
-            "max_epochs": 40
+            "max_epochs": 20
         },
         "optim_hparams": {
             "lr": 1e-5,
@@ -145,9 +147,9 @@ def get_finetune_args(save_name, checkpoint_path):
         }
     }
 
-def test_supervised(device, model, checkpoint_path: str, test_path):
+def test_supervised(device, model, checkpoint_path: str, test_path, seed: int=None):
 
-    test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0))
+    test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0, seed=seed))
 
     trainer = pl.Trainer(
         default_root_dir=os.path.join(checkpoint_path, test_path),
@@ -175,9 +177,10 @@ def test_supervised(device, model, checkpoint_path: str, test_path):
 
 def train_supervised(device, num_patients: int,
                      encoder: nn.Module, transformer: nn.Module,
-                     classifier: nn.Module, finetune_encoder: bool, finetune_transformer: bool, args):
+                     classifier: nn.Module, finetune_encoder: bool, finetune_transformer: bool, args,
+                     seed:int = None):
 
-    dm = EEGdataModule(**get_data_args(num_patients, batch_size=64))
+    dm = EEGdataModule(**get_data_args(num_patients, batch_size=64, seed=seed))
     supervised_model = OuterSupervisedModel(encoder=encoder,
                                        classifier=classifier,
                                         transformer=transformer,
@@ -214,6 +217,7 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
         3) Compare it with training the outer transformer and classifier in a fully supervised way
         4) Also finetune 3)
     """
+    seed = random.randint(0, 2**32 - 1)  # to have the same validation set for all
     save_name_logistic = save_name + 'logistic' + str(num_patients)+'pat'
     save_name_finetune = save_name + 'fine_tuned' + str(num_patients) + 'pat'
     save_name_supervised = save_name + 'supervised' + str(num_patients) + 'pat'
@@ -226,7 +230,8 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                       classifier=get_classifier(),
                                       finetune_encoder=False,
                                       finetune_transformer=False,
-                                      args=get_logistic_args(save_name_logistic, checkpoint_path))
+                                      args=get_logistic_args(save_name_logistic, checkpoint_path),
+                                      seed=seed)
 
     finetune_model = train_supervised(device=device,
                                       num_patients=num_patients,
@@ -235,7 +240,8 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                       classifier=logistic_model.classifier,
                                       finetune_encoder=True,
                                       finetune_transformer=True,
-                                      args=get_finetune_args(save_name_finetune, checkpoint_path))
+                                      args=get_finetune_args(save_name_finetune, checkpoint_path),
+                                      seed=seed)
 
     # Compare with a supervised model where only the outer transformer is trained
     fully_supervised_model = train_supervised(device=device,
@@ -245,7 +251,8 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                               classifier=get_classifier(),
                                               finetune_encoder=False,
                                               finetune_transformer=True,
-                                              args=get_supervised_args(save_name_supervised, checkpoint_path))
+                                              args=get_supervised_args(save_name_supervised, checkpoint_path),
+                                              seed=seed)
 
     fully_supervised_model_finetune = train_supervised(device=dev,
                                                        num_patients=num_patients,
@@ -254,8 +261,8 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                                        classifier=deepcopy(fully_supervised_model.classifier),
                                                        finetune_encoder=True,
                                                        finetune_transformer=True,
-                                                       args=get_finetune_args(save_name_supervised_finetune, checkpoint_path)
-                                                       )
+                                                       args=get_finetune_args(save_name_supervised_finetune, checkpoint_path),
+                                                       seed=seed)
 
     test_res_logistic = test_supervised(device, logistic_model, checkpoint_path, save_name_logistic)
     test_res_finetuned = test_supervised(device, finetune_model, checkpoint_path, save_name_finetune)

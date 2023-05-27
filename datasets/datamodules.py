@@ -28,6 +28,7 @@ class EEGdataModule(pl.LightningDataModule):
                  dataset_type=SHHSdataset,
                  window_size=1,
                  num_ds: int = 1,  # This property can be used to load a different dataset every epoch
+                 seed:int=None,
                  test_dl=None, **kwargs):
         super().__init__()
         self.data_path = data_path
@@ -43,7 +44,7 @@ class EEGdataModule(pl.LightningDataModule):
         self.dataset_type = dataset_type
         self.window_size = window_size
 
-        self.my_seed = random.randint(0, 2**32 - 1)  # random seed for splitting dataset
+        self.my_seed = random.randint(0, 2**32 - 1) if seed is None else seed  # random seed for splitting dataset
         # self.load_dataset(0)
         self.MAX_TEST_SIZE = 500
         if test_set:
