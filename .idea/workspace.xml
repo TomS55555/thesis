@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train outer transformer">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -289,21 +290,7 @@
       <workItem from="1685003913480" duration="7461000" />
       <workItem from="1685051693575" duration="1257000" />
       <workItem from="1685112057376" duration="6619000" />
-      <workItem from="1685175106734" duration="312000" />
-    </task>
-    <task id="LOCAL-00039" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
-      <created>1684413390004</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1684413390004</updated>
-    </task>
-    <task id="LOCAL-00040" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
-      <created>1684413447524</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1684413447524</updated>
+      <workItem from="1685175106734" duration="1108000" />
     </task>
     <task id="LOCAL-00041" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
       <created>1684413997119</created>
@@ -634,7 +621,21 @@
       <option name="project" value="LOCAL" />
       <updated>1685175224407</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="ready to train outer transformer">
+      <created>1685175423380</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1685175423380</updated>
+    </task>
+    <task id="LOCAL-00089" summary="ready to train outer transformer">
+      <created>1685175458152</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1685175458152</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

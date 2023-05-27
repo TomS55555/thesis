@@ -118,11 +118,11 @@ def get_logistic_args(save_name, checkpoint_path):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": 80,
+            "max_epochs": 40,
         },
         "optim_hparams": {
             "lr": 1e-4,
-            "weight_decay": 0,
+            "weight_decay": 1e-7,
             "lr_hparams": None
         }
     }
@@ -139,8 +139,8 @@ def get_finetune_args(save_name, checkpoint_path):
             "max_epochs": 40
         },
         "optim_hparams": {
-            "lr": 5e-6,
-            "weight_decay": 0,
+            "lr": 1e-5,
+            "weight_decay": 1e-6,
             "lr_hparams": None
         }
     }
@@ -280,17 +280,24 @@ if __name__ == "__main__":
     print(dev)
 
     version = int(args.version)
-    train_supervised(device=dev,
-                     num_patients=50,
-                     encoder=encoder,
-                     transformer=transformer,
-                     classifier=classifier,
-                     finetune_encoder=finetune_encoder,
-                     finetune_transformer=finetune_transformer,
-                     args=get_supervised_args(
-                         save_name='test_random_shuffle_logistic',
-                         checkpoint_path='test_random_shuffle'
-                     ))
+    # train_supervised(device=dev,
+    #                  num_patients=50,
+    #                  encoder=encoder,
+    #                  transformer=transformer,
+    #                  classifier=classifier,
+    #                  finetune_encoder=finetune_encoder,
+    #                  finetune_transformer=finetune_transformer,
+    #                  args=get_supervised_args(
+    #                      save_name='test_random_shuffle_logistic',
+    #                      checkpoint_path='test_random_shuffle'
+    #                  ))
+    train_models_n_pat(device=dev,
+                       num_patients=50,
+                       save_name='test_on_50pat',
+                       checkpoint_path='test_random_shuffle',
+                       pretrained_encoder=encoder,
+                       pretrained_transformer=transformer,
+                       result_file_name='test_results_random_shuffle')
     #model = train_supervised(dev, train_path, encoder, transformer, classifier, finetune_encoder, finetune_transformer)
     #result = test_supervised(dev, model)
     #print(result)
