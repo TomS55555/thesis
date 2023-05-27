@@ -118,11 +118,11 @@ def get_logistic_args(save_name, checkpoint_path):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": 40,
+            "max_epochs": 70,
         },
         "optim_hparams": {
             "lr": 1e-4,
-            "weight_decay": 1e-6,
+            "weight_decay": 1e-9,
             "lr_hparams": None
         }
     }
@@ -139,8 +139,8 @@ def get_finetune_args(save_name, checkpoint_path):
             "max_epochs": 40
         },
         "optim_hparams": {
-            "lr": 1e-7,
-            "weight_decay": 0,
+            "lr": 1e-5,
+            "weight_decay": 1e-5,
             "lr_hparams": None
         }
     }
@@ -253,7 +253,8 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                                        transformer=deepcopy(fully_supervised_model.transformer),
                                                        classifier=deepcopy(fully_supervised_model.classifier),
                                                        finetune_encoder=True,
-                                                       finetune_transformer=True
+                                                       finetune_transformer=True,
+                                                       args=get_finetune_args(save_name_supervised_finetune, checkpoint_path)
                                                        )
 
     test_res_logistic = test_supervised(device, logistic_model, checkpoint_path, save_name_logistic)
