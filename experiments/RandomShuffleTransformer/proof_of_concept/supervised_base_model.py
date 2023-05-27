@@ -103,7 +103,7 @@ def get_supervised_args(save_name, checkpoint_path):
         },
         "optim_hparams": {
             "lr": 1e-4,
-            "weight_decay": 1e-5,
+            "weight_decay": 1e-3,
             "lr_hparams": None
         }
     }
@@ -122,7 +122,7 @@ def get_logistic_args(save_name, checkpoint_path):
         },
         "optim_hparams": {
             "lr": 1e-4,
-            "weight_decay": 1e-7,
+            "weight_decay": 1e-6,
             "lr_hparams": None
         }
     }
@@ -139,8 +139,8 @@ def get_finetune_args(save_name, checkpoint_path):
             "max_epochs": 40
         },
         "optim_hparams": {
-            "lr": 1e-5,
-            "weight_decay": 1e-6,
+            "lr": 5e-5,
+            "weight_decay": 1e-4,
             "lr_hparams": None
         }
     }
@@ -211,11 +211,13 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
         This function uses a pretrained encoder and pretrained transformer to conduct the following experiment
         1) Fix both pretrained encoder and pretrained outer transformer and train a classifier on top
         2) Fine-tune the whole thing
-        3) Compare it with a fully supervised method with the same amount of patients
+        3) Compare it with training the outer transformer and classifier in a fully supervised way
+        4) Also finetune 3)
     """
     save_name_logistic = save_name + 'logistic' + str(num_patients)+'pat'
     save_name_finetune = save_name + 'fine_tuned' + str(num_patients) + 'pat'
     save_name_supervised = save_name + 'supervised' + str(num_patients) + 'pat'
+    save_name_supervised_finetune = save_name + 'supervised_finetune' + str(num_patients) + 'pat'
 
     logistic_model = train_supervised(device=device,
                                       num_patients=num_patients,
@@ -230,28 +232,40 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                       num_patients=num_patients,
                                       encoder=deepcopy(pretrained_encoder),
                                       transformer=deepcopy(pretrained_transformer),
-                                      classifier=get_classifier(),
+                                      classifier=logistic_model.classifier,
                                       finetune_encoder=True,
                                       finetune_transformer=True,
                                       args=get_finetune_args(save_name_finetune, checkpoint_path))
 
+    # Compare with a supervised model where only the outer transformer is trained
     fully_supervised_model = train_supervised(device=device,
                                               num_patients=num_patients,
-                                              encoder=get_CNN_encoder(),
+                                              encoder=deepcopy(pretrained_encoder),
                                               transformer=get_transformer(),
                                               classifier=get_classifier(),
-                                              finetune_encoder=True,
+                                              finetune_encoder=False,
                                               finetune_transformer=True,
                                               args=get_supervised_args(save_name_supervised, checkpoint_path))
+
+    fully_supervised_model_finetune = train_supervised(device=dev,
+                                                       num_patients=num_patients,
+                                                       encoder=deepcopy(pretrained_encoder),
+                                                       transformer=deepcopy(fully_supervised_model.transformer),
+                                                       classifier=deepcopy(fully_supervised_model.classifier),
+                                                       finetune_encoder=True,
+                                                       finetune_transformer=True
+                                                       )
 
     test_res_logistic = test_supervised(device, logistic_model, checkpoint_path, save_name_logistic)
     test_res_finetuned = test_supervised(device, finetune_model, checkpoint_path, save_name_finetune)
     test_res_supervised = test_supervised(device, fully_supervised_model, checkpoint_path, save_name_supervised)
+    test_res_supervised_fine = test_supervised(device, fully_supervised_model_finetune, checkpoint_path, save_name_supervised_finetune)
 
     results = {
         "sup_res": test_res_supervised,
+        "sup_res_fine": test_res_supervised_fine,
         "logistic_res": test_res_logistic,
-        "fully_tuned_res": test_res_finetuned
+        "fully_tuned_res": test_res_finetuned,
     }
     print(results)
     if save_name is not None:

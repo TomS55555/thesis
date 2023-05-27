@@ -290,14 +290,7 @@
       <workItem from="1685003913480" duration="7461000" />
       <workItem from="1685051693575" duration="1257000" />
       <workItem from="1685112057376" duration="6619000" />
-      <workItem from="1685175106734" duration="1108000" />
-    </task>
-    <task id="LOCAL-00041" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
-      <created>1684413997119</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1684413997119</updated>
+      <workItem from="1685175106734" duration="3389000" />
     </task>
     <task id="LOCAL-00042" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
       <created>1684491218035</created>
@@ -635,7 +628,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685175458152</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="ready to train outer transformer">
+      <created>1685176266943</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1685176266943</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
