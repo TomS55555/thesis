@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train outer transformer">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -289,13 +289,7 @@
       <workItem from="1685003913480" duration="7461000" />
       <workItem from="1685051693575" duration="1257000" />
       <workItem from="1685112057376" duration="6619000" />
-    </task>
-    <task id="LOCAL-00038" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
-      <created>1684411011876</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1684411011876</updated>
+      <workItem from="1685175106734" duration="312000" />
     </task>
     <task id="LOCAL-00039" summary="READY TO TEST CNNENCODER FOR FINAL TIME">
       <created>1684413390004</created>
@@ -633,7 +627,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685138674316</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="ready to train outer transformer">
+      <created>1685175224407</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1685175224407</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

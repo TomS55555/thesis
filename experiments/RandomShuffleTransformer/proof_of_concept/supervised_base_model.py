@@ -26,6 +26,7 @@ from models.outer_supervised import OuterSupervisedModel
 from models.simclr_transformer import SimCLR_Transformer
 from models.random_shuffle_transformer import RandomShuffleTransformer
 import json
+from models.supervised_model import SupervisedModel
 from copy import deepcopy
 
 
@@ -269,11 +270,11 @@ if __name__ == "__main__":
     parser.add_argument("--pretrained_classifier", required=False, default=None)
     args = parser.parse_args()
 
-    encoder = load_model(SimCLR_Transformer, args.pretrained_encoder).f if args.pretrained_encoder is not None else get_CNN_encoder()
+    encoder = load_model(SupervisedModel, args.pretrained_encoder).f if args.pretrained_encoder is not None else get_CNN_encoder()
     transformer = load_model(RandomShuffleTransformer, args.pretrained_transformer).transformer if args.pretrained_transformer is not None else get_transformer()
     classifier = load_model(OuterSupervisedModel, args.pretrained_classifier).classifier if args.pretrained_classifier is not None else get_classifier()
-    finetune_encoder = bool(args.finetune_encoder) if args.finetune_encoder is not None else False
-    finetune_transformer = bool(args.finetune_transformer) if args.finetune_transformer is not None else False
+    finetune_encoder = bool(args.finetune_encoder)
+    finetune_transformer = bool(args.finetune_transformer)
 
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(dev)
