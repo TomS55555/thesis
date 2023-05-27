@@ -139,8 +139,8 @@ def get_finetune_args(save_name, checkpoint_path):
             "max_epochs": 40
         },
         "optim_hparams": {
-            "lr": 5e-5,
-            "weight_decay": 1e-4,
+            "lr": 1e-7,
+            "weight_decay": 0,
             "lr_hparams": None
         }
     }
@@ -308,7 +308,7 @@ if __name__ == "__main__":
     train_models_n_pat(device=dev,
                        num_patients=50,
                        save_name='test_on_50pat',
-                       checkpoint_path='test_random_shuffle',
+                       checkpoint_path='test_random_shuffle2',
                        pretrained_encoder=encoder,
                        pretrained_transformer=transformer,
                        result_file_name='test_results_random_shuffle')
