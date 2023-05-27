@@ -280,14 +280,14 @@ if __name__ == "__main__":
 
     version = int(args.version)
     train_supervised(device=dev,
-                     num_patients=5000,
-                     encoder=get_CNN_encoder(),
-                     transformer=get_transformer(),
-                     classifier=get_classifier(),
-                     finetune_encoder=True,
-                     finetune_transformer=True,
+                     num_patients=50,
+                     encoder=encoder,
+                     transformer=transformer,
+                     classifier=classifier,
+                     finetune_encoder=finetune_encoder,
+                     finetune_transformer=finetune_transformer,
                      args=get_supervised_args(
-                         save_name='test_random_shuffle',
+                         save_name='test_random_shuffle_logistic',
                          checkpoint_path='test_random_shuffle'
                      ))
     #model = train_supervised(dev, train_path, encoder, transformer, classifier, finetune_encoder, finetune_transformer)
