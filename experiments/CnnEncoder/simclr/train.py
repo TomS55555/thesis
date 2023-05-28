@@ -135,7 +135,7 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
         },
         "optim_hparams": {
             "lr": 1e-4,
-            "weight_decay": 0,
+            "weight_decay": 1e-5,
             "lr_hparams": None
         }
     }
@@ -154,7 +154,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
         },
         "optim_hparams": {
             "lr": 1e-5,
-            "weight_decay": 0,
+            "weight_decay": 1e-6,
             "lr_hparams": None
         }
     }
