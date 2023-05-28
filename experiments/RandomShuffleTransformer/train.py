@@ -31,7 +31,7 @@ PATIENTS_PER_DS = 250  # Depends on RAM size of PC
 train_path = "randomshuffle_trainings"  # path used for training the networks
 result_file_name = "test_results_randomshuffle_transformer"
 
-pretrained_save_name = "pretrained_IT"
+pretrained_save_name = "pretrained_outer_CNN"
 
 # parameters for SimCLR projection head
 HIDDEN_DIM = 256
@@ -97,9 +97,9 @@ def get_data_args(num_patients, batch_size, num_workers=4):
         "window_size": OUTER_DIM
     }
 
-def pretrain(device, version, patients, encoder=None):
+def pretrain(device, version, encoder=None):
     # TODO: fix normalization of STFT images!
-    num_patients = patients
+    num_patients = 5700
     batch_size = 64
     max_epochs = 220
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
@@ -146,7 +146,6 @@ if __name__ == "__main__":
     parser.add_argument("--mode", required=True)
     parser.add_argument("--version", required=False, default="0")
     parser.add_argument("--pretrained_encoder_path", required=False, default=None)
-    parser.add_argument("--num_patients", required=True, type=int)
     args = parser.parse_args()
 
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
@@ -156,6 +155,6 @@ if __name__ == "__main__":
 
     if args.mode == "pretrain":
         encoder = load_model(SupervisedModel, args.pretrained_encoder_path).encoder
-        pretrain(dev, version, args.num_patients, encoder)
+        pretrain(dev, version, encoder)
     else:
         exit("Mode not recognized!")

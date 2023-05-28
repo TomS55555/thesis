@@ -291,14 +291,7 @@
       <workItem from="1685112057376" duration="6619000" />
       <workItem from="1685175106734" duration="9320000" />
       <workItem from="1685219901689" duration="701000" />
-      <workItem from="1685262044940" duration="7387000" />
-    </task>
-    <task id="LOCAL-00050" summary="ready to test featpredictor for first time">
-      <created>1684772302068</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1684772302069</updated>
+      <workItem from="1685262044940" duration="7560000" />
     </task>
     <task id="LOCAL-00051" summary="ready to test featpredictor for first time">
       <created>1684772441494</created>
@@ -636,7 +629,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685272318338</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="ready to train randomshuffle on whole dataset final time">
+      <created>1685272522227</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1685272522227</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
