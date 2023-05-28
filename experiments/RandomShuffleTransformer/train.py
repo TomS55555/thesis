@@ -146,7 +146,7 @@ if __name__ == "__main__":
     parser.add_argument("--mode", required=True)
     parser.add_argument("--version", required=False, default="0")
     parser.add_argument("--pretrained_encoder_path", required=False, default=None)
-    parser.add_argument("--num_patients", required=True)
+    parser.add_argument("--num_patients", required=True, type=int)
     args = parser.parse_args()
 
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")

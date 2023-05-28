@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train randomshuffle on whole dataset haha" />
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train randomshuffle on whole dataset final time">
+      <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/train.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -289,14 +291,7 @@
       <workItem from="1685112057376" duration="6619000" />
       <workItem from="1685175106734" duration="9320000" />
       <workItem from="1685219901689" duration="701000" />
-      <workItem from="1685262044940" duration="6918000" />
-    </task>
-    <task id="LOCAL-00049" summary="ready to test featpredictor for first time">
-      <created>1684772063169</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1684772063169</updated>
+      <workItem from="1685262044940" duration="7387000" />
     </task>
     <task id="LOCAL-00050" summary="ready to test featpredictor for first time">
       <created>1684772302068</created>
@@ -634,7 +629,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685269397494</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="ready to train randomshuffle on whole dataset final time">
+      <created>1685272318338</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1685272318338</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ready to pretrain cnn encoder" />
     <MESSAGE value="ready to pretrain cnn transformer" />
     <MESSAGE value="commit" />
     <MESSAGE value="ready to train CnnEncoder for a final time" />
@@ -677,7 +678,8 @@
     <MESSAGE value="ready to train outer transformer" />
     <MESSAGE value="ready to train randomshuffle on 250 patients" />
     <MESSAGE value="ready to train randomshuffle on whole dataset haha" />
-    <option name="LAST_COMMIT_MESSAGE" value="ready to train randomshuffle on whole dataset haha" />
+    <MESSAGE value="ready to train randomshuffle on whole dataset final time" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to train randomshuffle on whole dataset final time" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/thesis$simclr_cnn_encoder.coverage" NAME="simclr_cnn_encoder Coverage Results" MODIFIED="1684251549680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/CnnEncoder/simclr" />
