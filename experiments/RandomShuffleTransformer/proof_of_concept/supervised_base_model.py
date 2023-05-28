@@ -270,8 +270,8 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
     #test_res_supervised_fine = test_supervised(device, fully_supervised_model_finetune, checkpoint_path, save_name_supervised_finetune)
 
     results = {
-        "sup_res": test_res_supervised,
-        "sup_res_fine": test_res_supervised_fine,
+  #       "sup_res": test_res_supervised,
+  #      "sup_res_fine": test_res_supervised_fine,
         "logistic_res": test_res_logistic,
         "fully_tuned_res": test_res_finetuned,
     }
@@ -290,36 +290,47 @@ if __name__ == "__main__":
     parser.add_argument("--finetune_encoder", required=False, default=False)
     parser.add_argument("--finetune_transformer", required=False, default=False)
     parser.add_argument("--pretrained_classifier", required=False, default=None)
+    parser.add_argument("--test_supervised", required=False, default=None)
     args = parser.parse_args()
-
-    encoder = load_model(SupervisedModel, args.pretrained_encoder).encoder if args.pretrained_encoder is not None else get_CNN_encoder()
-    transformer = load_model(RandomShuffleTransformer, args.pretrained_transformer).transformer if args.pretrained_transformer is not None else get_transformer()
-    classifier = load_model(OuterSupervisedModel, args.pretrained_classifier).classifier if args.pretrained_classifier is not None else get_classifier()
-    finetune_encoder = bool(args.finetune_encoder)
-    finetune_transformer = bool(args.finetune_transformer)
-
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(dev)
 
-    version = int(args.version)
-    # train_supervised(device=dev,
-    #                  num_patients=50,
-    #                  encoder=encoder,
-    #                  transformer=transformer,
-    #                  classifier=classifier,
-    #                  finetune_encoder=finetune_encoder,
-    #                  finetune_transformer=finetune_transformer,
-    #                  args=get_supervised_args(
-    #                      save_name='test_random_shuffle_logistic',
-    #                      checkpoint_path='test_random_shuffle'
-    #                  ))
-    train_models_n_pat(device=dev,
-                       num_patients=50,
-                       save_name='test_on_50pat',
-                       checkpoint_path='test_random_shuffle2',
-                       pretrained_encoder=encoder,
-                       pretrained_transformer=transformer,
-                       result_file_name='test_results_random_shuffle')
-    #model = train_supervised(dev, train_path, encoder, transformer, classifier, finetune_encoder, finetune_transformer)
-    #result = test_supervised(dev, model)
-    #print(result)
+    if args.test_supervised is not None:
+        model = load_model(OuterSupervisedModel, args.test_supervised)
+        test_supervised(
+            device=dev,
+            model=model,
+            checkpoint_path='testing',
+            test_path='save_supervised'
+        )
+    else:
+        encoder = load_model(SupervisedModel, args.pretrained_encoder).encoder if args.pretrained_encoder is not None else get_CNN_encoder()
+        transformer = load_model(RandomShuffleTransformer, args.pretrained_transformer).transformer if args.pretrained_transformer is not None else get_transformer()
+        classifier = load_model(OuterSupervisedModel, args.pretrained_classifier).classifier if args.pretrained_classifier is not None else get_classifier()
+        finetune_encoder = bool(args.finetune_encoder)
+        finetune_transformer = bool(args.finetune_transformer)
+
+
+
+        version = int(args.version)
+        # train_supervised(device=dev,
+        #                  num_patients=50,
+        #                  encoder=encoder,
+        #                  transformer=transformer,
+        #                  classifier=classifier,
+        #                  finetune_encoder=finetune_encoder,
+        #                  finetune_transformer=finetune_transformer,
+        #                  args=get_supervised_args(
+        #                      save_name='test_random_shuffle_logistic',
+        #                      checkpoint_path='test_random_shuffle'
+        #                  ))
+        train_models_n_pat(device=dev,
+                           num_patients=50,
+                           save_name='test_on_50pat',
+                           checkpoint_path='test_random_shuffle2',
+                           pretrained_encoder=encoder,
+                           pretrained_transformer=transformer,
+                           result_file_name='test_results_random_shuffle')
+        #model = train_supervised(dev, train_path, encoder, transformer, classifier, finetune_encoder, finetune_transformer)
+        #result = test_supervised(dev, model)
+        #print(result)
