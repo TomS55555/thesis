@@ -32,6 +32,7 @@ def get_trainer(checkpoint_path, save_name, num_ds, trainer_hparams, device):
     trainer.logger._default_hp_metric = None  # Optional logging argument that we don't need
     return trainer
 
+
 def pass_through_encoder(encoder, dm, mode="train"):
     encoded_inputs_train = list()
     labels_train = list()
@@ -59,6 +60,7 @@ def pass_through_encoder(encoder, dm, mode="train"):
         return encoded_ds_train, encoded_ds_val
     elif mode == "test":
         return data.TensorDataset(torch.cat(encoded_inputs_test, 0), torch.cat(labels_test, 0))
+
 
 def train_networks(pretrained_model, data_args, logistic_args, supervised_args, finetune_args, train_supervised, device):
     """

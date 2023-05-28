@@ -29,6 +29,7 @@ import json
 from models.supervised_model import SupervisedModel
 from copy import deepcopy
 import random
+from utils.helper_functions import get_checkpoint_path
 
 
 OUTER_DIM = 6
@@ -162,7 +163,7 @@ def get_finetune_args(save_name, checkpoint_path):
         },
         "optim_hparams": {
             "lr": 1e-5,
-            "weight_decay": 1e-5,
+            "weight_decay": 1e-4,
             "lr_hparams": None
         }
     }
@@ -225,6 +226,8 @@ def train_supervised(device, num_patients: int,
 
     trainer.fit(model=supervised_model,
                 datamodule=dm)
+
+    supervised_model = get_checkpoint_path(args['CHECKPOINT_PATH'], args['save_name'])
     return supervised_model
 
 
