@@ -37,8 +37,6 @@ pretrained_save_name = "pretrained_IT"
 HIDDEN_DIM = 256
 Z_DIM = 128
 
-MAX_EPOCHS = 100  # max epochs independent of number of datasets
-
 
 def get_encoder():
     """
@@ -99,11 +97,11 @@ def get_data_args(num_patients, batch_size, num_workers=4):
         "window_size": OUTER_DIM
     }
 
-def pretrain(device, version, encoder=None):
+def pretrain(device, version, patients, encoder=None):
     # TODO: fix normalization of STFT images!
-    num_patients = 5700
+    num_patients = patients
     batch_size = 64
-    max_epochs = 1000
+    max_epochs = 220
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = RandomShuffleTransformer(
@@ -112,7 +110,7 @@ def pretrain(device, version, encoder=None):
         proj_head=get_projection_head(),
         optim_hparams={
             "max_epochs": max_epochs,
-            "lr": 5e-5,
+            "lr": 1e-4,
             "weight_decay": 1e-5
         },
         train_encoder=False
@@ -147,8 +145,8 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--mode", required=True)
     parser.add_argument("--version", required=False, default="0")
-    parser.add_argument("--pretrained_path", required=False, default=None)
     parser.add_argument("--pretrained_encoder_path", required=False, default=None)
+    parser.add_argument("--num_patients", required=True)
     args = parser.parse_args()
 
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
@@ -158,6 +156,6 @@ if __name__ == "__main__":
 
     if args.mode == "pretrain":
         encoder = load_model(SupervisedModel, args.pretrained_encoder_path).encoder
-        pretrain(dev, version, encoder)
+        pretrain(dev, version, args.num_patients, encoder)
     else:
         exit("Mode not recognized!")
