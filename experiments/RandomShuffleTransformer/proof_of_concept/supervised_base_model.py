@@ -227,8 +227,8 @@ def train_supervised(device, num_patients: int,
     trainer.fit(model=supervised_model,
                 datamodule=dm)
 
-    supervised_model = get_checkpoint_path(args['CHECKPOINT_PATH'], args['save_name'])
-    return supervised_model
+    supervised_model_path = get_checkpoint_path(args['CHECKPOINT_PATH'], args['save_name'])
+    return load_model(OuterSupervisedModel, supervised_model_path)
 
 
 
