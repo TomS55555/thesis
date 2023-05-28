@@ -94,7 +94,7 @@ def get_data_args(num_patients, batch_size, num_workers=4):
         "batch_size": batch_size,
         "num_workers": num_workers,
         "num_ds": math.ceil(num_patients / PATIENTS_PER_DS),
-        "exclude_test_set": constants.TEST_SET_1,
+        "exclude_test_set": constants.TEST_SET_BIG,
         "dataset_type": SHHSdataset,
         "window_size": OUTER_DIM
     }

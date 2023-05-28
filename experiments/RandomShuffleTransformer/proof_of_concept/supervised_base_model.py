@@ -123,8 +123,8 @@ def get_logistic_args(save_name, checkpoint_path):
             "max_epochs": 70,
         },
         "optim_hparams": {
-            "lr": 1e-4,
-            "weight_decay": 1e-9,
+            "lr": 1e-3,
+            "weight_decay": 1e-10,
             "lr_hparams": None
         }
     }
@@ -244,30 +244,30 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                       seed=seed)
 
     # Compare with a supervised model where only the outer transformer is trained
-    fully_supervised_model = train_supervised(device=device,
-                                              num_patients=num_patients,
-                                              encoder=deepcopy(pretrained_encoder),
-                                              transformer=get_transformer(),
-                                              classifier=get_classifier(),
-                                              finetune_encoder=False,
-                                              finetune_transformer=True,
-                                              args=get_supervised_args(save_name_supervised, checkpoint_path),
-                                              seed=seed)
-
-    fully_supervised_model_finetune = train_supervised(device=dev,
-                                                       num_patients=num_patients,
-                                                       encoder=deepcopy(pretrained_encoder),
-                                                       transformer=deepcopy(fully_supervised_model.transformer),
-                                                       classifier=deepcopy(fully_supervised_model.classifier),
-                                                       finetune_encoder=True,
-                                                       finetune_transformer=True,
-                                                       args=get_finetune_args(save_name_supervised_finetune, checkpoint_path),
-                                                       seed=seed)
+    # fully_supervised_model = train_supervised(device=device,
+    #                                           num_patients=num_patients,
+    #                                           encoder=deepcopy(pretrained_encoder),
+    #                                           transformer=get_transformer(),
+    #                                           classifier=get_classifier(),
+    #                                           finetune_encoder=False,
+    #                                           finetune_transformer=True,
+    #                                           args=get_supervised_args(save_name_supervised, checkpoint_path),
+    #                                           seed=seed)
+    #
+    # fully_supervised_model_finetune = train_supervised(device=dev,
+    #                                                    num_patients=num_patients,
+    #                                                    encoder=deepcopy(pretrained_encoder),
+    #                                                    transformer=deepcopy(fully_supervised_model.transformer),
+    #                                                    classifier=deepcopy(fully_supervised_model.classifier),
+    #                                                    finetune_encoder=True,
+    #                                                    finetune_transformer=True,
+    #                                                    args=get_finetune_args(save_name_supervised_finetune, checkpoint_path),
+    #                                                    seed=seed)
 
     test_res_logistic = test_supervised(device, logistic_model, checkpoint_path, save_name_logistic)
     test_res_finetuned = test_supervised(device, finetune_model, checkpoint_path, save_name_finetune)
-    test_res_supervised = test_supervised(device, fully_supervised_model, checkpoint_path, save_name_supervised)
-    test_res_supervised_fine = test_supervised(device, fully_supervised_model_finetune, checkpoint_path, save_name_supervised_finetune)
+    #test_res_supervised = test_supervised(device, fully_supervised_model, checkpoint_path, save_name_supervised)
+    #test_res_supervised_fine = test_supervised(device, fully_supervised_model_finetune, checkpoint_path, save_name_supervised_finetune)
 
     results = {
         "sup_res": test_res_supervised,
