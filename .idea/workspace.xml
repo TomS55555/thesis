@@ -290,14 +290,7 @@
       <workItem from="1685175106734" duration="9320000" />
       <workItem from="1685219901689" duration="701000" />
       <workItem from="1685262044940" duration="10133000" />
-      <workItem from="1685301783412" duration="3997000" />
-    </task>
-    <task id="LOCAL-00054" summary="ready to test CnnTransformer for final time">
-      <created>1684794006633</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1684794006633</updated>
+      <workItem from="1685301783412" duration="4707000" />
     </task>
     <task id="LOCAL-00055" summary="ready to test Random Shuffle for final time">
       <created>1684842116324</created>
@@ -635,7 +628,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685308876620</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="ready to train randomshuffle on whole dataset final time">
+      <created>1685309574541</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1685309574541</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

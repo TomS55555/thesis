@@ -69,9 +69,7 @@ def get_transformer():
 
 def get_classifier():
     return nn.Sequential(
-        nn.Linear(FEAT_DIM, HIDDEN_DIM),
-        nn.GELU(),
-        nn.Linear(HIDDEN_DIM, constants.N_CLASSES)
+        nn.Linear(FEAT_DIM, constants.N_CLASSES)
     )
 
 
