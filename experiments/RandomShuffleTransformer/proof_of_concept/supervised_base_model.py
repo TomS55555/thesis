@@ -141,7 +141,7 @@ def get_logistic_args(save_name, checkpoint_path):
         "classifier": get_classifier(),
 
         "trainer_hparams": {
-            "max_epochs": 70,
+            "max_epochs": 100,
         },
         "optim_hparams": {
             "lr": 5e-4,
