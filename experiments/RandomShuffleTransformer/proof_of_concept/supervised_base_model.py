@@ -31,7 +31,6 @@ from copy import deepcopy
 import random
 from utils.helper_functions import get_checkpoint_path
 
-
 OUTER_DIM = 6
 
 PATIENTS_PER_DS = 250  # Depends on RAM size of PC
@@ -67,6 +66,7 @@ def get_transformer():
         num_layers=4
     )
 
+
 def get_classifier():
     return nn.Sequential(
         nn.Linear(FEAT_DIM, HIDDEN_DIM),
@@ -75,7 +75,7 @@ def get_classifier():
     )
 
 
-def get_data_args(num_patients, batch_size, num_workers=4, seed:int =None):
+def get_data_args(num_patients, batch_size, num_workers=4, seed: int = None):
     return {
         "data_path": get_data_path(),
         "data_split": [4, 1],
@@ -111,6 +111,7 @@ def get_supervised_args(save_name, checkpoint_path):
         }
     }
 
+
 def get_supervised_args_fine(save_name, checkpoint_path):
     return {
         "save_name": save_name,
@@ -121,7 +122,7 @@ def get_supervised_args_fine(save_name, checkpoint_path):
         "classifier": None,
 
         "trainer_hparams": {
-            "max_epochs": 30
+            "max_epochs": 20
             # "profiler": "simple"
         },
         "optim_hparams": {
@@ -130,6 +131,7 @@ def get_supervised_args_fine(save_name, checkpoint_path):
             "lr_hparams": None
         }
     }
+
 
 def get_logistic_args(save_name, checkpoint_path):
     return {
@@ -150,6 +152,28 @@ def get_logistic_args(save_name, checkpoint_path):
         }
     }
 
+
+def get_intermediate_args(save_name, checkpoint_path):
+    return {
+        "save_name": save_name,
+        "CHECKPOINT_PATH": checkpoint_path,
+
+        "encoder": None,
+        "transformer": None,
+        "classifier": None,
+
+        "trainer_hparams": {
+            "max_epochs": 30
+            # "profiler": "simple"
+        },
+        "optim_hparams": {
+            "lr": 1e-4,
+            "weight_decay": 1e-3,
+            "lr_hparams": None
+        }
+    }
+
+
 def get_finetune_args(save_name, checkpoint_path):
     return {
         "save_name": save_name,
@@ -162,14 +186,14 @@ def get_finetune_args(save_name, checkpoint_path):
             "max_epochs": 20
         },
         "optim_hparams": {
-            "lr": 1e-6,
-            "weight_decay": 1e-7,
+            "lr": 1e-5,
+            "weight_decay": 1e-6,
             "lr_hparams": None
         }
     }
 
-def test_supervised(device, model, checkpoint_path: str, test_path, seed: int=None):
 
+def test_supervised(device, model, checkpoint_path: str, test_path, seed: int = None):
     test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0, seed=seed))
 
     trainer = pl.Trainer(
@@ -199,13 +223,12 @@ def test_supervised(device, model, checkpoint_path: str, test_path, seed: int=No
 def train_supervised(device, num_patients: int,
                      encoder: nn.Module, transformer: nn.Module,
                      classifier: nn.Module, finetune_encoder: bool, finetune_transformer: bool, args,
-                     seed:int = None):
-
+                     seed: int = None):
     dm = EEGdataModule(**get_data_args(num_patients, batch_size=64, seed=seed))
     supervised_model = OuterSupervisedModel(encoder=encoder,
-                                       classifier=classifier,
-                                        transformer=transformer,
-                                       optim_hparams=args['optim_hparams'],
+                                            classifier=classifier,
+                                            transformer=transformer,
+                                            optim_hparams=args['optim_hparams'],
                                             finetune_encoder=finetune_encoder,
                                             finetune_transformer=finetune_transformer)
     trainer = pl.Trainer(
@@ -231,8 +254,8 @@ def train_supervised(device, num_patients: int,
     return load_model(OuterSupervisedModel, supervised_model_path)
 
 
-
-def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_path: str, pretrained_encoder: nn.Module, pretrained_transformer: nn.Module, result_file_name=None):
+def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_path: str, pretrained_encoder: nn.Module,
+                       pretrained_transformer: nn.Module, result_file_name=None):
     """
         This function uses a pretrained encoder and pretrained transformer to conduct the following experiment
         1) Fix both pretrained encoder and pretrained outer transformer and train a classifier on top
@@ -240,8 +263,8 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
         3) Compare it with training the outer transformer and classifier in a fully supervised way
         4) Also finetune 3)
     """
-    seed = random.randint(0, 2**32 - 1)  # to have the same validation set for all
-    save_name_logistic = save_name + 'logistic' + str(num_patients)+'pat'
+    seed = random.randint(0, 2 ** 32 - 1)  # to have the same validation set for all
+    save_name_logistic = save_name + 'logistic' + str(num_patients) + 'pat'
     save_name_finetune = save_name + 'fine_tuned' + str(num_patients) + 'pat'
 
     save_name_supervised = save_name + 'supervised' + str(num_patients) + 'pat'
@@ -257,11 +280,21 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                       args=get_logistic_args(save_name_logistic, checkpoint_path),
                                       seed=seed)
 
+    intermediate_model = train_supervised(device=device,
+                                          num_patients=num_patients,
+                                          encoder=deepcopy(pretrained_encoder),
+                                          transformer=deepcopy(pretrained_transformer),
+                                          classifier=deepcopy(logistic_model.classifier),
+                                          finetune_encoder=False,
+                                          finetune_transformer=True,
+                                          args=get_intermediate_args(save_name_finetune, checkpoint_path),
+                                          seed=seed)
+
     finetune_model = train_supervised(device=device,
                                       num_patients=num_patients,
                                       encoder=deepcopy(pretrained_encoder),
-                                      transformer=deepcopy(pretrained_transformer),
-                                      classifier=logistic_model.classifier,
+                                      transformer=deepcopy(intermediate_model.transformer),
+                                      classifier=deepcopy(intermediate_model.classifier),
                                       finetune_encoder=True,
                                       finetune_transformer=True,
                                       args=get_finetune_args(save_name_finetune, checkpoint_path),
@@ -285,13 +318,15 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                                        classifier=deepcopy(fully_supervised_model.classifier),
                                                        finetune_encoder=True,
                                                        finetune_transformer=True,
-                                                       args=get_finetune_args(save_name_supervised_finetune, checkpoint_path),
+                                                       args=get_finetune_args(save_name_supervised_finetune,
+                                                                              checkpoint_path),
                                                        seed=seed)
 
     test_res_logistic = test_supervised(device, logistic_model, checkpoint_path, save_name_logistic)
     test_res_finetuned = test_supervised(device, finetune_model, checkpoint_path, save_name_finetune)
     test_res_supervised = test_supervised(device, fully_supervised_model, checkpoint_path, save_name_supervised)
-    test_res_supervised_fine = test_supervised(device, fully_supervised_model_finetune, checkpoint_path, save_name_supervised_finetune)
+    test_res_supervised_fine = test_supervised(device, fully_supervised_model_finetune, checkpoint_path,
+                                               save_name_supervised_finetune)
 
     results = {
         "sup_res": test_res_supervised,
@@ -315,8 +350,8 @@ if __name__ == "__main__":
     parser.add_argument("--finetune_transformer", required=False, default=False)
     parser.add_argument("--pretrained_classifier", required=False, default=None)
     parser.add_argument("--test_supervised", required=False, default=None)
-    #parser.add_argument("--num_patients", required=True, type=int)
-    #num_patients = args.num_patients
+    # parser.add_argument("--num_patients", required=True, type=int)
+    # num_patients = args.num_patients
     args = parser.parse_args()
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(dev)
@@ -340,18 +375,18 @@ if __name__ == "__main__":
 
         for num_patients in [3, 5, 10, 20, 50, 100, 250, 500]:
             train_path_enc = 'simclr_cnn_encoder_trainings_final30'
-            save_name_enc = 'fine_tuned_simclr_IT_'+str(num_patients)+'pat'
+            save_name_enc = 'fine_tuned_simclr_IT_' + str(num_patients) + 'pat'
             train_path_trans = 'randomshuffle_trainings5'
             save_name_trans = 'pretrained_outer_CNN_5700_pat' + str(num_patients)
 
             encoder = load_model(SupervisedModel, get_checkpoint_path(train_path_enc, save_name_enc)).encoder
-            transformer = load_model(RandomShuffleTransformer, get_checkpoint_path(train_path_trans, save_name_trans)).transformer
+            transformer = load_model(RandomShuffleTransformer,
+                                     get_checkpoint_path(train_path_trans, save_name_trans)).transformer
 
             train_models_n_pat(device=dev,
                                num_patients=num_patients,
-                               save_name='test_on_'+str(num_patients)+'pat',
+                               save_name='test_on_' + str(num_patients) + 'pat',
                                checkpoint_path='trainings_random_shuffle_MLPclass',
                                pretrained_encoder=encoder,
                                pretrained_transformer=transformer,
-                               result_file_name='test_results_random_shuffle_MLPclass'+str(num_patients)+'pat')
-
+                               result_file_name='test_results_random_shuffle_MLPclass' + str(num_patients) + 'pat')
