@@ -91,6 +91,26 @@ def get_data_args(num_patients, batch_size, num_workers=4, seed: int = None):
     }
 
 
+def get_no_pretraining_args(save_name, checkpoint_path):
+    return {
+        "save_name": save_name,
+        "CHECKPOINT_PATH": checkpoint_path,
+
+        "encoder": None,
+        "transformer": None,
+        "classifier": None,
+
+        "trainer_hparams": {
+            "max_epochs": 30
+            # "profiler": "simple"
+        },
+        "optim_hparams": {
+            "lr": 1e-4,
+            "weight_decay": 1e-3,
+            "lr_hparams": None
+        }
+    }
+
 def get_supervised_args(save_name, checkpoint_path):
     return {
         "save_name": save_name,
@@ -183,7 +203,7 @@ def get_finetune_args(save_name, checkpoint_path):
         "classifier": None,
 
         "trainer_hparams": {
-            "max_epochs": 20
+            "max_epochs": 30
         },
         "optim_hparams": {
             "lr": 1e-5,
@@ -265,8 +285,10 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
     """
     seed = random.randint(0, 2 ** 32 - 1)  # to have the same validation set for all
     save_name_logistic = save_name + 'logistic' + str(num_patients) + 'pat'
+    save_name_intermediate = save_name + 'intermediate' + str(num_patients) + 'pat'
     save_name_finetune = save_name + 'fine_tuned' + str(num_patients) + 'pat'
 
+    save_name_no_pretraining = save_name + 'no_pretraining' + str(num_patients) + 'pat'
     save_name_supervised = save_name + 'supervised' + str(num_patients) + 'pat'
     save_name_supervised_finetune = save_name + 'supervised_finetune' + str(num_patients) + 'pat'
 
@@ -287,7 +309,7 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                           classifier=deepcopy(logistic_model.classifier),
                                           finetune_encoder=False,
                                           finetune_transformer=True,
-                                          args=get_intermediate_args(save_name_finetune, checkpoint_path),
+                                          args=get_intermediate_args(save_name_intermediate, checkpoint_path),
                                           seed=seed)
 
     finetune_model = train_supervised(device=device,
@@ -300,6 +322,15 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                       args=get_finetune_args(save_name_finetune, checkpoint_path),
                                       seed=seed)
 
+    no_pretraining_model = train_supervised(device=device,
+                                            num_patients=num_patients,
+                                            encoder=get_CNN_encoder(),
+                                            transformer=get_transformer(),
+                                            classifier=get_classifier(),
+                                            finetune_encoder=True,
+                                            finetune_transformer=True,
+                                            args=get_no_pretraining_args(save_name_no_pretraining, checkpoint_path),
+                                            seed=seed)
     # Compare with a supervised model where only the outer transformer is trained
     fully_supervised_model = train_supervised(device=device,
                                               num_patients=num_patients,
@@ -322,17 +353,23 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
                                                                               checkpoint_path),
                                                        seed=seed)
 
-    test_res_logistic = test_supervised(device, logistic_model, checkpoint_path, save_name_logistic)
-    test_res_finetuned = test_supervised(device, finetune_model, checkpoint_path, save_name_finetune)
-    test_res_supervised = test_supervised(device, fully_supervised_model, checkpoint_path, save_name_supervised)
-    test_res_supervised_fine = test_supervised(device, fully_supervised_model_finetune, checkpoint_path,
+    checkpoint_path_test = checkpoint_path+ '/testings'
+    test_res_logistic = test_supervised(device, logistic_model, checkpoint_path_test, save_name_logistic)
+    test_res_intermediate = test_supervised(device, intermediate_model, checkpoint_path_test, save_name_intermediate)
+    test_res_finetuned = test_supervised(device, finetune_model, checkpoint_path_test, save_name_finetune)
+
+    test_res_no_pretrain = test_supervised(device, no_pretraining_model, checkpoint_path_test, save_name_no_pretraining)
+    test_res_supervised = test_supervised(device, fully_supervised_model, checkpoint_path_test, save_name_supervised)
+    test_res_supervised_fine = test_supervised(device, fully_supervised_model_finetune, checkpoint_path_test,
                                                save_name_supervised_finetune)
 
     results = {
+        "logistic_res": test_res_logistic,
+        "intermediate_res": test_res_intermediate,
+        "fully_tuned_res": test_res_finetuned,
+        "no_pretrain_res": test_res_no_pretrain,
         "sup_res": test_res_supervised,
         "sup_res_fine": test_res_supervised_fine,
-        "logistic_res": test_res_logistic,
-        "fully_tuned_res": test_res_finetuned,
     }
     print(results)
     if result_file_name is not None:
