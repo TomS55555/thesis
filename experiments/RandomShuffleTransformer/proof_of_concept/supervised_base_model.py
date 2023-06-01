@@ -342,7 +342,7 @@ if __name__ == "__main__":
             train_path_enc = 'simclr_cnn_encoder_trainings_final30'
             save_name_enc = 'fine_tuned_simclr_IT_'+str(num_patients)+'pat'
             train_path_trans = 'randomshuffle_trainings5'
-            save_name_trans = '/pretrained_outer_CNN_5700_pat'+ str(num_patients)
+            save_name_trans = 'pretrained_outer_CNN_5700_pat' + str(num_patients)
 
             encoder = load_model(SupervisedModel, get_checkpoint_path(train_path_enc, save_name_enc))
             transformer = load_model(RandomShuffleTransformer, get_checkpoint_path(train_path_trans, save_name_trans))
