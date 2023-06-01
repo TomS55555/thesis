@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train randomshuffle on whole dataset final time" />
+    <list default="true" id="40deac0a-bac8-4319-81e8-77b1d06ca4ef" name="Changes" comment="ready to train randomshuffle on whole dataset final time">
+      <change afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/results/test_on_100pat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/results/test_on_20pat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/results/test_on_250pat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/results/test_on_50pat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/trainings/cnn_encoder_pretraining_time.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/trainings/cnn_encoder_pretraining_top5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/trainings/cnn_encoder_valtop1.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/trainings/transformer_time.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/trainings/transformer_valtop1.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/trainings/transformer_valtop5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/process_results.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/process_results.ipynb" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,12 +59,13 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis/experiments/RandomShuffleTransformer/proof_of_concept/supervised_base_model.py&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tomsm/PycharmProjects/thesis/experiments/trainings&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\trainings" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\FeatPredictor" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments\SiamSiamTransformer" />
       <recent name="C:\Users\tomsm\PycharmProjects\thesis\experiments" />
@@ -291,13 +306,10 @@
       <workItem from="1685219901689" duration="701000" />
       <workItem from="1685262044940" duration="10133000" />
       <workItem from="1685301783412" duration="4707000" />
-    </task>
-    <task id="LOCAL-00055" summary="ready to test Random Shuffle for final time">
-      <created>1684842116324</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1684842116324</updated>
+      <workItem from="1685353244335" duration="9533000" />
+      <workItem from="1685459394936" duration="951000" />
+      <workItem from="1685568874308" duration="601000" />
+      <workItem from="1685613778692" duration="1580000" />
     </task>
     <task id="LOCAL-00056" summary="ready to test Random Shuffle for final time">
       <created>1684842542412</created>
@@ -635,7 +647,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685309574541</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="ready to train randomshuffle on whole dataset final time">
+      <created>1685353379619</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1685353379620</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

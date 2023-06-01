@@ -69,7 +69,9 @@ def get_transformer():
 
 def get_classifier():
     return nn.Sequential(
-        nn.Linear(FEAT_DIM, constants.N_CLASSES)
+        nn.Linear(FEAT_DIM, HIDDEN_DIM),
+        nn.GELU(),
+        nn.Linear(HIDDEN_DIM, constants.N_CLASSES)
     )
 
 
@@ -124,7 +126,7 @@ def get_supervised_args_fine(save_name, checkpoint_path):
         },
         "optim_hparams": {
             "lr": 1e-5,
-            "weight_decay": 1e-4,
+            "weight_decay": 1e-6,
             "lr_hparams": None
         }
     }
@@ -142,8 +144,8 @@ def get_logistic_args(save_name, checkpoint_path):
             "max_epochs": 70,
         },
         "optim_hparams": {
-            "lr": 1e-3,
-            "weight_decay": 1e-10,
+            "lr": 1e-4,
+            "weight_decay": 0,
             "lr_hparams": None
         }
     }
@@ -160,8 +162,8 @@ def get_finetune_args(save_name, checkpoint_path):
             "max_epochs": 20
         },
         "optim_hparams": {
-            "lr": 1e-5,
-            "weight_decay": 1e-4,
+            "lr": 1e-6,
+            "weight_decay": 1e-7,
             "lr_hparams": None
         }
     }
@@ -298,7 +300,7 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
         "fully_tuned_res": test_res_finetuned,
     }
     print(results)
-    if save_name is not None:
+    if result_file_name is not None:
         with open(save_name, 'w+') as fp:
             json.dump(results, fp)
     return results
@@ -313,11 +315,11 @@ if __name__ == "__main__":
     parser.add_argument("--finetune_transformer", required=False, default=False)
     parser.add_argument("--pretrained_classifier", required=False, default=None)
     parser.add_argument("--test_supervised", required=False, default=None)
-    parser.add_argument("--num_patients", required=True, type=int)
+    #parser.add_argument("--num_patients", required=True, type=int)
+    #num_patients = args.num_patients
     args = parser.parse_args()
     dev = torch.device("cpu") if not torch.cuda.is_available() else torch.device("cuda:0")
     print(dev)
-    num_patients = args.num_patients
 
     if args.test_supervised is not None:
         model = load_model(OuterSupervisedModel, args.test_supervised)
@@ -328,33 +330,28 @@ if __name__ == "__main__":
             test_path='save_supervised'
         )
     else:
-        encoder = load_model(SupervisedModel, args.pretrained_encoder).encoder if args.pretrained_encoder is not None else get_CNN_encoder()
-        transformer = load_model(RandomShuffleTransformer, args.pretrained_transformer).transformer if args.pretrained_transformer is not None else get_transformer()
-        classifier = load_model(OuterSupervisedModel, args.pretrained_classifier).classifier if args.pretrained_classifier is not None else get_classifier()
-        finetune_encoder = bool(args.finetune_encoder)
-        finetune_transformer = bool(args.finetune_transformer)
-
-
+        # encoder = load_model(SupervisedModel, args.pretrained_encoder).encoder if args.pretrained_encoder is not None else get_CNN_encoder()
+        # transformer = load_model(RandomShuffleTransformer, args.pretrained_transformer).transformer if args.pretrained_transformer is not None else get_transformer()
+        # classifier = load_model(OuterSupervisedModel, args.pretrained_classifier).classifier if args.pretrained_classifier is not None else get_classifier()
+        # finetune_encoder = bool(args.finetune_encoder)
+        # finetune_transformer = bool(args.finetune_transformer)
 
         version = int(args.version)
-        # train_supervised(device=dev,
-        #                  num_patients=50,
-        #                  encoder=encoder,
-        #                  transformer=transformer,
-        #                  classifier=classifier,
-        #                  finetune_encoder=finetune_encoder,
-        #                  finetune_transformer=finetune_transformer,
-        #                  args=get_supervised_args(
-        #                      save_name='test_random_shuffle_logistic',
-        #                      checkpoint_path='test_random_shuffle'
-        #                  ))
-        train_models_n_pat(device=dev,
-                           num_patients=args.num_patients,
-                           save_name='test_on_'+str(num_patients)+'pat',
-                           checkpoint_path='testings_random_shuffle'+str(version),
-                           pretrained_encoder=encoder,
-                           pretrained_transformer=transformer,
-                           result_file_name='test_results_random_shuffle')
-        #model = train_supervised(dev, train_path, encoder, transformer, classifier, finetune_encoder, finetune_transformer)
-        #result = test_supervised(dev, model)
-        #print(result)
+
+        for num_patients in [3, 5, 10, 20, 50, 100, 250, 500]:
+            train_path_enc = 'simclr_cnn_encoder_trainings_final30'
+            save_name_enc = 'fine_tuned_simclr_IT_'+str(num_patients)+'pat'
+            train_path_trans = 'randomshuffle_trainings5'
+            save_name_trans = '/pretrained_outer_CNN_5700_pat'+ str(num_patients)
+
+            encoder = load_model(SupervisedModel, get_checkpoint_path(train_path_enc, save_name_enc))
+            transformer = load_model(RandomShuffleTransformer, get_checkpoint_path(train_path_trans, save_name_trans))
+
+            train_models_n_pat(device=dev,
+                               num_patients=num_patients,
+                               save_name='test_on_'+str(num_patients)+'pat',
+                               checkpoint_path='trainings_random_shuffle_MLPclass',
+                               pretrained_encoder=encoder,
+                               pretrained_transformer=transformer,
+                               result_file_name='test_results_random_shuffle_MLPclass'+str(num_patients)+'pat')
+
