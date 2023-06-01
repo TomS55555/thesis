@@ -344,8 +344,8 @@ if __name__ == "__main__":
             train_path_trans = 'randomshuffle_trainings5'
             save_name_trans = 'pretrained_outer_CNN_5700_pat' + str(num_patients)
 
-            encoder = load_model(SupervisedModel, get_checkpoint_path(train_path_enc, save_name_enc))
-            transformer = load_model(RandomShuffleTransformer, get_checkpoint_path(train_path_trans, save_name_trans))
+            encoder = load_model(SupervisedModel, get_checkpoint_path(train_path_enc, save_name_enc)).encoder
+            transformer = load_model(RandomShuffleTransformer, get_checkpoint_path(train_path_trans, save_name_trans)).transformer
 
             train_models_n_pat(device=dev,
                                num_patients=num_patients,
