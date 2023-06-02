@@ -18,3 +18,5 @@
 /trainings/
 /simclr*
 /randomshuffle*
+/test*
+/trainings*
