@@ -22,8 +22,6 @@ class SHHSdataset(torch.utils.data.Dataset):
                  exclude_test_set: tuple = (),
                  test_set=False):
         super().__init__()
-        if window_size != 1 and window_size != 4:
-            raise NotImplementedError("Only window size 1 and 4 are supported")
         self.data_path = data_path
         self.window_size = window_size
         X1_list = []
@@ -56,7 +54,7 @@ class SHHSdataset(torch.utils.data.Dataset):
         return self.length
 
     def __getitem__(self, item):
-        if self.window_size == 4:
+        if self.window_size != 1:
             inputs = self.X1[item:item + self.window_size]
             label = self.labels[item:item+self.window_size]
         else:

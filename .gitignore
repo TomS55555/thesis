@@ -16,3 +16,7 @@
 /simclr_trainings*
 ./.idea/workspace.xml
 /trainings/
+/simclr*
+/randomshuffle*
+/test*
+/trainings*

@@ -88,3 +88,6 @@ class MAEEG_Transformer(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         return self.common_step(batch, mode="train")
+
+    def validation_step(self, batch, batch_idx):
+        return self.common_step(batch, mode="val")

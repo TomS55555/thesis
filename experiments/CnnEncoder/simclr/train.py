@@ -42,7 +42,7 @@ finetune_save_name = "fine_tuned_simclr_IT"
 HIDDEN_DIM = 256
 Z_DIM = 128
 
-MAX_EPOCHS = 200  # max epochs independent of number of datasets
+MAX_EPOCHS = 50  # max epochs independent of number of datasets
 
 
 def get_encoder():
@@ -135,7 +135,7 @@ def get_supervised_args(save_name, checkpoint_path, num_ds):
         },
         "optim_hparams": {
             "lr": 1e-4,
-            "weight_decay": 0,
+            "weight_decay": 1e-5,
             "lr_hparams": None
         }
     }
@@ -154,7 +154,7 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
         },
         "optim_hparams": {
             "lr": 1e-5,
-            "weight_decay": 0,
+            "weight_decay": 1e-6,
             "lr_hparams": None
         }
     }
@@ -286,7 +286,7 @@ if __name__ == "__main__":
     elif args.mode == 'final':
         pretrained_model = load_model(SimCLR_Transformer, args.pretrained_path) if args.pretrained_path is not None else pretrain(
             dev, version)
-        for i in range(5):
+        for i in range(2,5):
             train(pretrained_model, dev, version+i, True)
             test_dm = EEGdataModule(test_set=True, **get_data_args(num_patients=5, batch_size=64, num_workers=0))
             test(pretrained_model, dev, version+i, test_dm, True)

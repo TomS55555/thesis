@@ -29,7 +29,7 @@ OUTER_DIM = 4  # Only 1 and 4 are supported at the moment
 
 PATIENTS_PER_DS = 250  # Depends on RAM size of PC
 
-train_path = "simclr_cnn_transformer_trainings"  # path used for training the networks
+train_path = "maeeg_trainings"  # path used for training the networks
 result_file_name = "test_results_cnn_transformer"
 
 pretrained_save_name = "pretrained_IT"
@@ -187,9 +187,9 @@ def get_finetune_args(save_name, checkpoint_path, num_ds):
 
 def pretrain(device, version):
     # TODO: fix normalization of STFT images!
-    num_patients = 10
+    num_patients = 100
     batch_size = 64
-    max_epochs = 5
+    max_epochs = 50
     dm = EEGdataModule(**get_data_args(num_patients=num_patients,
                                        batch_size=batch_size))
     model = MAEEG_Transformer(
@@ -198,8 +198,8 @@ def pretrain(device, version):
         recon_head=get_reconstruction_head(),
         optim_hparams={
             "max_epochs": max_epochs,
-            "lr": 1e-4,
-            "weight_decay": 1e-5
+            "lr": 1e-3,
+            "weight_decay": 1e-7
         },
         train_encoder=True
     )
