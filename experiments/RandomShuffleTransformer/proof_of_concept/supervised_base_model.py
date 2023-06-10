@@ -79,7 +79,7 @@ def get_data_args(num_patients, batch_size, num_workers=4, seed: int = None):
     return {
         "data_path": get_data_path(),
         "data_split": [4, 1],
-        "first_patient": 1,
+        "first_patient": 2000,
         "num_patients": num_patients,
         "batch_size": batch_size,
         "num_workers": num_workers,
@@ -423,7 +423,7 @@ if __name__ == "__main__":
             train_models_n_pat(device=dev,
                                num_patients=num_patients,
                                save_name='test_on_' + str(num_patients) + 'pat',
-                               checkpoint_path='trainings_random_shuffle_MLPclass',
+                               checkpoint_path='trainings_random_shuffle_MLPclass3',
                                pretrained_encoder=encoder,
                                pretrained_transformer=transformer,
-                               result_file_name='test_results_random_shuffle_MLPclass' + str(num_patients) + 'pat')
+                               result_file_name='test_results_random_shuffle_MLPclass' + str(num_patients) + 'patV3')
