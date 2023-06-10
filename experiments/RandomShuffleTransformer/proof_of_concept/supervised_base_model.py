@@ -373,7 +373,7 @@ def train_models_n_pat(device, num_patients: int, save_name: str, checkpoint_pat
     }
     print(results)
     if result_file_name is not None:
-        with open(save_name, 'w+') as fp:
+        with open(result_file_name, 'w+') as fp:
             json.dump(results, fp)
     return results
 
