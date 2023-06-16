@@ -23,7 +23,7 @@ import json
 from models.sleep_transformer import Aggregator
 import numpy as np
 
-patients_list = [3, 5, 10, 20, 50, 100, 250, 500]
+patients_list = [1000, 5700]
 #patients_list = [10]
 
 OUTER_DIM = 1
