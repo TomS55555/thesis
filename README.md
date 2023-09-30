@@ -1,5 +1,5 @@
 # Thesis
-The code for my thesis: EEG-based sleep-staging with SSL, read the full text: #https://github.com/TomS55555/thesis/edit/master/Thesis_final_pdf.pdf
+The code for my thesis: EEG-based sleep-staging with SSL, read the full text: [https://github.com/TomS55555/thesis/edit/master/Thesis_final_pdf.pdf](https://github.com/TomS55555/thesis/blob/master/Thesis_final_pdf.pdf)
 
 # Abstract
 This thesis aims to reduce the reliance on labeled data for training a machine learning
